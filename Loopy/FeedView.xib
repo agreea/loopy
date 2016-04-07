@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedView" customModule="Loopy" customModuleProvider="target">
@@ -20,39 +19,43 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBe-Ix-ILI">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="425" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gqe-gj-lCJ">
+                            <rect key="frame" x="0.0" y="71" width="600" height="600"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="ZGA-qf-o9J"/>
+                                <outlet property="delegate" destination="-1" id="BCc-nQ-j28"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" red="0.53176185344827587" green="0.91223060344827589" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="425" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gqe-gj-lCJ">
-                    <rect key="frame" x="0.0" y="71" width="600" height="600"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="ZGA-qf-o9J"/>
-                        <outlet property="delegate" destination="-1" id="BCc-nQ-j28"/>
-                    </connections>
-                </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gif copied to clipboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EC-s7-4Rg">
-                    <rect key="frame" x="195" y="553" width="211" height="39"/>
-                    <color key="backgroundColor" red="0.61926185344827589" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="211" id="VAw-2H-efL"/>
-                        <constraint firstAttribute="height" constant="39" id="cun-9q-w91"/>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="leading" secondItem="hBe-Ix-ILI" secondAttribute="leading" id="4Ia-ky-vLP"/>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="width" secondItem="hBe-Ix-ILI" secondAttribute="width" id="6JW-rL-2DA"/>
+                        <constraint firstAttribute="bottom" secondItem="Gqe-gj-lCJ" secondAttribute="bottom" constant="-71" id="cpA-dK-bDx"/>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="top" secondItem="hBe-Ix-ILI" secondAttribute="top" constant="71" id="gTJ-UW-ZXo"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gif copied to clipboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EC-s7-4Rg">
+                    <rect key="frame" x="195" y="531" width="211" height="46"/>
+                    <color key="backgroundColor" red="0.49597331389452315" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="93V-yk-ATd"/>
+                        <constraint firstAttribute="width" constant="211" id="XHU-wb-x1c"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Gqe-gj-lCJ" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="6s6-pP-dOf"/>
-                <constraint firstItem="5EC-s7-4Rg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="FXo-aG-1h8"/>
-                <constraint firstItem="Gqe-gj-lCJ" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="FrM-AQ-OBo"/>
+                <constraint firstAttribute="bottom" secondItem="5EC-s7-4Rg" secondAttribute="bottom" constant="23" id="EZ6-up-OgV"/>
+                <constraint firstItem="5EC-s7-4Rg" firstAttribute="centerX" secondItem="hBe-Ix-ILI" secondAttribute="centerX" id="JgM-Qs-WMd"/>
                 <constraint firstItem="hBe-Ix-ILI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TOl-FZ-nzR"/>
-                <constraint firstItem="5EC-s7-4Rg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" id="jz5-R2-Ab2"/>
                 <constraint firstItem="hBe-Ix-ILI" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="kS2-vQ-oWT"/>
-                <constraint firstItem="Gqe-gj-lCJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lM4-Pk-LBm"/>
                 <constraint firstItem="hBe-Ix-ILI" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="n2a-gw-Y7b"/>
-                <constraint firstItem="Gqe-gj-lCJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="71" id="yJq-IP-DIE"/>
                 <constraint firstItem="hBe-Ix-ILI" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="zPy-i1-rUC"/>
             </constraints>
         </view>

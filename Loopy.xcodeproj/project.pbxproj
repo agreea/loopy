@@ -27,6 +27,8 @@
 		C6BB8FFF1CB459B300C6DB94 /* capture_recording.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FFE1CB459B300C6DB94 /* capture_recording.png */; };
 		C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB90061CB590A200C6DB94 /* FeedCell.swift */; };
 		C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BB90071CB590A200C6DB94 /* FeedCell.xib */; };
+		C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */; };
+		C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */; };
 		C6BE95A11CB1E7F500E4F067 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A01CB1E7F500E4F067 /* x.png */; };
 		C6BE95A31CB1EAD900E4F067 /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A21CB1EAD900E4F067 /* send.png */; };
 		C6BE95A51CB1EC5200E4F067 /* capture.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A41CB1EC5200E4F067 /* capture.png */; };
@@ -81,6 +83,8 @@
 		C6BB8FFE1CB459B300C6DB94 /* capture_recording.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture_recording.png; sourceTree = "<group>"; };
 		C6BB90061CB590A200C6DB94 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		C6BB90071CB590A200C6DB94 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCell.xib; sourceTree = "<group>"; };
+		C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureButtonView.swift; sourceTree = "<group>"; };
+		C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerBarView.swift; sourceTree = "<group>"; };
 		C6BE95A01CB1E7F500E4F067 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 		C6BE95A21CB1EAD900E4F067 /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = send.png; path = "../../../Documents/Art ideas/Design/UXUI/send.png"; sourceTree = "<group>"; };
 		C6BE95A41CB1EC5200E4F067 /* capture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = capture.png; path = "../../../Documents/Art ideas/Design/UXUI/capture.png"; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 				C67DBB7E1C9FAD470082CB56 /* FeedView.xib */,
 				C6BB90061CB590A200C6DB94 /* FeedCell.swift */,
 				C6BB90071CB590A200C6DB94 /* FeedCell.xib */,
+				C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */,
+				C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */,
 			);
 			path = Loopy;
 			sourceTree = "<group>";
@@ -404,6 +410,8 @@
 			files = (
 				C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */,
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
+				C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */,
+				C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */,
 				C67370EA1C9D2D1800B2B8C1 /* ViewController.swift in Sources */,
 				C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */,
 				C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */,

@@ -29,13 +29,12 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var timeBarCenterX: NSLayoutConstraint!
     @IBOutlet weak var timeBarWidth: NSLayoutConstraint!
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var recordButton: CaptureViewButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print("viewBounds in didLoad: \(self.view.bounds.width)")
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,6 +61,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         return true
     }
     
+    // called whenever recording mode exits. 
+    // Hides the the recording bar and resets the button
     private func resetRecordInterface(){
         print("current centerX: \(timeBarCenterX!.constant)")
         if timeBarCenterX.constant == 0 {
@@ -69,7 +70,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         print("reset centerX: \(timeBarCenterX!.constant)")
         timeBar.alpha = 1.0
-        recordButton.setImage(UIImage(named: "capture"), forState: UIControlState.Normal)
+        recordButton.recordingMode = false
+        recordButton.setNeedsDisplay()
         self.view.layoutIfNeeded()
     }
     
@@ -107,6 +109,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         captureModeDelegate!.previewModeDidStart(outputFileURL)
     }
     
+    // captureMode is the live preview mode
     func captureModeDidStart() {
         recordButton.hidden = false
         print("reset centerX: \(timeBarCenterX!.constant)")
@@ -128,7 +131,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func startRecordInterface() {
-        recordButton.setImage(UIImage(named: "capture_recording"), forState: UIControlState.Normal)
+        recordButton.recordingMode = true
+        recordButton.setNeedsDisplay()
         UIView.animateWithDuration(6, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
             self.timeBarCenterX.constant = 0
             self.view.layoutIfNeeded()

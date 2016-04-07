@@ -22,6 +22,7 @@ class FeedCell: UITableViewCell {
     let day = 60 * 60 * 24
     override func awakeFromNib() {
         super.awakeFromNib()
+//        gifPreview.sizeToFit()
         // Initialization code
     }
 
@@ -34,7 +35,6 @@ class FeedCell: UITableViewCell {
         setGifPreview(feedItem.Uuid!)
         usernameLabel.text = feedItem.Username
 //        setTimeLabel(feedItem.Timestamp!)
-        gifPreview.alignment = UIImageViewAlignmentMask.Left
     }
     
     private func setGifPreview(gifUuid: String) {
@@ -42,10 +42,24 @@ class FeedCell: UITableViewCell {
         let resource = Resource(downloadURL: URL, cacheKey: gifUuid + ".gif")
         
         gifPreview.kf_setImageWithURL(URL, placeholderImage: nil, optionsInfo: nil, completionHandler: { (image, error, cacheType, imageURL) -> () in
-                print("Downloaded and set!")
+                self.roundGifCorners()
             })
     }
-    
+    private func roundGifCorners() {
+        if let gifSize = self.gifPreview.image?.size {
+            let currentFrame = self.gifPreview.frame
+            // get the current height of the gif
+            // divide that by the current height of the preview, you've got the ratio
+            let downscaleRatio =  currentFrame.height / gifSize.height
+            self.gifPreview!.frame = CGRectMake(currentFrame.origin.x,
+                                                currentFrame.origin.y,
+                                                gifSize.width * downscaleRatio,
+                                                currentFrame.height);
+        }
+        self.gifPreview.layer.cornerRadius = 6.0
+        self.gifPreview.clipsToBounds = true
+        self.gifPreview.alignment = UIImageViewAlignmentMask.Left
+    }
 //    private func setTimeLabel(timestamp: String) {
 //        inFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
 //        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"

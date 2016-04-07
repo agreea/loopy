@@ -12,11 +12,12 @@ import Kingfisher
 import Regift
 import Alamofire
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CaptureModeDelegate {
+class ViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, CaptureModeDelegate {
     
     @IBOutlet weak var scrollWindow: UIScrollView!
     var moviePreviewController: MoviePreviewViewController?
     var captureViewController: CaptureViewController?
+    var previewMode: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initCaptureViewController()
@@ -24,6 +25,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         self.initMoviePreviewController()
         scrollWindow.contentSize = CGSizeMake(self.view.frame.width * 2, self.view.frame.size.height)
         scrollWindow.showsHorizontalScrollIndicator = false
+        scrollWindow.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -68,15 +70,24 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         moviePreviewController!.movieURL = movieURL
         moviePreviewController!.previewModeDidStart()
         moviePreviewController!.view.hidden = false
+        previewMode = true
+        
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if previewMode {
+            scrollView.contentOffset.x = 0
+        }
+    }
+
     func captureModeDidStart() {
         self.moviePreviewController!.view.hidden = true
         self.captureViewController!.captureModeDidStart()
+        previewMode = false
     }
     
 //    func uploadGif(sender: AnyObject) {
-//        //Now use image to create into NSData format
+//        // Now use image to create into NSData format
 //        // upload that to the server
 //        let request = Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", file: gifUrl)
 //        print(request)
