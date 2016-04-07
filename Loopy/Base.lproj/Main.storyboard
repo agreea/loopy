@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,31 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcG-U7-7GV">
-                                <rect key="frame" x="257" y="550" width="87" height="30"/>
-                                <color key="backgroundColor" red="0.35973978258554729" green="0.93304363084465169" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Select Video"/>
-                                <connections>
-                                    <action selector="selectVideoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xKC-1W-kra"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Nl-c5-Q6r">
-                                <rect key="frame" x="0.0" y="42" width="601" height="322"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXb-OH-oTS">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4Nl-c5-Q6r" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="50k-yD-0jF"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4Nl-c5-Q6r" secondAttribute="bottom" constant="236" id="9Pg-vf-VES"/>
-                            <constraint firstItem="4Nl-c5-Q6r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BNH-7y-G0u"/>
-                            <constraint firstItem="4Nl-c5-Q6r" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="ToL-vD-UoA"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PcG-U7-7GV" secondAttribute="bottom" constant="20" id="jM5-oX-Btr"/>
-                            <constraint firstItem="PcG-U7-7GV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ymk-Qm-I7L"/>
+                            <constraint firstItem="dXb-OH-oTS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="83y-Y5-Zod"/>
+                            <constraint firstItem="dXb-OH-oTS" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="EhO-hg-Hho"/>
+                            <constraint firstItem="dXb-OH-oTS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ep2-oI-eJh"/>
+                            <constraint firstItem="dXb-OH-oTS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="tcW-Wd-h66"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gifWindow" destination="4Nl-c5-Q6r" id="2pN-jI-dz2"/>
+                        <outlet property="scrollWindow" destination="dXb-OH-oTS" id="8FF-DS-Dxf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
