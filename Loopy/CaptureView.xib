@@ -10,7 +10,8 @@
             <connections>
                 <outlet property="cameraView" destination="4A9-qi-p0v" id="hoH-0O-WYn"/>
                 <outlet property="recordButton" destination="cIs-sd-bOm" id="bJR-hY-k5W"/>
-                <outlet property="timeBar" destination="F36-Tc-CNX" id="I8t-5f-0R9"/>
+                <outlet property="timeBar" destination="lY5-wQ-uY9" id="Iou-1H-7nd"/>
+                <outlet property="timeBarCenterX" destination="rbX-cq-9EG" id="Zof-U3-xR1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,6 +24,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" red="0.41702586206896552" green="1" blue="0.55668103448275863" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lY5-wQ-uY9">
+                    <rect key="frame" x="0.0" y="590" width="600" height="10"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIs-sd-bOm" customClass="CaptureViewButton" customModule="Loopy" customModuleProvider="target">
                     <rect key="frame" x="246" y="469" width="108" height="108"/>
                     <constraints>
@@ -33,27 +38,24 @@
                         <action selector="didPressRecord:" destination="-1" eventType="touchUpInside" id="DgI-8G-Jwe"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timer_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="F36-Tc-CNX" userLabel="timerBar" customClass="TimerBarView">
-                    <rect key="frame" x="0.0" y="585" width="600" height="15"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="F36-Tc-CNX" firstAttribute="bottom" secondItem="4A9-qi-p0v" secondAttribute="bottom" id="0NI-qw-TrY"/>
-                <constraint firstItem="F36-Tc-CNX" firstAttribute="trailing" secondItem="4A9-qi-p0v" secondAttribute="trailing" id="4sL-Dc-bAa"/>
                 <constraint firstAttribute="bottom" secondItem="cIs-sd-bOm" secondAttribute="bottom" constant="23" id="Gu7-zd-PhO"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KIF-4L-sTm"/>
                 <constraint firstItem="cIs-sd-bOm" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" id="OZf-kH-ecP"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="QZz-Ep-mmT"/>
-                <constraint firstItem="F36-Tc-CNX" firstAttribute="leading" secondItem="4A9-qi-p0v" secondAttribute="leading" id="T94-r1-8st"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Xt1-2X-u0L"/>
                 <constraint firstAttribute="bottom" secondItem="4A9-qi-p0v" secondAttribute="bottom" id="aQ4-zM-Jfh"/>
                 <constraint firstItem="cIs-sd-bOm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bXh-qw-My8"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="cxX-xk-Lik"/>
                 <constraint firstAttribute="trailing" secondItem="4A9-qi-p0v" secondAttribute="trailing" id="dM6-RO-Zrd"/>
-                <constraint firstItem="F36-Tc-CNX" firstAttribute="top" secondItem="cIs-sd-bOm" secondAttribute="bottom" constant="8" symbolic="YES" id="eHK-MT-Ij9"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jeH-rJ-6IT"/>
+                <constraint firstItem="lY5-wQ-uY9" firstAttribute="bottom" secondItem="4A9-qi-p0v" secondAttribute="bottom" id="k6z-e0-ye3"/>
+                <constraint firstItem="lY5-wQ-uY9" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="nUK-pg-Cfs"/>
                 <constraint firstItem="4A9-qi-p0v" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="p2s-OU-Qcg"/>
+                <constraint firstItem="lY5-wQ-uY9" firstAttribute="top" secondItem="cIs-sd-bOm" secondAttribute="bottom" constant="13" id="qea-19-abo"/>
+                <constraint firstItem="lY5-wQ-uY9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rbX-cq-9EG"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
@@ -62,7 +64,4 @@
             </variation>
         </view>
     </objects>
-    <resources>
-        <image name="timer_bar.png" width="1125" height="20"/>
-    </resources>
 </document>

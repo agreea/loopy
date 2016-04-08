@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
-class TimerBarView: UIView {
+@IBDesignable class TimerBarView: UIImageView {
     override func drawRect(rect: CGRect) {
-        
+        let rectPath = UIBezierPath(rect: rect)
+        UIColor(netHex: 0xFF0000, alpha: 1.0).setFill()
+        rectPath.fill()
     }
 }

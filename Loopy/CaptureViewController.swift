@@ -27,7 +27,6 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     var recording = false
     @IBOutlet weak var timeBar: UIView!
     @IBOutlet weak var timeBarCenterX: NSLayoutConstraint!
-    @IBOutlet weak var timeBarWidth: NSLayoutConstraint!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: CaptureViewButton!
     

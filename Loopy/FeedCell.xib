@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wfl-Dg-hXa" userLabel="ImageView" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
-                        <rect key="frame" x="8" y="52" width="300" height="309"/>
+                        <rect key="frame" x="8" y="52" width="381" height="309"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YP-u1-LdV">
                         <rect key="frame" x="8" y="369" width="79" height="21"/>
@@ -26,15 +26,15 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="leading" secondItem="7YP-u1-LdV" secondAttribute="leading" id="0qn-vS-m35"/>
                     <constraint firstAttribute="trailing" secondItem="Wfl-Dg-hXa" secondAttribute="trailing" id="0ue-j1-2aU"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Wfl-Dg-hXa" secondAttribute="trailing" constant="81" id="5rD-Ye-e8H"/>
                     <constraint firstItem="Wfl-Dg-hXa" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="66k-nu-ftf"/>
+                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="leading" secondItem="7YP-u1-LdV" secondAttribute="leading" id="6FQ-hV-eta"/>
+                    <constraint firstItem="7YP-u1-LdV" firstAttribute="top" secondItem="Wfl-Dg-hXa" secondAttribute="bottom" constant="8" symbolic="YES" id="6tr-jS-4Qd"/>
                     <constraint firstAttribute="bottomMargin" secondItem="7YP-u1-LdV" secondAttribute="bottom" constant="60" id="9hB-u7-HvF"/>
-                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="44" id="Xo5-TY-gLY"/>
-                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="kEX-bg-e10"/>
-                    <constraint firstItem="7YP-u1-LdV" firstAttribute="top" secondItem="Wfl-Dg-hXa" secondAttribute="bottom" constant="8" symbolic="YES" id="l8i-4x-y6f"/>
+                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Y0H-ek-p7e"/>
+                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Zmo-V5-Jtz"/>
                     <constraint firstAttribute="bottomMargin" secondItem="7YP-u1-LdV" secondAttribute="bottom" constant="27" id="tfM-IZ-7Si"/>
+                    <constraint firstItem="Wfl-Dg-hXa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="44" id="yWb-LO-nTE"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

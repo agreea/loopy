@@ -11,8 +11,14 @@ import MobileCoreServices
 import Kingfisher
 import Regift
 import Alamofire
+import CoreData
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, CaptureModeDelegate {
+protocol CoreDataDelegate {
+        func getSession() -> String?
+        func getUserId() -> Int?
+        func getUsername() -> String?
+}
+class ViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, CaptureModeDelegate, CoreDataDelegate {
     
     @IBOutlet weak var scrollWindow: UIScrollView!
     var moviePreviewController: MoviePreviewViewController?
@@ -20,9 +26,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIScroll
     var previewMode: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initCaptureViewController()
-        self.initFeedViewController()
-        self.initMoviePreviewController()
+        initCaptureViewController()
+        initFeedViewController()
+        initMoviePreviewController()
         scrollWindow.contentSize = CGSizeMake(self.view.frame.width * 2, self.view.frame.size.height)
         scrollWindow.showsHorizontalScrollIndicator = false
         scrollWindow.delegate = self
@@ -30,16 +36,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIScroll
     }
     
     private func initMoviePreviewController(){
-        self.moviePreviewController = MoviePreviewViewController(nibName: "MoviePreviewView", bundle: nil)
-        print("init")
-        self.moviePreviewController!.captureModeDelegate = self
-        print("assigned member vars")
+        moviePreviewController = MoviePreviewViewController(nibName: "MoviePreviewView", bundle: nil)
+        moviePreviewController!.captureModeDelegate = self
         self.addChildViewController(moviePreviewController!)
         moviePreviewController!.view.hidden = true
-        self.captureViewController!.view.addSubview(moviePreviewController!.view)
-        print("added subview")
+        captureViewController!.view.addSubview(moviePreviewController!.view)
         moviePreviewController!.didMoveToParentViewController(self)
-        print("done")
+        moviePreviewController!.coreDataDelegate = self
 
     }
     
@@ -53,6 +56,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIScroll
     
     private func initFeedViewController() {
         let feedView = FeedView(nibName: "FeedView", bundle: nil)
+        feedView.coreDataDelegate = self
         self.addChildViewController(feedView)
         self.scrollWindow.addSubview(feedView.view)
         feedView.didMoveToParentViewController(self)
@@ -66,6 +70,12 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIScroll
         // Dispose of any resources that can be recreated.
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if previewMode {
+            scrollView.contentOffset.x = 0
+        }
+    }
+    
     func previewModeDidStart(movieURL: NSURL) {
         moviePreviewController!.movieURL = movieURL
         moviePreviewController!.previewModeDidStart()
@@ -74,24 +84,52 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIScroll
         
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if previewMode {
-            scrollView.contentOffset.x = 0
-        }
-    }
-
+    // CaptureModeDelegateMethods
     func captureModeDidStart() {
         self.moviePreviewController!.view.hidden = true
         self.captureViewController!.captureModeDidStart()
         previewMode = false
     }
     
-//    func uploadGif(sender: AnyObject) {
-//        // Now use image to create into NSData format
-//        // upload that to the server
-//        let request = Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", file: gifUrl)
-//        print(request)
-//    }
+    // CoreDataDelegateMethods
+    func getUserId() -> Int? {
+        if let userData = getUserData() {
+            return userData.valueForKey("id") as? Int
+        }
+        return nil
+    }
     
+    func getSession() -> String? {
+        if let userData = getUserData() {
+            return userData.valueForKey("session") as? String
+        }
+        return nil
+    }
+    
+    func getUsername() -> String? {
+        if let userData = getUserData() {
+            return userData.valueForKey("username") as? String
+        }
+        return nil
+    }
+    
+    private func getUserData() -> NSManagedObject? {
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "User_data")
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            if let userCredentials = results as? [NSManagedObject],
+                let userData = userCredentials[0] as? NSManagedObject {
+                return userData
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        return nil
+    }
+
 }
 

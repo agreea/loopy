@@ -16,7 +16,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // check that the user has a session
+        // if not, launch the login storyboard
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "User_data")
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            // check that the data model exists,
+            if let userCredentials = results as? [NSManagedObject] {
+                // that it has an entry
+                if userCredentials.count > 0 {
+                    // and that the entry has a session key
+                    if let _ = userCredentials[0].valueForKey("session") as? String {
+                        // start the default story board
+                        return true
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        // otherwise launch the splash scene
+        let loginSignup = UIStoryboard(name: "LoginSignup", bundle: nil)
+        let loginNavigationController = loginSignup.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
+        self.window!.rootViewController = loginNavigationController
         return true
     }
 
@@ -105,6 +132,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    func saveUserData(userId: Int, session: String, username: String) -> Bool {
+        let managedContext = self.managedObjectContext
+        let entity =  NSEntityDescription.entityForName("User_data",
+                                                        inManagedObjectContext:managedContext)
+        let userData = NSManagedObject(entity: entity!,
+                                       insertIntoManagedObjectContext: managedContext)
+        userData.setValue(username, forKey: "username")
+        userData.setValue(session, forKey: "session")
+        userData.setValue(userId, forKey: "id")
+        do {
+            try managedContext.save()
+            print("Saved user data")
+            return true
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        return false
     }
 
 }

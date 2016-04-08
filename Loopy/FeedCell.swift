@@ -20,9 +20,10 @@ class FeedCell: UITableViewCell {
     let minute = 60
     let hour = 60 * 60
     let day = 60 * 60 * 24
+    var userId: Int?
+    var authorId: Int?
     override func awakeFromNib() {
         super.awakeFromNib()
-//        gifPreview.sizeToFit()
         // Initialization code
     }
 
@@ -31,16 +32,16 @@ class FeedCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func loadItem(feedItem: FeedItem) {
+    func loadItem(feedItem: FeedItem, userId: Int) {
         setGifPreview(feedItem.Uuid!)
         usernameLabel.text = feedItem.Username
+        self.userId = userId
+        self.authorId = feedItem.User_id
 //        setTimeLabel(feedItem.Timestamp!)
     }
     
     private func setGifPreview(gifUuid: String) {
-        let URL = NSURL(string: "https://yaychakula.com/img/" + gifUuid + "/loopy.gif")!
-        let resource = Resource(downloadURL: URL, cacheKey: gifUuid + ".gif")
-        
+        let URL = NSURL(string: "https://yaychakula.com/img/" + gifUuid + "/loopy.gif")!        
         gifPreview.kf_setImageWithURL(URL, placeholderImage: nil, optionsInfo: nil, completionHandler: { (image, error, cacheType, imageURL) -> () in
                 self.roundGifCorners()
             })
@@ -58,7 +59,7 @@ class FeedCell: UITableViewCell {
         }
         self.gifPreview.layer.cornerRadius = 6.0
         self.gifPreview.clipsToBounds = true
-        self.gifPreview.alignment = UIImageViewAlignmentMask.Left
+        self.gifPreview.alignment = (authorId == userId) ? .Right : .Left
     }
 //    private func setTimeLabel(timestamp: String) {
 //        inFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")

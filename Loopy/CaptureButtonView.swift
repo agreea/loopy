@@ -40,7 +40,7 @@ import UIKit
     private func renderStatic(rect: CGRect) {
         let middleRect = CGRect(x: rect.origin.x + 16, y: rect.origin.y + 16, width: rect.width - 32, height: rect.height - 32)
         let middleCircle = UIBezierPath(ovalInRect: middleRect)
-        middleCircle.lineWidth = CGFloat(16.0)
+        middleCircle.lineWidth = CGFloat(12.0)
         UIColor.whiteColor().setStroke()
         middleCircle.stroke()
         let outerRect = CGRect(x: rect.origin.x + 8, y: rect.origin.y + 8, width: rect.width - 16, height: rect.height - 16)

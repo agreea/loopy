@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import Kingfisher
 import MobileCoreServices
+import CoreData
 
 struct FeedItem {
     let Id: Int?
@@ -38,15 +39,19 @@ extension UIColor {
 class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // function: view:
     var feedData = [FeedItem]()
+
     var refreshControl: UIRefreshControl!
+    var id: Int?
+    var coreDataDelegate: CoreDataDelegate?
     @IBOutlet weak var imageCopiedAlert: UILabel!
     @IBOutlet weak var feedView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let nib = UINib(nibName: "FeedCell", bundle: nil)
+        id = coreDataDelegate?.getUserId()
         feedView.registerNib(nib, forCellReuseIdentifier: "feedCell")
-        loadFeed()
+        attemptLoadFeed()
         imageCopiedAlert.layer.cornerRadius = 6.0
         imageCopiedAlert.clipsToBounds = true
         setUpPullToRefresh()
@@ -63,29 +68,39 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func refresh(sender: AnyObject) {
         // Code to refresh table view
         feedData = [FeedItem]()
-        loadFeed()
+        attemptLoadFeed()
     }
     
-    func loadFeed() {
+    func attemptLoadFeed() {
+        if let session = coreDataDelegate!.getSession() {
+            loadFeed(session)
+        }
+    }
+    
+    private func loadFeed(session: String) {
         // Do any additional setup after loading the view.
         let parameters = [
             "method": "GetFeed",
-            "session": "c2dc4cc4-08cb-4c18-be8b-6d8ef0c812cc"
+            "session": session
         ]
         Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
             parameters: parameters)
             .responseJSON { response in
-                guard response.result.error == nil else {
-                    // got an error in getting the data, need to handle it
-                    print(response.result.error!)
-                    return
-                }
-                if let value: AnyObject = response.result.value {
-                    let json = JSON(value)
-                    self.constructFeedDataFromJSON(json)
-                    self.feedView!.reloadData()
-                    self.refreshControl.endRefreshing()
-                }
+                self.processFeedAPIResponse(response)
+        }
+    }
+    
+    func processFeedAPIResponse(response: Response<AnyObject, NSError>) {
+        guard response.result.error == nil else {
+            // got an error in getting the data, need to handle it
+            print(response.result.error!)
+            return
+        }
+        if let value: AnyObject = response.result.value {
+            let json = JSON(value)
+            self.constructFeedDataFromJSON(json)
+            self.feedView!.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -172,7 +187,9 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         print("got cell")
         
         let feedItem = self.feedData[indexPath.row]
-        cell.loadItem(feedItem)
+        if id != nil {
+            cell.loadItem(feedItem, userId: id!)
+        }
         return cell
     }
 
