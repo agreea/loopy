@@ -11,8 +11,6 @@
                 <outlet property="loadingLabel" destination="6UK-S0-DYD" id="RLX-55-4Cl"/>
                 <outlet property="moviePreview" destination="3t6-1V-WMG" id="GUa-AR-mek"/>
                 <outlet property="nextButton" destination="Ry5-hc-OmM" id="N9u-Rp-KVf"/>
-                <outlet property="progressBar" destination="HPM-6o-VZ3" id="v0N-mc-CSr"/>
-                <outlet property="progressBarCenterX" destination="DQS-qL-gCn" id="5L6-ly-qeB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -40,10 +38,6 @@
                         <constraint firstItem="mi2-ZG-Ix4" firstAttribute="trailing" secondItem="3t6-1V-WMG" secondAttribute="trailingMargin" id="PQU-9l-qR5"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPM-6o-VZ3">
-                    <rect key="frame" x="0.0" y="590" width="600" height="10"/>
-                    <color key="backgroundColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ry5-hc-OmM">
                     <rect key="frame" x="486" y="518" width="106" height="58"/>
                     <constraints>
@@ -69,19 +63,12 @@
             <color key="backgroundColor" red="0.3597397826" green="0.93304363079999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Ry5-hc-OmM" secondAttribute="bottom" constant="24" id="7tP-8F-AQa"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="bottom" secondItem="3t6-1V-WMG" secondAttribute="bottom" id="9H2-wM-iL1"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="AFm-Ms-hwu"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="DQS-qL-gCn"/>
                 <constraint firstItem="6UK-S0-DYD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Hsm-Nw-cMt"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="KgA-QK-lFM"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Qn0-VM-5cq"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="top" secondItem="Ry5-hc-OmM" secondAttribute="bottom" constant="14" id="Xs6-rB-HTU"/>
                 <constraint firstItem="Ry5-hc-OmM" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="Z71-yW-meb"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="b6K-4K-Akw"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="dxn-zi-Rhf"/>
                 <constraint firstItem="6UK-S0-DYD" firstAttribute="bottom" secondItem="Ry5-hc-OmM" secondAttribute="bottom" id="hCt-xq-Dc8"/>
-                <constraint firstItem="HPM-6o-VZ3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hgN-bp-dFP"/>
-                <constraint firstAttribute="bottom" secondItem="HPM-6o-VZ3" secondAttribute="bottom" id="hzw-bo-NKa"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="xgM-Sh-5B3"/>
             </constraints>
         </view>

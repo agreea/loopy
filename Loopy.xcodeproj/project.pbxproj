@@ -13,10 +13,13 @@
 		C63F6FEA1CB72DEC00D5DE3E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */; };
 		C63F6FEC1CB7395000D5DE3E /* LoopyLandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */; };
 		C63F6FEE1CB75BD400D5DE3E /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */; };
-		C63F6FF11CB75F1E00D5DE3E /* text_insecure.png in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FEF1CB75F1E00D5DE3E /* text_insecure.png */; };
-		C63F6FF21CB75F1E00D5DE3E /* text_secure.png in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FF01CB75F1E00D5DE3E /* text_secure.png */; };
+		C63F6FF41CB76E6800D5DE3E /* AddPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */; };
+		C63F6FF61CB7708700D5DE3E /* VerifyPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */; };
+		C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */; };
+		C6583B281CB9787200E3B242 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6583B271CB9787200E3B242 /* GradientView.swift */; };
+		C671F4511CBA53E800400963 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C671F4501CBA53E800400963 /* ClassExtensions.swift */; };
 		C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */; };
-		C67370EA1C9D2D1800B2B8C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370E91C9D2D1800B2B8C1 /* ViewController.swift */; };
+		C67370EA1C9D2D1800B2B8C1 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */; };
 		C67370ED1C9D2D1800B2B8C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */; };
 		C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C67370EE1C9D2D1800B2B8C1 /* Loopy.xcdatamodeld */; };
 		C67370F21C9D2D1800B2B8C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C67370F11C9D2D1800B2B8C1 /* Assets.xcassets */; };
@@ -27,24 +30,21 @@
 		C67DBB7C1C9FAAA70082CB56 /* CaptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */; };
 		C67DBB7F1C9FAD470082CB56 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67DBB7D1C9FAD470082CB56 /* FeedView.swift */; };
 		C67DBB801C9FAD470082CB56 /* FeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67DBB7E1C9FAD470082CB56 /* FeedView.xib */; };
-		C6BB8FF11CB39E9A00C6DB94 /* timer_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FF01CB39E9A00C6DB94 /* timer_bar.png */; };
-		C6BB8FF51CB3AEEF00C6DB94 /* capture_ring.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FF31CB3AEEF00C6DB94 /* capture_ring.png */; };
-		C6BB8FF91CB4585C00C6DB94 /* capture_recording_fill.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FF71CB4585C00C6DB94 /* capture_recording_fill.png */; };
-		C6BB8FFC1CB458B100C6DB94 /* capture_fill.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FFA1CB458B100C6DB94 /* capture_fill.png */; };
-		C6BB8FFF1CB459B300C6DB94 /* capture_recording.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BB8FFE1CB459B300C6DB94 /* capture_recording.png */; };
 		C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB90061CB590A200C6DB94 /* FeedCell.swift */; };
 		C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BB90071CB590A200C6DB94 /* FeedCell.xib */; };
 		C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */; };
 		C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */; };
 		C6BB900F1CB6345300C6DB94 /* CancelPreviewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */; };
 		C6BB90111CB63ABE00C6DB94 /* PreviewNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */; };
-		C6BE95A11CB1E7F500E4F067 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A01CB1E7F500E4F067 /* x.png */; };
-		C6BE95A31CB1EAD900E4F067 /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A21CB1EAD900E4F067 /* send.png */; };
-		C6BE95A51CB1EC5200E4F067 /* capture.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A41CB1EC5200E4F067 /* capture.png */; };
 		C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */; };
 		C6BE95A91CB1ED0800E4F067 /* MoviePreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */; };
-		C6BE95AB1CB2477A00E4F067 /* progressbar.png in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95AA1CB2477A00E4F067 /* progressbar.png */; };
 		C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CCEF591C9DBD7500D8DF0F /* API.swift */; };
+		C6FBE73C1CBA3ACD00986B2A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */; };
+		C6FC53A61CB89F02009080A2 /* AddContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */; };
+		C6FC53A91CB89FA5009080A2 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FC53A71CB89FA5009080A2 /* ContactCell.swift */; };
+		C6FC53AA1CB89FA5009080A2 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53A81CB89FA5009080A2 /* ContactCell.xib */; };
+		C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */; };
+		C6FC53B21CB8F953009080A2 /* retweet.svg in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53B11CB8F953009080A2 /* retweet.svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,16 +67,20 @@
 /* Begin PBXFileReference section */
 		14F63581D348DC3BFE1E2897 /* Pods_Loopy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Loopy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512549D5C1058CBEE3D6B822 /* Pods-Loopy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Loopy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Loopy/Pods-Loopy.debug.xcconfig"; sourceTree = "<group>"; };
+		C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy2.xcdatamodel; sourceTree = "<group>"; };
 		C63F6FE51CB656DB00D5DE3E /* next_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next_button.png; sourceTree = "<group>"; };
 		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginSignup.storyboard; sourceTree = "<group>"; };
 		C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopyLandingViewController.swift; sourceTree = "<group>"; };
 		C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		C63F6FEF1CB75F1E00D5DE3E /* text_insecure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text_insecure.png; sourceTree = "<group>"; };
-		C63F6FF01CB75F1E00D5DE3E /* text_secure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text_secure.png; sourceTree = "<group>"; };
+		C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhoneViewController.swift; sourceTree = "<group>"; };
+		C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneViewController.swift; sourceTree = "<group>"; };
+		C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
+		C6583B271CB9787200E3B242 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		C671F4501CBA53E800400963 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		C67370E41C9D2D1800B2B8C1 /* Loopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C67370E91C9D2D1800B2B8C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		C67370EC1C9D2D1800B2B8C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C67370EF1C9D2D1800B2B8C1 /* Loopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy.xcdatamodel; sourceTree = "<group>"; };
 		C67370F11C9D2D1800B2B8C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,24 +96,21 @@
 		C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CaptureView.xib; sourceTree = "<group>"; };
 		C67DBB7D1C9FAD470082CB56 /* FeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C67DBB7E1C9FAD470082CB56 /* FeedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedView.xib; sourceTree = "<group>"; };
-		C6BB8FF01CB39E9A00C6DB94 /* timer_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = timer_bar.png; path = "../../../Documents/Art ideas/Design/UXUI/Loopy/timer_bar.png"; sourceTree = "<group>"; };
-		C6BB8FF31CB3AEEF00C6DB94 /* capture_ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = capture_ring.png; path = "../../../Documents/Art ideas/Design/UXUI/Loopy/capture_ring.png"; sourceTree = "<group>"; };
-		C6BB8FF71CB4585C00C6DB94 /* capture_recording_fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = capture_recording_fill.png; path = "../../../Documents/Art ideas/Design/UXUI/Loopy/capture_recording_fill.png"; sourceTree = "<group>"; };
-		C6BB8FFA1CB458B100C6DB94 /* capture_fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture_fill.png; sourceTree = "<group>"; };
-		C6BB8FFE1CB459B300C6DB94 /* capture_recording.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture_recording.png; sourceTree = "<group>"; };
 		C6BB90061CB590A200C6DB94 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		C6BB90071CB590A200C6DB94 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCell.xib; sourceTree = "<group>"; };
 		C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureButtonView.swift; sourceTree = "<group>"; };
 		C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerBarView.swift; sourceTree = "<group>"; };
 		C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelPreviewButton.swift; sourceTree = "<group>"; };
 		C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewNextButton.swift; sourceTree = "<group>"; };
-		C6BE95A01CB1E7F500E4F067 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
-		C6BE95A21CB1EAD900E4F067 /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = send.png; path = "../../../Documents/Art ideas/Design/UXUI/send.png"; sourceTree = "<group>"; };
-		C6BE95A41CB1EC5200E4F067 /* capture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = capture.png; path = "../../../Documents/Art ideas/Design/UXUI/capture.png"; sourceTree = "<group>"; };
 		C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePreviewViewController.swift; sourceTree = "<group>"; };
 		C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoviePreviewView.xib; sourceTree = "<group>"; };
-		C6BE95AA1CB2477A00E4F067 /* progressbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = progressbar.png; path = "../../../Documents/Art ideas/Design/UXUI/progressbar.png"; sourceTree = "<group>"; };
 		C6CCEF591C9DBD7500D8DF0F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactsViewController.xib; sourceTree = "<group>"; };
+		C6FC53A71CB89FA5009080A2 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		C6FC53A81CB89FA5009080A2 /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactsViewController.swift; sourceTree = "<group>"; };
+		C6FC53B11CB8F953009080A2 /* retweet.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = retweet.svg; sourceTree = "<group>"; };
 		F2D897E5F5CB810EE37056A5 /* Pods-Loopy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Loopy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Loopy/Pods-Loopy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,28 +183,17 @@
 			isa = PBXGroup;
 			children = (
 				C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */,
-				C67370E91C9D2D1800B2B8C1 /* ViewController.swift */,
+				C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */,
 				C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */,
 				C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */,
 				C67370F11C9D2D1800B2B8C1 /* Assets.xcassets */,
-				C6BE95A01CB1E7F500E4F067 /* x.png */,
-				C6BB8FF01CB39E9A00C6DB94 /* timer_bar.png */,
-				C6BB8FF31CB3AEEF00C6DB94 /* capture_ring.png */,
-				C6BE95AA1CB2477A00E4F067 /* progressbar.png */,
-				C63F6FEF1CB75F1E00D5DE3E /* text_insecure.png */,
-				C63F6FF01CB75F1E00D5DE3E /* text_secure.png */,
 				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
 				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
 				C67370F31C9D2D1800B2B8C1 /* LaunchScreen.storyboard */,
 				C67370F61C9D2D1800B2B8C1 /* Info.plist */,
 				C67370EE1C9D2D1800B2B8C1 /* Loopy.xcdatamodeld */,
-				C6BB8FFA1CB458B100C6DB94 /* capture_fill.png */,
-				C6BB8FF71CB4585C00C6DB94 /* capture_recording_fill.png */,
-				C6BB8FFE1CB459B300C6DB94 /* capture_recording.png */,
 				C6CCEF591C9DBD7500D8DF0F /* API.swift */,
 				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
-				C6BE95A41CB1EC5200E4F067 /* capture.png */,
-				C6BE95A21CB1EAD900E4F067 /* send.png */,
 				C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */,
 				C63F6FE51CB656DB00D5DE3E /* next_button.png */,
 				C67DBB7D1C9FAD470082CB56 /* FeedView.swift */,
@@ -217,6 +207,17 @@
 				C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */,
 				C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */,
 				C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */,
+				C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */,
+				C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */,
+				C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */,
+				C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */,
+				C6FC53B11CB8F953009080A2 /* retweet.svg */,
+				C6FC53A71CB89FA5009080A2 /* ContactCell.swift */,
+				C6FC53A81CB89FA5009080A2 /* ContactCell.xib */,
+				C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */,
+				C6583B271CB9787200E3B242 /* GradientView.swift */,
+				C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */,
+				C671F4501CBA53E800400963 /* ClassExtensions.swift */,
 			);
 			path = Loopy;
 			sourceTree = "<group>";
@@ -347,25 +348,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6BE95A11CB1E7F500E4F067 /* x.png in Resources */,
-				C63F6FF21CB75F1E00D5DE3E /* text_secure.png in Resources */,
 				C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */,
 				C67DBB801C9FAD470082CB56 /* FeedView.xib in Resources */,
-				C6BB8FF11CB39E9A00C6DB94 /* timer_bar.png in Resources */,
+				C6FC53A61CB89F02009080A2 /* AddContactsViewController.xib in Resources */,
 				C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */,
-				C6BE95A51CB1EC5200E4F067 /* capture.png in Resources */,
-				C6BB8FF51CB3AEEF00C6DB94 /* capture_ring.png in Resources */,
-				C6BB8FF91CB4585C00C6DB94 /* capture_recording_fill.png in Resources */,
 				C67370F51C9D2D1800B2B8C1 /* LaunchScreen.storyboard in Resources */,
 				C6BE95A91CB1ED0800E4F067 /* MoviePreviewView.xib in Resources */,
-				C6BE95A31CB1EAD900E4F067 /* send.png in Resources */,
-				C6BB8FFF1CB459B300C6DB94 /* capture_recording.png in Resources */,
+				C6FC53B21CB8F953009080A2 /* retweet.svg in Resources */,
 				C67370F21C9D2D1800B2B8C1 /* Assets.xcassets in Resources */,
 				C67370ED1C9D2D1800B2B8C1 /* Main.storyboard in Resources */,
-				C63F6FF11CB75F1E00D5DE3E /* text_insecure.png in Resources */,
 				C63F6FE61CB656DB00D5DE3E /* next_button.png in Resources */,
-				C6BB8FFC1CB458B100C6DB94 /* capture_fill.png in Resources */,
-				C6BE95AB1CB2477A00E4F067 /* progressbar.png in Resources */,
+				C6FC53AA1CB89FA5009080A2 /* ContactCell.xib in Resources */,
 				C67DBB7C1C9FAAA70082CB56 /* CaptureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,14 +437,22 @@
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
 				C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */,
 				C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */,
-				C67370EA1C9D2D1800B2B8C1 /* ViewController.swift in Sources */,
+				C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */,
+				C67370EA1C9D2D1800B2B8C1 /* MasterViewController.swift in Sources */,
+				C6FC53A91CB89FA5009080A2 /* ContactCell.swift in Sources */,
+				C63F6FF61CB7708700D5DE3E /* VerifyPhoneViewController.swift in Sources */,
+				C671F4511CBA53E800400963 /* ClassExtensions.swift in Sources */,
 				C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */,
 				C6BB90111CB63ABE00C6DB94 /* PreviewNextButton.swift in Sources */,
+				C6583B281CB9787200E3B242 /* GradientView.swift in Sources */,
 				C63F6FEC1CB7395000D5DE3E /* LoopyLandingViewController.swift in Sources */,
+				C63F6FF41CB76E6800D5DE3E /* AddPhoneViewController.swift in Sources */,
 				C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */,
 				C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */,
 				C67DBB7F1C9FAD470082CB56 /* FeedView.swift in Sources */,
+				C6FBE73C1CBA3ACD00986B2A /* RoundedButton.swift in Sources */,
 				C63F6FEE1CB75BD400D5DE3E /* SignupViewController.swift in Sources */,
+				C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */,
 				C63F6FEA1CB72DEC00D5DE3E /* LoginViewController.swift in Sources */,
 				C67DBB7B1C9FAAA70082CB56 /* CaptureViewController.swift in Sources */,
 			);
@@ -716,9 +717,10 @@
 		C67370EE1C9D2D1800B2B8C1 /* Loopy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */,
 				C67370EF1C9D2D1800B2B8C1 /* Loopy.xcdatamodel */,
 			);
-			currentVersion = C67370EF1C9D2D1800B2B8C1 /* Loopy.xcdatamodel */;
+			currentVersion = C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */;
 			path = Loopy.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

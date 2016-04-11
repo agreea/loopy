@@ -11,37 +11,66 @@ import SwiftyJSON
 import Alamofire
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
-
-    @IBOutlet weak var revealPasswordButton: NSLayoutConstraint!
     
+    @IBOutlet weak var revealPasswordButton: UIButton!
     @IBOutlet weak var passwordField: UITextField!
-    var username: String?
-    var password: String?
-    
+    @IBOutlet weak var usernameField: UITextField!
+    var registered = false
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordField.delegate = self
+        usernameField.addTarget(self, action: #selector(SignupViewController.usernameFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        setupBackground()
+    }
+    
+    func usernameFieldDidChange(textField: UITextField) {
+        if isUserNameDirty(){
+            print("found a bad character")
+            setUsernamefieldError()
+        } else {
+            setUsernamefieldOkay()
+        }
+    }
+    private func setUsernamefieldError() {
+        // initial flash
+        // drop down to a dull red
+        // reveal username error text
+    }
+    
+    private func setUsernamefieldOkay() {
+        // drop down to white
+    }
+    private func setupBackground() {
+        view.backgroundColor = UIColor.clearColor()
+        let gl = CAGradientLayer()
+        gl.colors = [UIColor(netHex: 0x29FC1E).CGColor, UIColor(netHex: 0x006D4C).CGColor]
+        gl.locations = [ 0.0, 1.0]
+        let backgroundLayer = gl
+        backgroundLayer.frame = view.frame
+        view.layer.insertSublayer(backgroundLayer, atIndex: 0)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+
     }
-    
+    // toggle secure text entry on the password field 
+    // and change the image in the reveal password button
     @IBAction func didPressRevealPassword(sender: AnyObject) {
         passwordField.secureTextEntry =
             !passwordField.secureTextEntry
+        let imageFile = passwordField.secureTextEntry ? "PasswordSecure" : "PasswordRevealed"
+        revealPasswordButton.setImage(UIImage(named: imageFile), forState: UIControlState.Normal)
     }
-    func usernameDidChange(textField: UITextField) {
-        username = textField.text
-    }
-
-    func passwordDidChange(textField: UITextField) {
-        password = textField.text
-    }
-
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         self.view.endEditing(true)
         // attempt to log in
@@ -54,22 +83,31 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func attemptRegister() {
-        var canRegister = true
-        if username == nil || username!.characters.count == 0 {
-            showUsernameMissing()
-            canRegister = false
-        }
-        if password == nil || password!.characters.count == 0 {
+        if passwordField!.text!.characters.count == 0 {
             showPasswordMissing()
-            canRegister = false
+            return
         }
-        if canRegister {
-            register()
+        if usernameField!.text!.characters.count == 0 {
+            showUsernameMissing()
+            return
+        } else if isUserNameDirty() {
+            showUsernameDirty()
+            return
         }
+        register()
+    }
+    
+    private func isUserNameDirty() -> Bool {
+        let username = usernameField!.text!
+        return username.containsEmoji || username.containsRegex("\\W")
     }
     
     private func showUsernameMissing() {
         print("username missing")
+    }
+    
+    private func showUsernameDirty() {
+        print("username dirty")
     }
     
     private func showPasswordMissing() {
@@ -77,10 +115,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func register() {
+        print("registering")
         let parameters = [
             "method": "Create",
-            "username": username!,
-            "password": password!
+            "username": usernameField!.text!,
+            "password": passwordField!.text!
         ]
         Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
             parameters: parameters)
@@ -103,6 +142,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 let userId = json["Return"]["Id"].int,
                 let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                 if appDelegate.saveUserData(userId, session: session, username: username) {
+                    registered = true
                     performSegueWithIdentifier("RegisterComplete", sender: nil)
                 } else {
                     showErrorMessage("Could not register user.")
@@ -113,10 +153,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+    override func shouldPerformSegueWithIdentifier(identifier: String,sender: AnyObject?) -> Bool {
+        return registered
+    }
     private func showErrorMessage(message: String) {
         
     }
+    
     /*
     // MARK: - Navigation
 
@@ -126,5 +169,4 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

@@ -12,6 +12,7 @@ import SwiftyJSON
 import Kingfisher
 import MobileCoreServices
 import CoreData
+import AVFoundation
 
 struct FeedItem {
     let Id: Int?
@@ -21,30 +22,24 @@ struct FeedItem {
     let Timestamp: String?
 }
 
-extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int, a: Float) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: CGFloat(a))
-    }
-    
-    convenience init(netHex:Int) {
-        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff, a: 1.0)
-    }
-    convenience init(netHex:Int, alpha: Float) {
-        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff, a: alpha)
-    }
-}
 class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // function: view:
     var feedData = [FeedItem]()
 
     var refreshControl: UIRefreshControl!
     var id: Int?
+    var videoLoadOperations = [String : NSBlockOperation]()
+    lazy var videoLoadQueue:NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Download queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
     var coreDataDelegate: CoreDataDelegate?
     @IBOutlet weak var imageCopiedAlert: UILabel!
     @IBOutlet weak var feedView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +110,6 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let feedItem = constructFeedItemFromJSON(jsonItem)
             feedData.append(feedItem)
         }
-        print("\(feedData)")
     }
     
     private func constructFeedItemFromJSON(json: JSON) -> FeedItem {
@@ -136,7 +130,7 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return feedData.count
     }
 
-    
+    // download gif, copy it to clipboard
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         feedView.deselectRowAtIndexPath(indexPath, animated: true)
         let feedItem = feedData[indexPath.row]
@@ -150,11 +144,13 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // to load the GIF to the clipboard
     func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
             completion(data: data, response: response, error: error)
             }.resume()
     }
+    
     func showImageCopying() {
         imageCopiedAlert.text = "Copying gif to clipboard..."
         imageCopiedAlert.backgroundColor = UIColor(netHex: 0xDB8EFF)
@@ -185,12 +181,40 @@ class FeedView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = feedView.dequeueReusableCellWithIdentifier("feedCell") as! FeedCell
         print("got cell")
-        
         let feedItem = self.feedData[indexPath.row]
         if id != nil {
+//            let loadVideoOp = NSBlockOperation()
+//            weak var weakOp = loadVideoOp
+//            loadVideoOp.addExecutionBlock({
+//                if (weakOp != nil && !weakOp!.cancelled) {
+//                    print("\(feedItem.Uuid!) NOT cancelled")
+//                    cell.setGif(feedItem.Uuid!)
+//                } else {
+//                    print("\(feedItem.Uuid!) cancelled")
+//                }
+//            })
+//            videoLoadOperations[feedItem.Uuid!] = loadVideoOp
+//            videoLoadQueue.addOperation(loadVideoOp)
             cell.loadItem(feedItem, userId: id!)
+//            cell.player?.pause()
         }
         return cell
     }
-
+    
+    func tableView(tableView: UITableView,
+                   didEndDisplayingCell cell: UITableViewCell,
+                   forRowAtIndexPath indexPath: NSIndexPath) {
+        let feedItem = feedData[indexPath.row]
+        let feedCell = cell as! FeedCell
+        feedCell.gifPreview.kf_cancelDownloadTask()
+        
+    //Fetch operation that doesn't need executing anymore
+//        let ongoingVideoLoadOperation = videoLoadOperations[feedItem.Uuid!]
+//        if (ongoingVideoLoadOperation != nil) {
+//        //Cancel operation and remove from dictionary
+//            ongoingVideoLoadOperation!.cancel()
+//            videoLoadOperations.removeValueForKey(feedItem.Uuid!)
+//            print("\(feedItem.Uuid) removed")
+//        }
+    }
 }

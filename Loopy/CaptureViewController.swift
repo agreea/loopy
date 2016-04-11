@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Proposer
 
 protocol CaptureModeDelegate {
     func previewModeDidStart(movieURL: NSURL)
@@ -25,6 +26,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     var captureModeDelegate: CaptureModeDelegate?
     var recordingCompleteCenterX: NSLayoutConstraint?
     var recording = false
+    var authorized = false
+    
     @IBOutlet weak var timeBar: UIView!
     @IBOutlet weak var timeBarCenterX: NSLayoutConstraint!
     @IBOutlet weak var cameraView: UIView!
@@ -43,17 +46,30 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        previewLayer!.frame = cameraView.bounds
-        print("viewBounds in didAppear: \(self.view.bounds.width)")
-        resetRecordInterface()
+        if authorized {
+            previewLayer!.frame = cameraView.bounds
+            print("viewBounds in didAppear: \(self.view.bounds.width)")
+            resetRecordInterface()
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         recordingCompleteCenterX = timeBarCenterX
         print("viewBounds in willAppear: \(self.view.bounds.width)")
-        initCapturePreview()
         timeBar.alpha = 0.0
+        checkCameraAccess()
+    }
+    
+    private func checkCameraAccess() {
+        let camera: PrivateResource = .Camera
+        proposeToAccess(camera, agreed: {
+            self.authorized = true
+            self.initCapturePreview()
+        }, rejected: {
+            print("Shut down")
+            AppDelegate.getAppDelegate().showSettingsAlert("Can't Access Camera", message: "Allow Loopy to access your camera in Settings.")
+        })
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -68,11 +84,12 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             timeBarCenterX.constant = recordingCompleteCenterX!.constant - self.view.bounds.width
         }
         print("reset centerX: \(timeBarCenterX!.constant)")
-        timeBar.alpha = 1.0
+        timeBar.hidden = true
         recordButton.recordingMode = false
         recordButton.setNeedsDisplay()
         self.view.layoutIfNeeded()
     }
+    
     
     private func initCapturePreview() {
         captureSession = AVCaptureSession()
@@ -132,6 +149,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func startRecordInterface() {
         recordButton.recordingMode = true
         recordButton.setNeedsDisplay()
+        timeBar.hidden = false
         UIView.animateWithDuration(6, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
             self.timeBarCenterX.constant = 0
             self.view.layoutIfNeeded()

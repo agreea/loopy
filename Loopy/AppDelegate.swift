@@ -8,43 +8,50 @@
 
 import UIKit
 import CoreData
+import Contacts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let contactStore = CNContactStore()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // check that the user has a session
         // if not, launch the login storyboard
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: "User_data")
-        do {
-            let results =
-                try managedContext.executeFetchRequest(fetchRequest)
-            // check that the data model exists,
-            if let userCredentials = results as? [NSManagedObject] {
-                // that it has an entry
-                if userCredentials.count > 0 {
-                    // and that the entry has a session key
-                    if let _ = userCredentials[0].valueForKey("session") as? String {
-                        // start the default story board
-                        return true
-                    }
-                }
-            }
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
+//        let appDelegate =
+//            UIApplication.sharedApplication().delegate as! AppDelegate
+//        let managedContext = appDelegate.managedObjectContext
+//        let fetchRequest = NSFetchRequest(entityName: "User_data")
+//        do {
+//            let results =
+//                try managedContext.executeFetchRequest(fetchRequest)
+//            // check that the data model exists,
+//            if let userCredentials = results as? [NSManagedObject] {
+//                // that it has an entry
+//                if userCredentials.count > 0 {
+//                    // and that the entry has a session key
+//                    if let _ = userCredentials[0].valueForKey("session") as? String {
+//                        // start the default story board
+//                        return true
+//                    }
+//                }
+//            }
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
         
         // otherwise launch the splash scene
+        launchLoginSignup()
+        return true
+    }
+    private func launchLoginSignup() {
         let loginSignup = UIStoryboard(name: "LoginSignup", bundle: nil)
         let loginNavigationController = loginSignup.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
+        let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
+        contactViewController.enterFromSetup = true
         self.window!.rootViewController = loginNavigationController
-        return true
+        loginNavigationController.showViewController(contactViewController, sender: nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -92,7 +99,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                            NSInferMappingModelAutomaticallyOption: true]
+
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -134,15 +144,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // fetch user data
     func saveUserData(userId: Int, session: String, username: String) -> Bool {
         let managedContext = self.managedObjectContext
         let entity =  NSEntityDescription.entityForName("User_data",
                                                         inManagedObjectContext:managedContext)
-        let userData = NSManagedObject(entity: entity!,
-                                       insertIntoManagedObjectContext: managedContext)
-        userData.setValue(username, forKey: "username")
-        userData.setValue(session, forKey: "session")
-        userData.setValue(userId, forKey: "id")
+        var userData = getUserData()
+        if userData == nil {
+            userData = NSManagedObject(entity: entity!,
+                                           insertIntoManagedObjectContext: managedContext)
+        }
+        userData!.setValue(username, forKey: "username")
+        userData!.setValue(session, forKey: "session")
+        userData!.setValue(userId, forKey: "id")
         do {
             try managedContext.save()
             print("Saved user data")
@@ -153,5 +167,137 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
+    // CoreDataDelegateMethods
+    func getUserId() -> Int? {
+        if let userData = getUserData() {
+            return userData.valueForKey("id") as? Int
+        }
+        return nil
+    }
+    
+    func getSession() -> String? {
+        if let userData = getUserData() {
+            return userData.valueForKey("session") as? String
+        }
+        return nil
+    }
+    
+    func getUsername() -> String? {
+        if let userData = getUserData() {
+            return userData.valueForKey("username") as? String
+        }
+        return nil
+    }
+
+    func setPhoneVerified() -> Bool {
+        let managedContext = self.managedObjectContext
+        if let userData = getUserData() {
+            userData.setValue(true, forKey: "verified_phone")
+            do {
+                try managedContext.save()
+                print("Saved user data")
+                return true
+            } catch let error as NSError  {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+        }
+        return false
+    }
+    
+    private func getUserData() -> NSManagedObject? {
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "User_data")
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            if let userCredentials = results as? [NSManagedObject],
+                let userData = userCredentials.first {
+                return userData
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        return nil
+    }
+    
+    func showMessage(message: String) {
+        let alertController = UIAlertController(title: "Loopy", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let dismissAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+            
+        }
+        
+        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
+        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        
+        presentedViewController.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func requestForContactsAccess(completionHandler: (accessGranted: Bool) -> Void) {
+        let authorizationStatus = CNContactStore.authorizationStatusForEntityType(CNEntityType.Contacts)
+        
+        switch authorizationStatus {
+        case .Authorized:
+            completionHandler(accessGranted: true)
+            
+        case .Denied, .NotDetermined:
+            self.contactStore.requestAccessForEntityType(CNEntityType.Contacts, completionHandler: { (access, accessError) -> Void in
+                if access {
+                    completionHandler(accessGranted: access)
+                }
+                else {
+                    if authorizationStatus == CNAuthorizationStatus.Denied {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                            self.showMessage(message)
+                        })
+                    }
+                }
+            })
+            
+        default:
+            completionHandler(accessGranted: false)
+        }
+    }
+    
+    func getAllContacts() -> [CNContact] {
+        var contacts = [CNContact]()
+        let fetchReq = CNContactFetchRequest(keysToFetch: [
+            CNContactGivenNameKey,
+            CNContactFamilyNameKey,
+            CNContactPhoneNumbersKey])
+        do {
+            try self.contactStore.enumerateContactsWithFetchRequest(fetchReq) { (contact, unsafePointer) in
+                contacts.append(contact)
+            }
+        } catch {
+            print("Error fetching results for container")
+        }
+        return contacts
+    }
+    
+    func showError(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showSettingsAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { action in
+            print("default")
+            if let url = NSURL(string: UIApplicationOpenSettingsURLString){
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }))
+        self.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    class func getAppDelegate() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+    }
 }
 

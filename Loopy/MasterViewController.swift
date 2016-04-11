@@ -18,7 +18,7 @@ protocol CoreDataDelegate {
         func getUserId() -> Int?
         func getUsername() -> String?
 }
-class ViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, CaptureModeDelegate, CoreDataDelegate {
+class MasterViewController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, CaptureModeDelegate, CoreDataDelegate {
     
     @IBOutlet weak var scrollWindow: UIScrollView!
     var moviePreviewController: MoviePreviewViewController?

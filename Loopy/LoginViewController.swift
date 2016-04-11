@@ -46,7 +46,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     // called only by the password textField
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
+    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         self.view.endEditing(true)
         // attempt to log in
@@ -123,7 +123,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         print("Launching main story board")
         // otherwise launch the splash scene
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let masterViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MasterViewController") as! ViewController
+        let masterViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MasterViewController") as! MasterViewController
         let appDelegate =
             UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.window!.rootViewController = masterViewController
