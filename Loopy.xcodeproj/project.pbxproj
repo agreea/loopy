@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		943149000C7F89059B16F8C1 /* Pods_Loopy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F63581D348DC3BFE1E2897 /* Pods_Loopy.framework */; };
+		C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */; };
+		C63EC0C71CBE326900ACE7E4 /* MyLoopsUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */; };
 		C63F6FE61CB656DB00D5DE3E /* next_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FE51CB656DB00D5DE3E /* next_button.png */; };
 		C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */; };
 		C63F6FEA1CB72DEC00D5DE3E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */; };
@@ -17,6 +19,9 @@
 		C63F6FF61CB7708700D5DE3E /* VerifyPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */; };
 		C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */; };
 		C6583B281CB9787200E3B242 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6583B271CB9787200E3B242 /* GradientView.swift */; };
+		C66EF52B1CBDED1F004C26A8 /* FeedCellMyPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66EF5291CBDED1F004C26A8 /* FeedCellMyPost.swift */; };
+		C66EF52C1CBDED1F004C26A8 /* FeedCellMyPost.xib in Resources */ = {isa = PBXBuildFile; fileRef = C66EF52A1CBDED1F004C26A8 /* FeedCellMyPost.xib */; };
+		C66EF52F1CBE00A3004C26A8 /* MyLoopsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66EF52D1CBE00A3004C26A8 /* MyLoopsViewController.swift */; };
 		C671F4511CBA53E800400963 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C671F4501CBA53E800400963 /* ClassExtensions.swift */; };
 		C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */; };
 		C67370EA1C9D2D1800B2B8C1 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */; };
@@ -27,9 +32,8 @@
 		C67371001C9D2D1800B2B8C1 /* LoopyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67370FF1C9D2D1800B2B8C1 /* LoopyTests.swift */; };
 		C673710B1C9D2D1800B2B8C1 /* LoopyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C673710A1C9D2D1800B2B8C1 /* LoopyUITests.swift */; };
 		C67DBB7B1C9FAAA70082CB56 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */; };
-		C67DBB7C1C9FAAA70082CB56 /* CaptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */; };
-		C67DBB7F1C9FAD470082CB56 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67DBB7D1C9FAD470082CB56 /* FeedView.swift */; };
-		C67DBB801C9FAD470082CB56 /* FeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67DBB7E1C9FAD470082CB56 /* FeedView.xib */; };
+		C67DBB7C1C9FAAA70082CB56 /* CaptureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67DBB7A1C9FAAA70082CB56 /* CaptureViewController.xib */; };
+		C67DBB7F1C9FAD470082CB56 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67DBB7D1C9FAD470082CB56 /* FeedViewController.swift */; };
 		C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB90061CB590A200C6DB94 /* FeedCell.swift */; };
 		C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BB90071CB590A200C6DB94 /* FeedCell.xib */; };
 		C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */; };
@@ -39,10 +43,13 @@
 		C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */; };
 		C6BE95A91CB1ED0800E4F067 /* MoviePreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */; };
 		C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CCEF591C9DBD7500D8DF0F /* API.swift */; };
+		C6FBCE191CBCBAA800DD65D4 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FBCE181CBCBAA800DD65D4 /* Contact.swift */; };
+		C6FBCE1B1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FBCE1A1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift */; };
+		C6FBCE1D1CBCBB2B00DD65D4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FBCE1C1CBCBB2B00DD65D4 /* ContactCell.swift */; };
+		C6FBCE1F1CBD6AB200DD65D4 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FBCE1E1CBD6AB200DD65D4 /* FeedViewController.xib */; };
 		C6FBE73C1CBA3ACD00986B2A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */; };
 		C6FC53A61CB89F02009080A2 /* AddContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */; };
-		C6FC53A91CB89FA5009080A2 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FC53A71CB89FA5009080A2 /* ContactCell.swift */; };
-		C6FC53AA1CB89FA5009080A2 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53A81CB89FA5009080A2 /* ContactCell.xib */; };
+		C6FC53A91CB89FA5009080A2 /* ContactCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = C6FC53A71CB89FA5009080A2 /* ContactCell.xib */; };
 		C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */; };
 		C6FC53B21CB8F953009080A2 /* retweet.svg in Resources */ = {isa = PBXBuildFile; fileRef = C6FC53B11CB8F953009080A2 /* retweet.svg */; };
 /* End PBXBuildFile section */
@@ -68,19 +75,24 @@
 		14F63581D348DC3BFE1E2897 /* Pods_Loopy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Loopy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512549D5C1058CBEE3D6B822 /* Pods-Loopy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Loopy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Loopy/Pods-Loopy.debug.xcconfig"; sourceTree = "<group>"; };
 		C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy2.xcdatamodel; sourceTree = "<group>"; };
+		C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyLoopsUserCell.swift; path = Main/MyLoopsUserCell.swift; sourceTree = "<group>"; };
+		C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyLoopsUserCell.xib; path = Main/MyLoopsUserCell.xib; sourceTree = "<group>"; };
 		C63F6FE51CB656DB00D5DE3E /* next_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next_button.png; sourceTree = "<group>"; };
-		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginSignup.storyboard; sourceTree = "<group>"; };
-		C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopyLandingViewController.swift; sourceTree = "<group>"; };
-		C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhoneViewController.swift; sourceTree = "<group>"; };
-		C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneViewController.swift; sourceTree = "<group>"; };
-		C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
+		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginSignup.storyboard; path = Landing/LoginSignup.storyboard; sourceTree = "<group>"; };
+		C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Landing/LoginViewController.swift; sourceTree = "<group>"; };
+		C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoopyLandingViewController.swift; path = Landing/LoopyLandingViewController.swift; sourceTree = "<group>"; };
+		C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignupViewController.swift; path = Landing/SignupViewController.swift; sourceTree = "<group>"; };
+		C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPhoneViewController.swift; path = Landing/AddPhoneViewController.swift; sourceTree = "<group>"; };
+		C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyPhoneViewController.swift; path = Landing/VerifyPhoneViewController.swift; sourceTree = "<group>"; };
+		C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FindFriendsViewController.swift; path = Landing/FindFriendsViewController.swift; sourceTree = "<group>"; };
 		C6583B271CB9787200E3B242 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		C66EF5291CBDED1F004C26A8 /* FeedCellMyPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedCellMyPost.swift; path = Main/FeedCellMyPost.swift; sourceTree = "<group>"; };
+		C66EF52A1CBDED1F004C26A8 /* FeedCellMyPost.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedCellMyPost.xib; path = Main/FeedCellMyPost.xib; sourceTree = "<group>"; };
+		C66EF52D1CBE00A3004C26A8 /* MyLoopsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyLoopsViewController.swift; path = Main/MyLoopsViewController.swift; sourceTree = "<group>"; };
 		C671F4501CBA53E800400963 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		C67370E41C9D2D1800B2B8C1 /* Loopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterViewController.swift; path = Main/MasterViewController.swift; sourceTree = "<group>"; };
 		C67370EC1C9D2D1800B2B8C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C67370EF1C9D2D1800B2B8C1 /* Loopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy.xcdatamodel; sourceTree = "<group>"; };
 		C67370F11C9D2D1800B2B8C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,24 +104,26 @@
 		C67371061C9D2D1800B2B8C1 /* LoopyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoopyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C673710A1C9D2D1800B2B8C1 /* LoopyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopyUITests.swift; sourceTree = "<group>"; };
 		C673710C1C9D2D1800B2B8C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
-		C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CaptureView.xib; sourceTree = "<group>"; };
-		C67DBB7D1C9FAD470082CB56 /* FeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
-		C67DBB7E1C9FAD470082CB56 /* FeedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedView.xib; sourceTree = "<group>"; };
-		C6BB90061CB590A200C6DB94 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
-		C6BB90071CB590A200C6DB94 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCell.xib; sourceTree = "<group>"; };
-		C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureButtonView.swift; sourceTree = "<group>"; };
-		C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerBarView.swift; sourceTree = "<group>"; };
-		C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelPreviewButton.swift; sourceTree = "<group>"; };
-		C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewNextButton.swift; sourceTree = "<group>"; };
-		C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePreviewViewController.swift; sourceTree = "<group>"; };
-		C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoviePreviewView.xib; sourceTree = "<group>"; };
+		C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaptureViewController.swift; path = Main/CaptureViewController.swift; sourceTree = "<group>"; };
+		C67DBB7A1C9FAAA70082CB56 /* CaptureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CaptureViewController.xib; path = Main/CaptureViewController.xib; sourceTree = "<group>"; };
+		C67DBB7D1C9FAD470082CB56 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = Main/FeedViewController.swift; sourceTree = "<group>"; };
+		C6BB90061CB590A200C6DB94 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedCell.swift; path = Main/FeedCell.swift; sourceTree = "<group>"; };
+		C6BB90071CB590A200C6DB94 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedCell.xib; path = Main/FeedCell.xib; sourceTree = "<group>"; };
+		C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaptureButtonView.swift; path = Main/CaptureButtonView.swift; sourceTree = "<group>"; };
+		C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerBarView.swift; path = Main/TimerBarView.swift; sourceTree = "<group>"; };
+		C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancelPreviewButton.swift; path = Main/CancelPreviewButton.swift; sourceTree = "<group>"; };
+		C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewNextButton.swift; path = Main/PreviewNextButton.swift; sourceTree = "<group>"; };
+		C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviePreviewViewController.swift; path = Main/MoviePreviewViewController.swift; sourceTree = "<group>"; };
+		C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MoviePreviewView.xib; path = Main/MoviePreviewView.xib; sourceTree = "<group>"; };
 		C6CCEF591C9DBD7500D8DF0F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C6FBCE181CBCBAA800DD65D4 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Main/Contact.swift; sourceTree = "<group>"; };
+		C6FBCE1A1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C6FBCE1C1CBCBB2B00DD65D4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCell.swift; path = Main/ContactCell.swift; sourceTree = "<group>"; };
+		C6FBCE1E1CBD6AB200DD65D4 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedViewController.xib; path = Main/FeedViewController.xib; sourceTree = "<group>"; };
 		C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
-		C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactsViewController.xib; sourceTree = "<group>"; };
-		C6FC53A71CB89FA5009080A2 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		C6FC53A81CB89FA5009080A2 /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
-		C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactsViewController.swift; sourceTree = "<group>"; };
+		C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddContactsViewController.xib; path = Main/AddContactsViewController.xib; sourceTree = "<group>"; };
+		C6FC53A71CB89FA5009080A2 /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactCell.xib; path = Main/ContactCell.xib; sourceTree = "<group>"; };
+		C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactsViewController.swift; path = Main/AddContactsViewController.swift; sourceTree = "<group>"; };
 		C6FC53B11CB8F953009080A2 /* retweet.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = retweet.svg; sourceTree = "<group>"; };
 		F2D897E5F5CB810EE37056A5 /* Pods-Loopy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Loopy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Loopy/Pods-Loopy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,39 +196,16 @@
 		C67370E61C9D2D1800B2B8C1 /* Loopy */ = {
 			isa = PBXGroup;
 			children = (
+				C6FBCE171CBCB8FE00DD65D4 /* Main */,
+				C6FBCE161CBCB7E600DD65D4 /* Landing */,
 				C67370E71C9D2D1800B2B8C1 /* AppDelegate.swift */,
-				C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */,
-				C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */,
-				C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */,
 				C67370F11C9D2D1800B2B8C1 /* Assets.xcassets */,
-				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
-				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
 				C67370F31C9D2D1800B2B8C1 /* LaunchScreen.storyboard */,
 				C67370F61C9D2D1800B2B8C1 /* Info.plist */,
 				C67370EE1C9D2D1800B2B8C1 /* Loopy.xcdatamodeld */,
 				C6CCEF591C9DBD7500D8DF0F /* API.swift */,
-				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
-				C67DBB7A1C9FAAA70082CB56 /* CaptureView.xib */,
 				C63F6FE51CB656DB00D5DE3E /* next_button.png */,
-				C67DBB7D1C9FAD470082CB56 /* FeedView.swift */,
-				C67DBB7E1C9FAD470082CB56 /* FeedView.xib */,
-				C6BB90061CB590A200C6DB94 /* FeedCell.swift */,
-				C6BB90071CB590A200C6DB94 /* FeedCell.xib */,
-				C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */,
-				C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */,
-				C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */,
-				C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */,
-				C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */,
-				C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */,
-				C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */,
-				C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */,
-				C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */,
-				C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */,
-				C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */,
 				C6FC53B11CB8F953009080A2 /* retweet.svg */,
-				C6FC53A71CB89FA5009080A2 /* ContactCell.swift */,
-				C6FC53A81CB89FA5009080A2 /* ContactCell.xib */,
-				C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */,
 				C6583B271CB9787200E3B242 /* GradientView.swift */,
 				C6FBE73B1CBA3ACD00986B2A /* RoundedButton.swift */,
 				C671F4501CBA53E800400963 /* ClassExtensions.swift */,
@@ -238,6 +229,52 @@
 				C673710C1C9D2D1800B2B8C1 /* Info.plist */,
 			);
 			path = LoopyUITests;
+			sourceTree = "<group>";
+		};
+		C6FBCE161CBCB7E600DD65D4 /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */,
+				C63F6FE91CB72DEC00D5DE3E /* LoginViewController.swift */,
+				C63F6FEB1CB7395000D5DE3E /* LoopyLandingViewController.swift */,
+				C63F6FED1CB75BD400D5DE3E /* SignupViewController.swift */,
+				C63F6FF51CB7708700D5DE3E /* VerifyPhoneViewController.swift */,
+				C63F6FF31CB76E6800D5DE3E /* AddPhoneViewController.swift */,
+				C63F6FF71CB7A4A200D5DE3E /* FindFriendsViewController.swift */,
+			);
+			name = Landing;
+			sourceTree = "<group>";
+		};
+		C6FBCE171CBCB8FE00DD65D4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */,
+				C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */,
+				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
+				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
+				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
+				C67DBB7A1C9FAAA70082CB56 /* CaptureViewController.xib */,
+				C67DBB7D1C9FAD470082CB56 /* FeedViewController.swift */,
+				C6FBCE1E1CBD6AB200DD65D4 /* FeedViewController.xib */,
+				C6BB90061CB590A200C6DB94 /* FeedCell.swift */,
+				C6BB90071CB590A200C6DB94 /* FeedCell.xib */,
+				C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */,
+				C6BB900C1CB627D700C6DB94 /* TimerBarView.swift */,
+				C6BB900E1CB6345300C6DB94 /* CancelPreviewButton.swift */,
+				C6BB90101CB63ABE00C6DB94 /* PreviewNextButton.swift */,
+				C6FBCE1C1CBCBB2B00DD65D4 /* ContactCell.swift */,
+				C6FC53A71CB89FA5009080A2 /* ContactCell.xib */,
+				C6FC53AB1CB89FFF009080A2 /* AddContactsViewController.swift */,
+				C6FC53A41CB89F02009080A2 /* AddContactsViewController.xib */,
+				C6FBCE181CBCBAA800DD65D4 /* Contact.swift */,
+				C6FBCE1A1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift */,
+				C66EF5291CBDED1F004C26A8 /* FeedCellMyPost.swift */,
+				C66EF52A1CBDED1F004C26A8 /* FeedCellMyPost.xib */,
+				C66EF52D1CBE00A3004C26A8 /* MyLoopsViewController.swift */,
+				C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */,
+				C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,17 +386,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */,
-				C67DBB801C9FAD470082CB56 /* FeedView.xib in Resources */,
 				C6FC53A61CB89F02009080A2 /* AddContactsViewController.xib in Resources */,
+				C63EC0C71CBE326900ACE7E4 /* MyLoopsUserCell.xib in Resources */,
 				C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */,
+				C66EF52C1CBDED1F004C26A8 /* FeedCellMyPost.xib in Resources */,
 				C67370F51C9D2D1800B2B8C1 /* LaunchScreen.storyboard in Resources */,
 				C6BE95A91CB1ED0800E4F067 /* MoviePreviewView.xib in Resources */,
 				C6FC53B21CB8F953009080A2 /* retweet.svg in Resources */,
 				C67370F21C9D2D1800B2B8C1 /* Assets.xcassets in Resources */,
 				C67370ED1C9D2D1800B2B8C1 /* Main.storyboard in Resources */,
+				C6FBCE1F1CBD6AB200DD65D4 /* FeedViewController.xib in Resources */,
 				C63F6FE61CB656DB00D5DE3E /* next_button.png in Resources */,
-				C6FC53AA1CB89FA5009080A2 /* ContactCell.xib in Resources */,
-				C67DBB7C1C9FAAA70082CB56 /* CaptureView.xib in Resources */,
+				C67DBB7C1C9FAAA70082CB56 /* CaptureViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C66EF52F1CBE00A3004C26A8 /* MyLoopsViewController.swift in Sources */,
 				C6BB900F1CB6345300C6DB94 /* CancelPreviewButton.swift in Sources */,
 				C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */,
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
@@ -439,18 +478,23 @@
 				C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */,
 				C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */,
 				C67370EA1C9D2D1800B2B8C1 /* MasterViewController.swift in Sources */,
-				C6FC53A91CB89FA5009080A2 /* ContactCell.swift in Sources */,
+				C6FC53A91CB89FA5009080A2 /* ContactCell.xib in Sources */,
+				C6FBCE1B1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift in Sources */,
 				C63F6FF61CB7708700D5DE3E /* VerifyPhoneViewController.swift in Sources */,
 				C671F4511CBA53E800400963 /* ClassExtensions.swift in Sources */,
 				C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */,
 				C6BB90111CB63ABE00C6DB94 /* PreviewNextButton.swift in Sources */,
+				C6FBCE191CBCBAA800DD65D4 /* Contact.swift in Sources */,
 				C6583B281CB9787200E3B242 /* GradientView.swift in Sources */,
 				C63F6FEC1CB7395000D5DE3E /* LoopyLandingViewController.swift in Sources */,
+				C6FBCE1D1CBCBB2B00DD65D4 /* ContactCell.swift in Sources */,
 				C63F6FF41CB76E6800D5DE3E /* AddPhoneViewController.swift in Sources */,
 				C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */,
 				C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */,
-				C67DBB7F1C9FAD470082CB56 /* FeedView.swift in Sources */,
+				C66EF52B1CBDED1F004C26A8 /* FeedCellMyPost.swift in Sources */,
+				C67DBB7F1C9FAD470082CB56 /* FeedViewController.swift in Sources */,
 				C6FBE73C1CBA3ACD00986B2A /* RoundedButton.swift in Sources */,
+				C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */,
 				C63F6FEE1CB75BD400D5DE3E /* SignupViewController.swift in Sources */,
 				C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */,
 				C63F6FEA1CB72DEC00D5DE3E /* LoginViewController.swift in Sources */,

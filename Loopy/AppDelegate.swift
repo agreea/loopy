@@ -42,18 +42,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         
         // otherwise launch the splash scene
-        launchLoginSignup()
+//        launchLoginSignup()
+//        launchAddContacts()
+        self.window!.makeKeyAndVisible()
+        launchFindMyFriends()
         return true
     }
-    private func launchLoginSignup() {
+    func launchLoginSignup() {
         let loginSignup = UIStoryboard(name: "LoginSignup", bundle: nil)
-        let loginNavigationController = loginSignup.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
+        let landingViewController = loginSignup.instantiateViewControllerWithIdentifier("LoopyLanding") as! LoopyLandingViewController
+        self.window!.rootViewController = landingViewController
+    }
+    
+    func launchAddContacts(enterFromSignup: Bool) {
         let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
-        contactViewController.enterFromSetup = true
-        self.window!.rootViewController = loginNavigationController
-        loginNavigationController.showViewController(contactViewController, sender: nil)
+        contactViewController.enterFromSetup = enterFromSignup
+        self.window!.rootViewController = contactViewController
+    }
+    
+    func launchMainExperience() {
+        let loginSignup = UIStoryboard(name: "Main", bundle: nil)
+        let landingViewController = loginSignup.instantiateViewControllerWithIdentifier("MasterViewController") as! MasterViewController
+        self.window!.rootViewController = landingViewController
     }
 
+    func launchFindMyFriends() {
+        let loginSignup = UIStoryboard(name: "LoginSignup", bundle: nil)
+        let findMyFriendsViewController = loginSignup.instantiateViewControllerWithIdentifier("FindFriendsViewController") as! FindFriendsViewController
+        self.window!.rootViewController = findMyFriendsViewController
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -114,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
-            abort()
+//            abort()
         }
         
         return coordinator
@@ -224,11 +242,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showMessage(message: String) {
         let alertController = UIAlertController(title: "Loopy", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let dismissAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
-            
-        }
-        
         let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
         let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
         
@@ -283,6 +296,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         self.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func showErrorFromController(title: String, message: String, viewController: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        viewController.presentViewController(alert, animated: true, completion: nil)
+    }
+
     
     func showSettingsAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

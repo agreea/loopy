@@ -1,67 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="icB-iX-snS">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Page View Controller-->
+        <!--Master View Controller-->
         <scene sceneID="Yey-PB-ydI">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="icB-iX-snS" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="MasterViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="icB-iX-snS" customClass="MasterViewController" customModule="Loopy" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="lwk-iZ-XMA"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qL9-Go-yee" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="937" y="327"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="xDB-qa-wfp">
-            <objects>
-                <viewController id="Ess-dv-Lds" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="m4V-sV-ddt"/>
-                        <viewControllerLayoutGuide type="bottom" id="HgS-eh-R3m"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="oL3-TL-UPp">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ekN-2J-Ydz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1646" y="327"/>
-        </scene>
-        <!--Master View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController storyboardIdentifier="MasterViewController" id="BYZ-38-t0r" customClass="MasterViewController" customModule="Loopy" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXb-OH-oTS">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="dXb-OH-oTS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="83y-Y5-Zod"/>
-                            <constraint firstItem="dXb-OH-oTS" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="EhO-hg-Hho"/>
-                            <constraint firstItem="dXb-OH-oTS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ep2-oI-eJh"/>
-                            <constraint firstItem="dXb-OH-oTS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="tcW-Wd-h66"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="scrollWindow" destination="dXb-OH-oTS" id="8FF-DS-Dxf"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="246" y="327"/>
         </scene>
     </scenes>
 </document>
