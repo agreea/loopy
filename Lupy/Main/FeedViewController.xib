@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedViewController" customModule="Lupy" customModuleProvider="target">
+            <connections>
+                <outlet property="feedView" destination="Gqe-gj-lCJ" id="6zr-EU-o4m"/>
+                <outlet property="imageCopiedAlert" destination="5EC-s7-4Rg" id="fG5-Ir-j2y"/>
+                <outlet property="leftButtonNav" destination="evj-07-rCb" id="hxD-fW-12r"/>
+                <outlet property="navBar" destination="ImL-uv-lbg" id="bZF-fc-LBr"/>
+                <outlet property="navBarHeight" destination="xqu-Ae-aaK" id="CPR-Q2-cEu"/>
+                <outlet property="rightButtonNav" destination="zmh-D5-jmm" id="UlM-et-J90"/>
+                <outlet property="titleNav" destination="DL0-VI-9Vc" id="hzF-Q2-FWF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBe-Ix-ILI">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="451" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gqe-gj-lCJ">
+                            <rect key="frame" x="0.0" y="63" width="600" height="608"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="ZGA-qf-o9J"/>
+                                <outlet property="delegate" destination="-1" id="BCc-nQ-j28"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="leading" secondItem="hBe-Ix-ILI" secondAttribute="leading" id="4Ia-ky-vLP"/>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="width" secondItem="hBe-Ix-ILI" secondAttribute="width" id="6JW-rL-2DA"/>
+                        <constraint firstAttribute="bottom" secondItem="Gqe-gj-lCJ" secondAttribute="bottom" constant="-71" id="cpA-dK-bDx"/>
+                        <constraint firstItem="Gqe-gj-lCJ" firstAttribute="top" secondItem="hBe-Ix-ILI" secondAttribute="top" constant="63" id="paz-od-eiD"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImL-uv-lbg" userLabel="Navbar">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmh-D5-jmm" userLabel="RightNavButton">
+                            <rect key="frame" x="546" y="30" width="36" height="23"/>
+                            <state key="normal" image="User"/>
+                            <connections>
+                                <action selector="didPressRightButtonNav:" destination="-1" eventType="touchUpInside" id="fbf-tc-0cW"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evj-07-rCb">
+                            <rect key="frame" x="13" y="29" width="36" height="23"/>
+                            <state key="normal" image="Camera"/>
+                            <connections>
+                                <action selector="didPressLeftButtonNav:" destination="-1" eventType="touchUpInside" id="DeO-mX-k3W"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.46274509803921571" green="0.21568627450980393" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="evj-07-rCb" firstAttribute="leading" secondItem="ImL-uv-lbg" secondAttribute="leading" constant="13" id="NHF-J0-ach"/>
+                        <constraint firstAttribute="trailing" secondItem="zmh-D5-jmm" secondAttribute="trailing" constant="18" id="ZsE-Zg-G5m"/>
+                        <constraint firstAttribute="bottom" secondItem="evj-07-rCb" secondAttribute="bottom" constant="12" id="fSv-by-bhw"/>
+                        <constraint firstAttribute="bottom" secondItem="zmh-D5-jmm" secondAttribute="bottom" constant="11" id="ot1-yu-ftV"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gif copied to clipboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EC-s7-4Rg">
+                    <rect key="frame" x="195" y="531" width="211" height="46"/>
+                    <color key="backgroundColor" red="0.0" green="0.8980392157" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="93V-yk-ATd"/>
+                        <constraint firstAttribute="width" constant="211" id="XHU-wb-x1c"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lupy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DL0-VI-9Vc">
+                    <rect key="frame" x="275" y="29" width="50" height="25"/>
+                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="5EC-s7-4Rg" secondAttribute="bottom" constant="23" id="EZ6-up-OgV"/>
+                <constraint firstItem="5EC-s7-4Rg" firstAttribute="centerX" secondItem="hBe-Ix-ILI" secondAttribute="centerX" id="JgM-Qs-WMd"/>
+                <constraint firstItem="hBe-Ix-ILI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TOl-FZ-nzR"/>
+                <constraint firstItem="ImL-uv-lbg" firstAttribute="width" secondItem="hBe-Ix-ILI" secondAttribute="width" id="U0M-Qh-BhZ"/>
+                <constraint firstItem="DL0-VI-9Vc" firstAttribute="top" secondItem="ImL-uv-lbg" secondAttribute="bottom" constant="-35" id="c0P-GD-iPs"/>
+                <constraint firstItem="ImL-uv-lbg" firstAttribute="centerX" secondItem="hBe-Ix-ILI" secondAttribute="centerX" id="evw-2y-RI0"/>
+                <constraint firstItem="DL0-VI-9Vc" firstAttribute="centerX" secondItem="ImL-uv-lbg" secondAttribute="centerX" id="feF-kt-GJb"/>
+                <constraint firstItem="Gqe-gj-lCJ" firstAttribute="top" secondItem="ImL-uv-lbg" secondAttribute="bottom" constant="-1" id="iYo-b8-you"/>
+                <constraint firstItem="hBe-Ix-ILI" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="kS2-vQ-oWT"/>
+                <constraint firstItem="hBe-Ix-ILI" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="n2a-gw-Y7b"/>
+                <constraint firstItem="hBe-Ix-ILI" firstAttribute="top" secondItem="ImL-uv-lbg" secondAttribute="bottom" constant="-64" id="xqu-Ae-aaK"/>
+                <constraint firstItem="ImL-uv-lbg" firstAttribute="top" secondItem="hBe-Ix-ILI" secondAttribute="top" id="y5P-72-MRI"/>
+                <constraint firstItem="hBe-Ix-ILI" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="zPy-i1-rUC"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="Camera" width="36" height="23"/>
+        <image name="User" width="36" height="23"/>
+    </resources>
+</document>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="KGk-i7-Jjw" customClass="ContactCell" customModule="Lupy" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="67"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="390" height="66"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0AI-nr-eHk">
+                        <rect key="frame" x="334" y="15" width="36" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="0AI-nr-eHk" secondAttribute="height" multiplier="1:1" id="gS2-AY-q25"/>
+                            <constraint firstAttribute="width" constant="36" id="sHo-BI-EHZ"/>
+                        </constraints>
+                        <state key="normal" image="FollowUser"/>
+                        <connections>
+                            <action selector="didPressFollowButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zP8-Hi-vqO"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W6d-Ai-ueA">
+                        <rect key="frame" x="18" y="10" width="46" height="46"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="W6d-Ai-ueA" secondAttribute="height" multiplier="1:1" id="m2F-JV-faN"/>
+                            <constraint firstAttribute="width" constant="46" id="vdA-QN-txA"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Daj-lr-rkA">
+                        <rect key="frame" x="72" y="21" width="44" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="qzD-XE-VxM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.26214823298429324" green="0.26214823298429324" blue="0.26214823298429324" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qzD-XE-VxM"/>
+                            </mask>
+                        </variation>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="0AI-nr-eHk" secondAttribute="trailing" constant="12" id="1TZ-Y7-aUa"/>
+                    <constraint firstItem="0AI-nr-eHk" firstAttribute="bottom" secondItem="Daj-lr-rkA" secondAttribute="bottom" id="8Xh-ez-xJE"/>
+                    <constraint firstItem="W6d-Ai-ueA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="AFZ-D9-eII"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Daj-lr-rkA" secondAttribute="bottom" constant="17" id="Ael-cm-NN2"/>
+                    <constraint firstItem="Daj-lr-rkA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="I4a-Aj-D3Z"/>
+                    <constraint firstItem="W6d-Ai-ueA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T76-nP-7Y6"/>
+                    <constraint firstItem="Daj-lr-rkA" firstAttribute="leading" secondItem="W6d-Ai-ueA" secondAttribute="trailing" constant="8" id="YV3-ri-0KF"/>
+                    <constraint firstItem="0AI-nr-eHk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="lGo-kO-UXh"/>
+                    <constraint firstItem="Daj-lr-rkA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="vQu-4q-96E"/>
+                    <constraint firstItem="0AI-nr-eHk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="vgx-hh-fXO"/>
+                    <constraint firstItem="0AI-nr-eHk" firstAttribute="centerY" secondItem="Daj-lr-rkA" secondAttribute="centerY" id="xdP-Rv-E2a"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="Ael-cm-NN2"/>
+                        <exclude reference="8Xh-ez-xJE"/>
+                        <exclude reference="vgx-hh-fXO"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="followButton" destination="0AI-nr-eHk" id="Hxn-VJ-d9F"/>
+                <outlet property="nameLabel" destination="Daj-lr-rkA" id="Bgw-ER-FHS"/>
+            </connections>
+            <point key="canvasLocation" x="176" y="228.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="FollowUser" width="56" height="53"/>
+    </resources>
+</document>

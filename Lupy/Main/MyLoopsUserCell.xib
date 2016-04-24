@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="399" id="KGk-i7-Jjw" customClass="MyLoopsUserCell" customModule="Lupy" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="399"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="398"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q4a-5e-pzT" userLabel="Profile Pic">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="398"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xVO-PV-PZC">
+                        <rect key="frame" x="0.0" y="339" width="320" height="59"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ukp-Cn-mbb" userLabel="Bottom bg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" Username" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UcS-lF-ibn">
+                                <rect key="frame" x="8" y="14" width="126" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yI-XN-JND">
+                                <rect key="frame" x="250" y="15" width="61" height="30"/>
+                                <color key="backgroundColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
+                                <state key="normal" title="Follow">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didPressFollowButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Chf-tv-OoJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Ukp-Cn-mbb" firstAttribute="centerX" secondItem="xVO-PV-PZC" secondAttribute="centerX" id="SWK-mp-QaN"/>
+                            <constraint firstAttribute="height" constant="59" id="TOh-9L-IyU"/>
+                            <constraint firstItem="Ukp-Cn-mbb" firstAttribute="height" secondItem="xVO-PV-PZC" secondAttribute="height" id="mYu-4U-HWG"/>
+                            <constraint firstItem="Ukp-Cn-mbb" firstAttribute="width" secondItem="xVO-PV-PZC" secondAttribute="width" id="mst-e4-8if"/>
+                            <constraint firstItem="Ukp-Cn-mbb" firstAttribute="centerY" secondItem="xVO-PV-PZC" secondAttribute="centerY" id="sPw-GI-4uc"/>
+                        </constraints>
+                    </view>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hJr-eG-dPw">
+                        <rect key="frame" x="259" y="290" width="53" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" title="Change">
+                            <color key="titleColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="didPressChangeButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8tJ-Ju-vaj"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0QN-eT-zKh"/>
+                    <constraint firstItem="xVO-PV-PZC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="331" id="ERm-FM-Ypq"/>
+                    <constraint firstItem="xVO-PV-PZC" firstAttribute="top" secondItem="hJr-eG-dPw" secondAttribute="bottom" constant="19" id="MEs-09-eof"/>
+                    <constraint firstItem="hJr-eG-dPw" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="MwY-zD-UN8"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="PLE-d1-Xb7"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="VMt-nk-Wok"/>
+                    <constraint firstItem="xVO-PV-PZC" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="WJo-lE-SIH"/>
+                    <constraint firstItem="xVO-PV-PZC" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="ZQ2-76-sxN"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="dHC-cH-RiC"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xVO-PV-PZC" secondAttribute="bottom" constant="-8" id="eQ1-r0-EI7"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="i8H-YS-5fO"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="taS-5j-7jC"/>
+                    <constraint firstItem="xVO-PV-PZC" firstAttribute="top" secondItem="Q4a-5e-pzT" secondAttribute="bottom" constant="8" id="ye2-Dh-7sZ"/>
+                    <constraint firstItem="Q4a-5e-pzT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="yjm-sV-WsF"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ye2-Dh-7sZ"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="changeButton" destination="hJr-eG-dPw" id="NFR-ef-dgN"/>
+                <outlet property="followButton" destination="3yI-XN-JND" id="D0w-VJ-8k2"/>
+                <outlet property="usernameLabel" destination="UcS-lF-ibn" id="YVK-nk-7Sb"/>
+            </connections>
+            <point key="canvasLocation" x="430" y="168.5"/>
+        </tableViewCell>
+    </objects>
+</document>
