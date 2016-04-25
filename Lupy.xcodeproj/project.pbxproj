@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		85C700A90DDA269D36450C4B /* Pods_Lupy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9CA5447C2C686D816945BA /* Pods_Lupy.framework */; };
+		C635A0211CCD3A030096940C /* VideoBufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0201CCD3A030096940C /* VideoBufferManager.swift */; };
+		C635A0231CCDED2A0096940C /* VideoSampleBufferSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */; };
+		C635A0251CCDEF380096940C /* CoreImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0241CCDEF380096940C /* CoreImageView.swift */; };
 		C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */; };
 		C63EC0C71CBE326900ACE7E4 /* MyLoopsUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */; };
 		C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */; };
@@ -110,6 +113,9 @@
 		4B9CA5447C2C686D816945BA /* Pods_Lupy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lupy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512549D5C1058CBEE3D6B822 /* Pods-Lupy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lupy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lupy/Pods-Lupy.debug.xcconfig"; sourceTree = "<group>"; };
 		C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy2.xcdatamodel; sourceTree = "<group>"; };
+		C635A0201CCD3A030096940C /* VideoBufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBufferManager.swift; sourceTree = "<group>"; };
+		C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoSampleBufferSource.swift; path = Main/VideoSampleBufferSource.swift; sourceTree = "<group>"; };
+		C635A0241CCDEF380096940C /* CoreImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreImageView.swift; path = Main/CoreImageView.swift; sourceTree = "<group>"; };
 		C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyLoopsUserCell.swift; path = Main/MyLoopsUserCell.swift; sourceTree = "<group>"; };
 		C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyLoopsUserCell.xib; path = Main/MyLoopsUserCell.xib; sourceTree = "<group>"; };
 		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginSignup.storyboard; path = Landing/LoginSignup.storyboard; sourceTree = "<group>"; };
@@ -374,9 +380,11 @@
 				C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */,
 				C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */,
 				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
+				C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */,
 				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
 				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
 				C67DBB7A1C9FAAA70082CB56 /* CaptureViewController.xib */,
+				C635A0201CCD3A030096940C /* VideoBufferManager.swift */,
 				C67DBB7D1C9FAD470082CB56 /* FeedViewController.swift */,
 				C6FBCE1E1CBD6AB200DD65D4 /* FeedViewController.xib */,
 				C6BB90061CB590A200C6DB94 /* FeedCell.swift */,
@@ -396,6 +404,7 @@
 				C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */,
 				C65875A81CC8A01C00F3EE79 /* BottomNavBar.swift */,
 				C6F081DB1CCA924A00014A44 /* TabBarViewController.swift */,
+				C635A0241CCDEF380096940C /* CoreImageView.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -631,6 +640,7 @@
 				C65875A91CC8A01C00F3EE79 /* BottomNavBar.swift in Sources */,
 				C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */,
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
+				C635A0211CCD3A030096940C /* VideoBufferManager.swift in Sources */,
 				C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */,
 				C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */,
 				C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */,
@@ -646,6 +656,7 @@
 				C63F6FEC1CB7395000D5DE3E /* LoopyLandingViewController.swift in Sources */,
 				C6FBCE1D1CBCBB2B00DD65D4 /* ContactCell.swift in Sources */,
 				C63F6FF41CB76E6800D5DE3E /* AddPhoneViewController.swift in Sources */,
+				C635A0251CCDEF380096940C /* CoreImageView.swift in Sources */,
 				C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */,
 				C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */,
 				C67DBB7F1C9FAD470082CB56 /* FeedViewController.swift in Sources */,
@@ -653,6 +664,7 @@
 				C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */,
 				C63F6FEE1CB75BD400D5DE3E /* SignupViewController.swift in Sources */,
 				C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */,
+				C635A0231CCDED2A0096940C /* VideoSampleBufferSource.swift in Sources */,
 				C63F6FEA1CB72DEC00D5DE3E /* LoginViewController.swift in Sources */,
 				C6F081DC1CCA924A00014A44 /* TabBarViewController.swift in Sources */,
 				C67DBB7B1C9FAAA70082CB56 /* CaptureViewController.swift in Sources */,

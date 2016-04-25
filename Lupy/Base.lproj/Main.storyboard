@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ln2-3b-Ada">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="540"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
                                     <segue destination="icB-iX-snS" kind="embed" identifier="embed" id="EpQ-m9-coQ"/>
                                 </connections>
@@ -152,10 +152,14 @@
                             <constraint firstItem="Ln2-3b-Ada" firstAttribute="bottom" secondItem="loc-Z9-rBh" secondAttribute="top" id="5lS-eD-nW0"/>
                             <constraint firstItem="Ln2-3b-Ada" firstAttribute="trailing" secondItem="5iZ-ad-bix" secondAttribute="trailing" id="71C-NZ-hqW"/>
                             <constraint firstAttribute="bottomMargin" secondItem="5iZ-ad-bix" secondAttribute="bottom" constant="-41" id="7DF-I9-VJt"/>
+                            <constraint firstItem="Ln2-3b-Ada" firstAttribute="width" secondItem="rWM-i4-9AQ" secondAttribute="width" id="8M2-2O-ZG9"/>
+                            <constraint firstItem="Ln2-3b-Ada" firstAttribute="centerY" secondItem="rWM-i4-9AQ" secondAttribute="centerY" id="8q1-nc-MW9"/>
                             <constraint firstItem="5iZ-ad-bix" firstAttribute="bottom" secondItem="loc-Z9-rBh" secondAttribute="top" id="Urg-fy-vc1"/>
                             <constraint firstItem="5iZ-ad-bix" firstAttribute="top" secondItem="Ln2-3b-Ada" secondAttribute="bottom" id="ZB0-OJ-ehd"/>
+                            <constraint firstItem="Ln2-3b-Ada" firstAttribute="height" secondItem="rWM-i4-9AQ" secondAttribute="height" id="c3U-9K-aoz"/>
                             <constraint firstItem="Ln2-3b-Ada" firstAttribute="leading" secondItem="5iZ-ad-bix" secondAttribute="leading" id="mZM-pG-wRe"/>
                             <constraint firstItem="Ln2-3b-Ada" firstAttribute="top" secondItem="rWM-i4-9AQ" secondAttribute="top" id="r3q-Cf-fXu"/>
+                            <constraint firstItem="Ln2-3b-Ada" firstAttribute="centerX" secondItem="rWM-i4-9AQ" secondAttribute="centerX" id="yQQ-gU-F9N"/>
                             <constraint firstAttribute="trailing" secondItem="Ln2-3b-Ada" secondAttribute="trailing" id="z1v-o9-qSi"/>
                             <constraint firstItem="Ln2-3b-Ada" firstAttribute="leading" secondItem="rWM-i4-9AQ" secondAttribute="leading" id="zYq-d0-2W0"/>
                         </constraints>
@@ -164,6 +168,7 @@
                                 <exclude reference="5lS-eD-nW0"/>
                                 <exclude reference="1fz-Bj-te3"/>
                                 <exclude reference="7DF-I9-VJt"/>
+                                <exclude reference="ZB0-OJ-ehd"/>
                             </mask>
                         </variation>
                     </view>

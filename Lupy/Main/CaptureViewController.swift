@@ -1,11 +1,3 @@
-//
-//  CaptureView.swift
-//  Loopy
-//
-//  Created by Agree Ahmed on 3/21/16.
-//  Copyright © 2016 Agree Ahmed. All rights reserved.
-//
-
 import UIKit
 import AVFoundation
 import Proposer
@@ -67,16 +59,16 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         print("BottomView height: \(bottomView.frame.height)")
         resetRecordInterface()
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         timeBar.hidden = true
         recordingCompleteCenterX = timeBarCenterX
         dispatch_async(self.sessionQueue, {
-//            self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old , .New] , context: &SessionRunningAndDeviceAuthorizedContext)
-//            self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options:[.Old , .New], context: &CapturingStillImageContext)
-//            self.addObserver(self, forKeyPath: "movieFileOutput.recording", options: [.Old , .New], context: &RecordingContext)
-//            NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput?.device)
+            //            self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old , .New] , context: &SessionRunningAndDeviceAuthorizedContext)
+            //            self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options:[.Old , .New], context: &CapturingStillImageContext)
+            //            self.addObserver(self, forKeyPath: "movieFileOutput.recording", options: [.Old , .New], context: &RecordingContext)
+            //            NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput?.device)
             
             weak var weakSelf = self
             self.runtimeErrorHandlingObserver = NSNotificationCenter.defaultCenter().addObserverForName(AVCaptureSessionRuntimeErrorNotification, object: self.session, queue: nil, usingBlock: {
@@ -103,9 +95,9 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.authorized = true
             self.resetRecordInterface()
             self.initCapturePreview()
-        }, rejected: {
-            print("Shut down")
-            AppDelegate.getAppDelegate().showSettingsAlert("Can't Access Camera", message: "Allow Loopy to access your camera in Settings.")
+            }, rejected: {
+                print("Shut down")
+                AppDelegate.getAppDelegate().showSettingsAlert("Can't Access Camera", message: "Allow Loopy to access your camera in Settings.")
         })
     }
     
@@ -113,7 +105,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         return true
     }
     
-    // called whenever recording mode exits. 
+    // called whenever recording mode exits.
     // Hides the the recording bar and resets the button
     private func resetRecordInterface(){
         if timeBarCenterX.constant == 0 {
@@ -125,43 +117,43 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.view.layoutIfNeeded()
     }
     
-//    private func initCapturePreview() {
-//        initFrontCamPreview()
-//        initBackCamPreview()
-//    }
+    //    private func initCapturePreview() {
+    //        initFrontCamPreview()
+    //        initBackCamPreview()
+    //    }
     
-//    private func initBackCamPreview() {
-//        let captureSession = AVCaptureSession()
-//        captureSession.sessionPreset = AVCaptureSessionPreset1280x720
-//        let backCam = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-//        do {
-//            let input = try AVCaptureDeviceInput(device: backCam)
-//            if captureSession.canAddInput(input) {
-//                captureSession.addInput(input)
-//                backOutput = AVCaptureMovieFileOutput()
-//                backOutput!.maxRecordedDuration = CMTimeMake(6, 1)
-//                if captureSession.canAddOutput(backOutput) {
-//                    captureSession.addOutput(backOutput)
-//                    backPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-//                    backPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
-//                    backPreviewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
-//                    backView.layer.addSublayer(backPreviewLayer!)
-//                    captureSession.commitConfiguration() //5
-//                    captureSession.startRunning()
-//                }
-//                
-//            }
-//        } catch let error as NSError {
-//            NSLog("\(error), \(error.localizedDescription)")
-//        }
-//    }
-
+    //    private func initBackCamPreview() {
+    //        let captureSession = AVCaptureSession()
+    //        captureSession.sessionPreset = AVCaptureSessionPreset1280x720
+    //        let backCam = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+    //        do {
+    //            let input = try AVCaptureDeviceInput(device: backCam)
+    //            if captureSession.canAddInput(input) {
+    //                captureSession.addInput(input)
+    //                backOutput = AVCaptureMovieFileOutput()
+    //                backOutput!.maxRecordedDuration = CMTimeMake(6, 1)
+    //                if captureSession.canAddOutput(backOutput) {
+    //                    captureSession.addOutput(backOutput)
+    //                    backPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+    //                    backPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+    //                    backPreviewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
+    //                    backView.layer.addSublayer(backPreviewLayer!)
+    //                    captureSession.commitConfiguration() //5
+    //                    captureSession.startRunning()
+    //                }
+    //
+    //            }
+    //        } catch let error as NSError {
+    //            NSLog("\(error), \(error.localizedDescription)")
+    //        }
+    //    }
+    
     @IBAction func didPressExitCam(sender: AnyObject) {
         captureModeDelegate?.didExitCamera()
     }
     
     @IBAction func didPressFlipCam(sender: AnyObject) {
-//        self..enabled = false
+        //        self..enabled = false
         self.recordButton.enabled = false
         
         dispatch_async(self.sessionQueue) {
@@ -190,8 +182,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.session!.beginConfiguration()
             self.session!.removeInput(self.videoDeviceInput)
             if self.session!.canAddInput(videoDeviceInput){
-//                NSNotificationCenter.defaultCenter().removeObserver(self, name:AVCaptureDeviceSubjectAreaDidChangeNotification, object:currentVideoDevice)
-//                NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: device)
+                //                NSNotificationCenter.defaultCenter().removeObserver(self, name:AVCaptureDeviceSubjectAreaDidChangeNotification, object:currentVideoDevice)
+                //                NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: device)
                 self.session!.addInput(videoDeviceInput)
                 self.videoDeviceInput = videoDeviceInput
             } else{
@@ -200,31 +192,31 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.session!.commitConfiguration()
             dispatch_async(dispatch_get_main_queue(), {
                 self.recordButton.enabled = true
-//                let shouldMirrorVideo = preferredPosition == AVCaptureDevicePosition.Front
-//                self.setVideoPreviewAndOutputMirrored(shouldMirrorVideo)
-//                self.snapButton.enabled = true
-//                self.cameraButton.enabled = true
+                //                let shouldMirrorVideo = preferredPosition == AVCaptureDevicePosition.Front
+                //                self.setVideoPreviewAndOutputMirrored(shouldMirrorVideo)
+                //                self.snapButton.enabled = true
+                //                self.cameraButton.enabled = true
             })
         }
     }
-
-//    private func setVideoPreviewAndOutputMirrored(mirrored: Bool) {
-//        // set previewLayer
-//        let previewLayer = self.previewView.layer as! AVCaptureVideoPreviewLayer
-//        previewLayer.connection.automaticallyAdjustsVideoMirroring = false
-//        previewLayer.connection.videoMirrored = mirrored
-//        // set preview
-//        for connection in self.movieFileOutput!.connections {
-//            for port in connection.inputPorts! {
-//                if port.mediaType == AVMediaTypeVideo {
-//                    let videoConnection = connection as? AVCaptureConnection
-//                    if videoConnection!.supportsVideoMirroring {
-//                        videoConnection!.videoMirrored = mirrored
-//                    }
-//                }
-//            }
-//        }
-//    }
+    
+    //    private func setVideoPreviewAndOutputMirrored(mirrored: Bool) {
+    //        // set previewLayer
+    //        let previewLayer = self.previewView.layer as! AVCaptureVideoPreviewLayer
+    //        previewLayer.connection.automaticallyAdjustsVideoMirroring = false
+    //        previewLayer.connection.videoMirrored = mirrored
+    //        // set preview
+    //        for connection in self.movieFileOutput!.connections {
+    //            for port in connection.inputPorts! {
+    //                if port.mediaType == AVMediaTypeVideo {
+    //                    let videoConnection = connection as? AVCaptureConnection
+    //                    if videoConnection!.supportsVideoMirroring {
+    //                        videoConnection!.videoMirrored = mirrored
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
     func initCapturePreview() {
         let session: AVCaptureSession = AVCaptureSession()
         self.session = session
@@ -285,24 +277,24 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
                 movieFileOutput.maxRecordedDuration = CMTimeMake(6, 1)
                 session.addOutput(movieFileOutput)
                 
-//                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
-//                let stab = connection?.supportsVideoStabilization
-//                if (stab != nil) {
-//                    connection!.enablesVideoStabilizationWhenAvailable = true
-//                }
+                //                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
+                //                let stab = connection?.supportsVideoStabilization
+                //                if (stab != nil) {
+                //                    connection!.enablesVideoStabilizationWhenAvailable = true
+                //                }
                 self.movieFileOutput = movieFileOutput
             }
             //            let stillImageOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
             //            if session.canAddOutput(stillImageOutput){
             //                stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
             //                session.addOutput(stillImageOutput)
-            //                
+            //
             //                self.stillImageOutput = stillImageOutput
             //            }
             
             
         })
-
+        
     }
     
     class func deviceWithMediaType(mediaType: String, preferringPosition:AVCaptureDevicePosition)->AVCaptureDevice{
@@ -322,7 +314,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func captureOutput(captureOutput: AVCaptureFileOutput!,
                        didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!,
-                       fromConnections connections: [AnyObject]!, error: NSError!) {
+                                                           fromConnections connections: [AnyObject]!, error: NSError!) {
         // TODO: error check
         captureModeDelegate!.previewModeDidStart(outputFileURL)
     }
@@ -386,4 +378,3 @@ class AVCamPreviewView: UIView{
         return AVCaptureVideoPreviewLayer.self;
     }
 }
-

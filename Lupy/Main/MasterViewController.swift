@@ -70,7 +70,6 @@ class MasterViewController: UIPageViewController, UINavigationControllerDelegate
         captureViewController!.captureModeDelegate = self
         initMoviePreviewController()
         captureViewController!.view.addSubview(moviePreviewController!.view)
-        moviePreviewController!.coreDataDelegate = self
         return captureViewController!
     }
     

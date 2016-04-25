@@ -15,10 +15,11 @@ import CoreData
 
 class MoviePreviewViewController: UIViewController {
     var moviePlayer: AVPlayerViewController!
-    var movieURL: NSURL?
     var player: AVPlayer?
+    var images: [UIImage]?
+    var coreImageView: CoreImageView?
     var uploadedBytesRepresented: Int64?
-    var coreDataDelegate: CoreDataDelegate?
+    var movieURL: NSURL?
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var moviePreview: UIView!
     @IBOutlet weak var progressBar: UIView!
@@ -28,6 +29,11 @@ class MoviePreviewViewController: UIViewController {
     
     var progressCompleteCenterX: NSLayoutConstraint?
     var captureModeDelegate: CaptureModeDelegate?
+    var videoSource: VideoSampleBufferSource?
+    
+    var angleForCurrentTime: Float {
+        return Float(NSDate.timeIntervalSinceReferenceDate() % M_PI*2)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +69,26 @@ class MoviePreviewViewController: UIViewController {
     }
     
     func previewModeDidStart() {
+        if coreImageView == nil {
+            coreImageView = CoreImageView(frame: moviePreview.bounds)
+            moviePreview.addSubview(coreImageView!)
+//            self.coreImageView!.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2))
+        }
         resetUploadInterface()
-        initPlayer()
+        videoSource = VideoSampleBufferSource(url: movieURL!) { [unowned self] buffer in
+            var image = CIImage(CVPixelBuffer: buffer)
+            // get transformation for this rotation
+            let rotateTransform = image.imageTransformForOrientation(Int32(6))
+            image = image.imageByApplyingTransform(rotateTransform)
+            let background = kaleidoscope()(image)
+            let mask = radialGradient(image.extent.center, radius: CGFloat(self.angleForCurrentTime) * 100)
+            let output = blendWithMask(image, mask: mask)(background)
+            print("output: \(output)")
+            self.coreImageView!.image = output
+        }
+//        initPlayer()
     }
+        
     func resetUploadInterface() {
         if progressBarCenterX.constant == 0 {
             progressBarCenterX.constant = progressCompleteCenterX!.constant - view.bounds.width
@@ -75,6 +98,7 @@ class MoviePreviewViewController: UIViewController {
         nextButton.hidden = false
         nextButton.alpha = 1.0
     }
+    
     func initPlayer() {
         if player == nil {
             player = AVPlayer(URL: movieURL!)
@@ -90,7 +114,6 @@ class MoviePreviewViewController: UIViewController {
                          selector: #selector(MoviePreviewViewController.restartVideoFromBeginning),
                          name: AVPlayerItemDidPlayToEndTimeNotification,
                          object: player!.currentItem)
-        
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = self.view.bounds
         let moviePreviewView = UIView(frame: self.view.bounds)
@@ -99,6 +122,7 @@ class MoviePreviewViewController: UIViewController {
         print("sublayer added")
         player!.play()
     }
+    
     func restartVideoFromBeginning()  {
         let startTime = CMTimeMake(0, 1)
         player!.seekToTime(startTime)
@@ -112,7 +136,7 @@ class MoviePreviewViewController: UIViewController {
     }
     
     @IBAction func didPressSend(sender: AnyObject) {
-        if let session = coreDataDelegate?.getSession() {
+        if let session = AppDelegate.getAppDelegate().getSession() {
             postLoop(session)
         } else {
             AppDelegate.getAppDelegate().showError("Upload Error", message: "It seems you're not logged in")
@@ -127,13 +151,13 @@ class MoviePreviewViewController: UIViewController {
             "Session": session,
             "Format": "MOV"
         ]
-        Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", headers: headers, file: movieURL!)
-            .progress { _, totalBytesRead, totalBytesExpectedToRead in
-                self.updateUploadProgress(totalBytesRead, totalBytesExpectedToRead: totalBytesExpectedToRead)
-            }
-            .responseJSON { response in
-                self.processUploadResponse(response)
-        }
+//        Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", headers: headers, file: movieURL!)
+//            .progress { _, totalBytesRead, totalBytesExpectedToRead in
+//                self.updateUploadProgress(totalBytesRead, totalBytesExpectedToRead: totalBytesExpectedToRead)
+//            }
+//            .responseJSON { response in
+//                self.processUploadResponse(response)
+//        }
     }
     
     private func updateUploadProgress(totalBytesRead: Int64, totalBytesExpectedToRead: Int64) {
@@ -232,4 +256,124 @@ class MoviePreviewViewController: UIViewController {
                 }
         })
     }
+}
+
+
+typealias Filter = CIImage -> CIImage
+
+func blur(radius: Double) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputRadiusKey: radius,
+            kCIInputImageKey: image
+        ]
+        let filter = CIFilter(name: "CIGaussianBlur",
+                              withInputParameters: parameters)
+        return filter!.outputImage!
+    }
+}
+
+func colorGenerator(color: UIColor) -> Filter {
+    return { _ in
+        let parameters = [kCIInputColorKey: color]
+        let filter = CIFilter(name: "CIConstantColorGenerator",
+                              withInputParameters: parameters)
+        return filter!.outputImage!
+    }
+}
+
+func hueAdjust(angleInRadians: Float) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputAngleKey: angleInRadians,
+            kCIInputImageKey: image
+        ]
+        let filter = CIFilter(name: "CIHueAdjust",
+                              withInputParameters: parameters)
+        return filter!.outputImage!
+        
+    }
+}
+
+func pixellate(scale: Float) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputImageKey:image,
+            kCIInputScaleKey:scale
+        ]
+        return CIFilter(name: "CIPixellate", withInputParameters: parameters)!.outputImage!
+    }
+}
+
+func kaleidoscope() -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputImageKey:image,
+            ]
+        return CIFilter(name: "CITriangleKaleidoscope", withInputParameters: parameters)!.outputImage!.imageByCroppingToRect(image.extent)
+    }
+}
+
+
+func vibrance(amount: Float) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputImageKey: image,
+            "inputAmount": amount
+        ]
+        return CIFilter(name: "CIVibrance", withInputParameters: parameters)!.outputImage!
+    }
+}
+
+func compositeSourceOver(overlay: CIImage) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputBackgroundImageKey: image,
+            kCIInputImageKey: overlay
+        ]
+        let filter = CIFilter(name: "CISourceOverCompositing",
+                              withInputParameters: parameters)
+        let cropRect = image.extent
+        return filter!.outputImage!.imageByCroppingToRect(cropRect)
+    }
+}
+
+
+func radialGradient(center: CGPoint, radius: CGFloat) -> CIImage {
+    let params: [String: AnyObject] = [
+        "inputColor0": CIColor(red: 1, green: 1, blue: 1),
+        "inputColor1": CIColor(red: 0, green: 0, blue: 0),
+        "inputCenter": CIVector(CGPoint: center),
+        "inputRadius0": radius,
+        "inputRadius1": radius + 1
+    ]
+    return CIFilter(name: "CIRadialGradient", withInputParameters: params)!.outputImage!
+}
+
+func blendWithMask(background: CIImage, mask: CIImage) -> Filter {
+    return { image in
+        let parameters = [
+            kCIInputBackgroundImageKey: background,
+            kCIInputMaskImageKey: mask,
+            kCIInputImageKey: image
+        ]
+        let filter = CIFilter(name: "CIBlendWithMask",
+                              withInputParameters: parameters)
+        let cropRect = image.extent
+        return filter!.outputImage!.imageByCroppingToRect(cropRect)
+    }
+}
+
+func colorOverlay(color: UIColor) -> Filter {
+    return { image in
+        let overlay = colorGenerator(color)(image)
+        return compositeSourceOver(overlay)(image)
+    }
+}
+
+
+infix operator >>> { associativity left }
+
+func >>> (filter1: Filter, filter2: Filter) -> Filter {
+    return { img in filter2(filter1(img)) }
 }
