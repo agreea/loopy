@@ -89,6 +89,9 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        recording = false
+    }
     func checkCameraAccess() {
         let camera: PrivateResource = .Camera
         proposeToAccess(camera, agreed: {
@@ -199,24 +202,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             })
         }
     }
-    
-    //    private func setVideoPreviewAndOutputMirrored(mirrored: Bool) {
-    //        // set previewLayer
-    //        let previewLayer = self.previewView.layer as! AVCaptureVideoPreviewLayer
-    //        previewLayer.connection.automaticallyAdjustsVideoMirroring = false
-    //        previewLayer.connection.videoMirrored = mirrored
-    //        // set preview
-    //        for connection in self.movieFileOutput!.connections {
-    //            for port in connection.inputPorts! {
-    //                if port.mediaType == AVMediaTypeVideo {
-    //                    let videoConnection = connection as? AVCaptureConnection
-    //                    if videoConnection!.supportsVideoMirroring {
-    //                        videoConnection!.videoMirrored = mirrored
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
+
     func initCapturePreview() {
         let session: AVCaptureSession = AVCaptureSession()
         self.session = session
@@ -247,36 +233,10 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
                     self.session!.startRunning()
                 })
             }
-            
-            
-            //            let audioDevice: AVCaptureDevice = AVCaptureDevice.devicesWithMediaType(AVMediaTypeAudio).first as! AVCaptureDevice
-            //
-            //            var audioDeviceInput: AVCaptureDeviceInput?
-            //
-            //            do {
-            //                audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
-            //            } catch let error2 as NSError {
-            //                error = error2
-            //                audioDeviceInput = nil
-            //            } catch {
-            //                fatalError()
-            //            }
-            //            if error != nil{
-            //                print(error)
-            //                let alert = UIAlertController(title: "Error", message: error!.localizedDescription
-            //                    , preferredStyle: .Alert)
-            //                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            //                self.presentViewController(alert, animated: true, completion: nil)
-            //            }
-            //            if session.canAddInput(audioDeviceInput){
-            //                session.addInput(audioDeviceInput)
-            //            }
-            
             let movieFileOutput: AVCaptureMovieFileOutput = AVCaptureMovieFileOutput()
             if session.canAddOutput(movieFileOutput){
                 movieFileOutput.maxRecordedDuration = CMTimeMake(6, 1)
                 session.addOutput(movieFileOutput)
-                
                 //                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
                 //                let stab = connection?.supportsVideoStabilization
                 //                if (stab != nil) {
@@ -284,13 +244,6 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
                 //                }
                 self.movieFileOutput = movieFileOutput
             }
-            //            let stillImageOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
-            //            if session.canAddOutput(stillImageOutput){
-            //                stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
-            //                session.addOutput(stillImageOutput)
-            //
-            //                self.stillImageOutput = stillImageOutput
-            //            }
             
             
         })
@@ -340,6 +293,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             movieFileOutput!.startRecordingToOutputFileURL(fileURL, recordingDelegate: self)
         } else {
             AppDelegate.getAppDelegate().showError("Camera Error", message: "Please exit the camera and try again")
+            return
         }
         recording = true
         startRecordInterface()

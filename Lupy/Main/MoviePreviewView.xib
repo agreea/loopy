@@ -14,6 +14,7 @@
                 <outlet property="nextButton" destination="Ry5-hc-OmM" id="N9u-Rp-KVf"/>
                 <outlet property="progressBar" destination="yrw-DM-CpV" id="wCI-fT-HYY"/>
                 <outlet property="progressBarCenterX" destination="do1-tX-ALm" id="Q1p-5N-8o2"/>
+                <outlet property="slider" destination="vJQ-9w-IvF" id="aUH-yv-kXM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -65,14 +66,25 @@
                                 <action selector="didPressSend:" destination="-1" eventType="touchUpInside" id="eSy-UF-ajV"/>
                             </connections>
                         </button>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="NoBrightness" maximumValueImage="FullBrightness" translatesAutoresizingMaskIntoConstraints="NO" id="vJQ-9w-IvF">
+                            <rect key="frame" x="6" y="8" width="588" height="31"/>
+                            <color key="tintColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="sliderDidSlide:" destination="-1" eventType="valueChanged" id="H6e-fF-5fw"/>
+                            </connections>
+                        </slider>
                     </subviews>
                     <color key="backgroundColor" red="0.13752693969999999" green="0.14232219830000001" blue="0.14232219830000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="vJQ-9w-IvF" firstAttribute="centerX" secondItem="7aJ-Rs-6K6" secondAttribute="centerX" id="8g9-8h-6Em"/>
+                        <constraint firstItem="vJQ-9w-IvF" firstAttribute="leading" secondItem="7aJ-Rs-6K6" secondAttribute="leading" constant="8" id="Jhj-bw-WT3"/>
+                        <constraint firstItem="vJQ-9w-IvF" firstAttribute="top" secondItem="7aJ-Rs-6K6" secondAttribute="top" constant="8" id="OyL-Zj-FVs"/>
                         <constraint firstAttribute="bottom" secondItem="Ry5-hc-OmM" secondAttribute="bottom" constant="8" id="QB3-Sl-wPy"/>
                         <constraint firstItem="6UK-S0-DYD" firstAttribute="top" secondItem="7aJ-Rs-6K6" secondAttribute="top" constant="8" id="QV1-Wx-URS"/>
                         <constraint firstItem="Ry5-hc-OmM" firstAttribute="top" secondItem="7aJ-Rs-6K6" secondAttribute="top" constant="87" id="Qcn-bg-SGn"/>
                         <constraint firstAttribute="trailing" secondItem="Ry5-hc-OmM" secondAttribute="trailing" constant="8" id="SWS-4R-NQi"/>
                         <constraint firstItem="6UK-S0-DYD" firstAttribute="centerX" secondItem="7aJ-Rs-6K6" secondAttribute="centerX" id="VcY-ln-mXF"/>
+                        <constraint firstAttribute="trailing" secondItem="vJQ-9w-IvF" secondAttribute="trailing" constant="8" id="qrc-YC-y6o"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrw-DM-CpV" userLabel="progressBar">
@@ -102,6 +114,8 @@
         </view>
     </objects>
     <resources>
+        <image name="FullBrightness" width="20" height="20"/>
+        <image name="NoBrightness" width="20" height="20"/>
         <image name="SendButton" width="160" height="77"/>
     </resources>
 </document>

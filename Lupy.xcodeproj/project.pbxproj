@@ -380,6 +380,7 @@
 				C67370EB1C9D2D1800B2B8C1 /* Main.storyboard */,
 				C67370E91C9D2D1800B2B8C1 /* MasterViewController.swift */,
 				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
+				C635A0241CCDEF380096940C /* CoreImageView.swift */,
 				C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */,
 				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
 				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
@@ -404,7 +405,6 @@
 				C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */,
 				C65875A81CC8A01C00F3EE79 /* BottomNavBar.swift */,
 				C6F081DB1CCA924A00014A44 /* TabBarViewController.swift */,
-				C635A0241CCDEF380096940C /* CoreImageView.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";

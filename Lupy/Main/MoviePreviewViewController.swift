@@ -26,14 +26,12 @@ class MoviePreviewViewController: UIViewController {
     @IBOutlet weak var progressBarCenterX: NSLayoutConstraint!
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var slider: UISlider!
     
     var progressCompleteCenterX: NSLayoutConstraint?
     var captureModeDelegate: CaptureModeDelegate?
     var videoSource: VideoSampleBufferSource?
     
-    var angleForCurrentTime: Float {
-        return Float(NSDate.timeIntervalSinceReferenceDate() % M_PI*2)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +57,11 @@ class MoviePreviewViewController: UIViewController {
         loadingLabel.alpha = 0.0
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        coreImageView = nil
+        print("You bet view did disappear")
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -69,24 +72,38 @@ class MoviePreviewViewController: UIViewController {
     }
     
     func previewModeDidStart() {
+        videoSource?.stop()
         if coreImageView == nil {
+            print("Adding core image view")
             coreImageView = CoreImageView(frame: moviePreview.bounds)
-            moviePreview.addSubview(coreImageView!)
-//            self.coreImageView!.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2))
+            moviePreview.insertSubview(coreImageView!, atIndex: 0)
         }
         resetUploadInterface()
-        videoSource = VideoSampleBufferSource(url: movieURL!) { [unowned self] buffer in
-            var image = CIImage(CVPixelBuffer: buffer)
-            // get transformation for this rotation
-            let rotateTransform = image.imageTransformForOrientation(Int32(6))
-            image = image.imageByApplyingTransform(rotateTransform)
-            let background = kaleidoscope()(image)
-            let mask = radialGradient(image.extent.center, radius: CGFloat(self.angleForCurrentTime) * 100)
-            let output = blendWithMask(image, mask: mask)(background)
-            print("output: \(output)")
-            self.coreImageView!.image = output
+        videoSource = VideoSampleBufferSource() { [unowned self] image in
+            self.handleVideoFrame(image)
         }
-//        initPlayer()
+        videoSource!.start(movieURL!)
+    }
+    
+    func handleVideoFrame(image: CIImage) {
+        // get transformation for this rotation
+        let rotateTransform = image.imageTransformForOrientation(Int32(6))
+        coreImageView!.image = image.imageByApplyingTransform(rotateTransform)
+        if coreImageView!.hidden {
+            self.coreImageView!.hidden = false
+        }
+    }
+    
+    func fileWriteCompletion(url: NSURL?) {
+        if url == nil {
+            AppDelegate.getAppDelegate().showError("Video Filtering Error", message: "Failed to write video")
+            return
+        } else {
+            print("Writing file END: \(Int(NSDate().timeIntervalSince1970))")
+            movieURL = url
+            initPlayer()
+            coreImageView!.hidden = true
+        }
     }
         
     func resetUploadInterface() {
@@ -132,15 +149,34 @@ class MoviePreviewViewController: UIViewController {
     
     @IBAction func didPressCancel(sender: AnyObject) {
         // go back to the captureView
-        self.captureModeDelegate!.captureModeDidStart()
+        captureModeDelegate!.captureModeDidStart()
+        videoSource?.stop()
+        videoSource = nil
+        slider.value = 0.5
+        if coreImageView != nil {
+            coreImageView!.image = nil
+            coreImageView!.hidden = true
+            coreImageView!.removeFromSuperview()
+            coreImageView = nil
+        } else {
+            print("core image view was nil")
+        }
     }
     
     @IBAction func didPressSend(sender: AnyObject) {
-        if let session = AppDelegate.getAppDelegate().getSession() {
-            postLoop(session)
-        } else {
-            AppDelegate.getAppDelegate().showError("Upload Error", message: "It seems you're not logged in")
-        }
+        print("Writing file START: \(Int(NSDate().timeIntervalSince1970))")
+        videoSource!.stop()
+        videoSource!.writeVideoToFile(self.fileWriteCompletion)
+//        if let session = AppDelegate.getAppDelegate().getSession() {
+//            postLoop(session)
+//        } else {
+//            AppDelegate.getAppDelegate().showError("Upload Error", message: "It seems you're not logged in")
+//        }
+    }
+    
+    @IBAction func sliderDidSlide(sender: UISlider) {
+        print(sender.value)
+        videoSource!.setLuminosity(sender.value)
     }
     
     private func postLoop(session: String) {
