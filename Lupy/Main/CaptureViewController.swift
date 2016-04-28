@@ -8,6 +8,7 @@ protocol CaptureModeDelegate {
     func didFinishUpload()
     func didEnterCamera()
     func didExitCamera()
+    func didPressUpload(sourceURL: NSURL, filterSettings: FilterSettings)
 }
 
 var SessionRunningAndDeviceAuthorizedContext = "SessionRunningAndDeviceAuthorizedContext"
@@ -205,6 +206,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     func initCapturePreview() {
         let session: AVCaptureSession = AVCaptureSession()
+        session.sessionPreset = AVCaptureSessionPreset1280x720
         self.session = session
         self.previewView.session = session
         dispatch_async(self.sessionQueue, {

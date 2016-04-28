@@ -31,6 +31,9 @@ struct ScrollSession {
         }
     }
 }
+enum UploadState {
+    case None, Uploading, Error, Success
+}
 class FeedViewController: UIViewController {
     // function: view:
     var feedData = [FeedItem]()
@@ -40,6 +43,8 @@ class FeedViewController: UIViewController {
     var id: Int?
     var navbarFullHeight: CGFloat?
     var scrollSession: ScrollSession?
+    var uploadState = UploadState.None
+    var uploaderDelegate: VideoUploaderDelegate?
     
     @IBOutlet weak var imageCopiedAlert: UILabel!
     @IBOutlet weak var feedView: UITableView!
@@ -51,14 +56,18 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var rightButtonNav: UIButton!
     @IBOutlet weak var titleNav: UILabel!
     var navBarVanishes = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navbarFullHeight = abs(navBarHeight.constant)
-        let nib = UINib(nibName: "FeedCell", bundle: nil)
+        let postNib = UINib(nibName: "FeedCell", bundle: nil)
+        let uploadingNib = UINib(nibName: "UploadingCell", bundle: nil)
         id = AppDelegate.getAppDelegate().getUserId()
-        feedView.registerNib(nib, forCellReuseIdentifier: "feedCell")
+        feedView.registerNib(postNib, forCellReuseIdentifier: "feedCell")
+        feedView.registerNib(uploadingNib, forCellReuseIdentifier: "uploadingCell")
         feedView.tableFooterView = UIView()
         feedView.allowsSelection = false
+        
         attemptLoadFeed()
         imageCopiedAlert.layer.cornerRadius = 6.0
         imageCopiedAlert.clipsToBounds = true
@@ -66,12 +75,17 @@ class FeedViewController: UIViewController {
         addNavbarTitleGesture()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func setUpPullToRefresh() {
         feedView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh feed")
-        self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Refresh feed")
+        refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         feedView.addSubview(self.refreshControl) // not required when using UITableViewController
+        refreshControl.superview!.sendSubviewToBack(refreshControl)
     }
     
     func addNavbarTitleGesture() {
@@ -173,17 +187,19 @@ class FeedViewController: UIViewController {
     }
     
     func navBarRightButtonAction() {
-        if let masterController = self.parentViewController as? MasterViewController? {
-            masterController?.goToMyLoops(.Forward)
+        let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
+        contactViewController.configureUserList(AddContactsViewController.CONFIG_CONTACTS) {
+            self.dismissViewControllerAnimated(true){}
         }
+        self.presentViewController(contactViewController, animated: true, completion: nil)
     }
 
     func navBarLeftButtonAction() {
-        if let masterController = self.parentViewController as? MasterViewController? {
-            masterController?.goToCapture(.Reverse)
-        }
+//        if let masterController = self.parentViewController as? MasterViewController? {
+//            masterController?.goToCapture(.Reverse)
+//        }
     }
-
+    
     func showImageCopying() {
         imageCopiedAlert.text = "Copying gif to clipboard..."
         imageCopiedAlert.backgroundColor = UIColor(netHex: 0xDB8EFF)
@@ -228,14 +244,56 @@ class FeedViewController: UIViewController {
         }
         return true
     }
+    
+    func uploadDidStart() {
+        uploadState = .Uploading
+        feedView.reloadData()
+    }
+    
+    func uploadDidSucceed() {
+        uploadState = .None
+        if let session = AppDelegate.getAppDelegate().getSession() {
+            loadFeed(session)
+        } else {
+            AppDelegate.getAppDelegate().showError("Feed Refresh Error", message: "Make Sure your are logged in and try again")
+        }
+    }
+
+    func uploadError() {
+        // show that and allow the user to tap to try again
+        uploadState = .Error
+        feedView.reloadData()
+    }
+    
 }
 
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if shouldShowUploadingCell() && section == 0 {
+            return 1
+        }
         return feedData.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if shouldShowUploadingCell() && indexPath.section == 0 {
+            return CGFloat(60.0)
+        }        
+        return view.frame.width * 1.25 + 50.0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if shouldShowUploadingCell() {
+            return 2
+        } else {
+            return 1
+        }
+    }
+    
+    func shouldShowUploadingCell() -> Bool {
+        return uploadState == .Uploading || uploadState == .Error
+    }
     // download gif, copy it to clipboard
 //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 //        feedView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -251,6 +309,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if shouldShowUploadingCell() && indexPath.section == 0 {
+            let cell = feedView.dequeueReusableCellWithIdentifier("uploadingCell") as! UploadingCell
+            cell.errorState = uploadState == .Error
+            cell.delegate = self
+            return cell
+        }
         let feedItem = self.feedData[indexPath.row]
         let cell = feedView.dequeueReusableCellWithIdentifier("feedCell") as! FeedCell
         cell.feedViewController = self
@@ -302,10 +366,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                 let loopBottom = loopTop + loopH
                 let feedTop = scrollSession!.currentY!
                 let feedBottom = scrollSession!.currentY! + feedView.frame.height
-                
-                if feedTop < loopTop && feedBottom > loopBottom {
-                    print("should play video at index \(indexPath!.row)")
-                }
                 if loopTop < feedTop {
                     if loopBottom - feedTop < loopH/2 { // if more than half of the video is hidden, pause it
                         cell.pauseVideo()
@@ -505,4 +565,15 @@ extension FeedViewController: FeedCellDelegate {
         feedView.reloadData()
     }
 
+}
+
+extension FeedViewController: UploadingCellDelegate {
+    func retry() {
+        uploaderDelegate!.retry()
+    }
+    
+    func cancelUpload() {
+        uploadState = .None
+        feedView.reloadData()
+    }
 }

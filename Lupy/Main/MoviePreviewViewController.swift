@@ -13,6 +13,15 @@ import Alamofire
 import SwiftyJSON
 import CoreData
 
+enum InterfaceToggle {
+    case Filter, Brightness
+}
+struct FilterPreview {
+    let name: String
+    let filter: VideoFilter
+    var selected: Bool
+}
+
 class MoviePreviewViewController: UIViewController {
     var moviePlayer: AVPlayerViewController!
     var player: AVPlayer?
@@ -20,21 +29,34 @@ class MoviePreviewViewController: UIViewController {
     var coreImageView: CoreImageView?
     var uploadedBytesRepresented: Int64?
     var movieURL: NSURL?
+    var firstFrame: CIImage?
+    var filterPreviews = [FilterPreview]()
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var moviePreview: UIView!
-    @IBOutlet weak var progressBar: UIView!
-    @IBOutlet weak var progressBarCenterX: NSLayoutConstraint!
-    @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var filterView: UICollectionView!
     
-    var progressCompleteCenterX: NSLayoutConstraint?
+    
+    private var interfaceToggle = InterfaceToggle.Filter
+    var interfaceState: InterfaceToggle {
+        get {
+            return interfaceToggle
+        }
+        set(newValue){
+            interfaceToggle = newValue
+            updateBottomInterface()
+        }
+    }
     var captureModeDelegate: CaptureModeDelegate?
     var videoSource: VideoSampleBufferSource?
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let filterNib = UINib(nibName: "FilterViewCell", bundle: nil)
+        filterView.registerNib(filterNib, forCellWithReuseIdentifier: "filterCell")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -47,14 +69,10 @@ class MoviePreviewViewController: UIViewController {
                                   width: frame.width,
                                   height: bottomViewHeight)
         bottomView.setNeedsLayout()
-        resetUploadInterface()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        progressCompleteCenterX = progressBarCenterX
-        progressBar.alpha = 0.0
-        loadingLabel.alpha = 0.0
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -78,7 +96,6 @@ class MoviePreviewViewController: UIViewController {
             coreImageView = CoreImageView(frame: moviePreview.bounds)
             moviePreview.insertSubview(coreImageView!, atIndex: 0)
         }
-        resetUploadInterface()
         videoSource = VideoSampleBufferSource() { [unowned self] image in
             self.handleVideoFrame(image)
         }
@@ -89,70 +106,69 @@ class MoviePreviewViewController: UIViewController {
         // get transformation for this rotation
         let rotateTransform = image.imageTransformForOrientation(Int32(6))
         coreImageView!.image = image.imageByApplyingTransform(rotateTransform)
+        if firstFrame == nil {
+            firstFrame = coreImageView!.image
+            populateFilterCells()
+        }
         if coreImageView!.hidden {
             self.coreImageView!.hidden = false
         }
     }
     
-    func fileWriteCompletion(url: NSURL?) {
-        if url == nil {
-            AppDelegate.getAppDelegate().showError("Video Filtering Error", message: "Failed to write video")
-            return
-        } else {
-            print("Writing file END: \(Int(NSDate().timeIntervalSince1970))")
-            movieURL = url
-            initPlayer()
-            coreImageView!.hidden = true
-        }
-    }
-        
-    func resetUploadInterface() {
-        if progressBarCenterX.constant == 0 {
-            progressBarCenterX.constant = progressCompleteCenterX!.constant - view.bounds.width
-        }
-        progressBar.alpha = 0.0
-        loadingLabel.alpha = 0.0
-        nextButton.hidden = false
-        nextButton.alpha = 1.0
+    func populateFilterCells(){
+        filterPreviews.append(FilterPreview(name: "Natural", filter: .None, selected: true))
+        filterPreviews.append(FilterPreview(name: "Chaplin", filter: .Chaplin, selected: false))
+        filterView.dataSource = self
+        filterView.delegate = self
+        filterView.reloadData()
+        filterView.hidden = false
     }
     
-    func initPlayer() {
-        if player == nil {
-            player = AVPlayer(URL: movieURL!)
-        } else {
-            let playerItem = AVPlayerItem(URL: movieURL!)
-            player?.replaceCurrentItemWithPlayerItem(playerItem)
-        }
-        player!.actionAtItemEnd = .None
-        //set a listener for when the video ends
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(self,
-                         selector: #selector(MoviePreviewViewController.restartVideoFromBeginning),
-                         name: AVPlayerItemDidPlayToEndTimeNotification,
-                         object: player!.currentItem)
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = self.view.bounds
-        let moviePreviewView = UIView(frame: self.view.bounds)
-        moviePreviewView.layer.addSublayer(playerLayer)
-        self.view.insertSubview(moviePreviewView, atIndex: 0)
-        print("sublayer added")
-        player!.play()
-    }
-    
-    func restartVideoFromBeginning()  {
-        let startTime = CMTimeMake(0, 1)
-        player!.seekToTime(startTime)
-        player!.play()
-    }
+//    func initPlayer() {
+//        if player == nil {
+//            player = AVPlayer(URL: movieURL!)
+//        } else {
+//            let playerItem = AVPlayerItem(URL: movieURL!)
+//            player?.replaceCurrentItemWithPlayerItem(playerItem)
+//        }
+//        player!.actionAtItemEnd = .None
+//        //set a listener for when the video ends
+//        NSNotificationCenter
+//            .defaultCenter()
+//            .addObserver(self,
+//                         selector: #selector(MoviePreviewViewController.restartVideoFromBeginning),
+//                         name: AVPlayerItemDidPlayToEndTimeNotification,
+//                         object: player!.currentItem)
+//        let playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.frame = self.view.bounds
+//        let moviePreviewView = UIView(frame: self.view.bounds)
+//        moviePreviewView.layer.addSublayer(playerLayer)
+//        self.view.insertSubview(moviePreviewView, atIndex: 0)
+//        print("sublayer added")
+//        player!.play()
+//    }
+//    
 
     
     @IBAction func didPressCancel(sender: AnyObject) {
         // go back to the captureView
         captureModeDelegate!.captureModeDidStart()
+        prepareForDisappear()
+    }
+    
+    @IBAction func didPressSend(sender: AnyObject) {
+        print("Writing file START: \(Int(NSDate().timeIntervalSince1970))")
+        videoSource!.stop()
+        captureModeDelegate?.didPressUpload(movieURL!, filterSettings: videoSource!.filterSettings)
+        prepareForDisappear()
+    }
+    
+    private func prepareForDisappear() {
         videoSource?.stop()
         videoSource = nil
         slider.value = 0.5
+        firstFrame = nil
+        filterView.hidden = true
         if coreImageView != nil {
             coreImageView!.image = nil
             coreImageView!.hidden = true
@@ -163,138 +179,73 @@ class MoviePreviewViewController: UIViewController {
         }
     }
     
-    @IBAction func didPressSend(sender: AnyObject) {
-        print("Writing file START: \(Int(NSDate().timeIntervalSince1970))")
-        videoSource!.stop()
-        videoSource!.writeVideoToFile(self.fileWriteCompletion)
-//        if let session = AppDelegate.getAppDelegate().getSession() {
-//            postLoop(session)
-//        } else {
-//            AppDelegate.getAppDelegate().showError("Upload Error", message: "It seems you're not logged in")
-//        }
-    }
-    
     @IBAction func sliderDidSlide(sender: UISlider) {
         print(sender.value)
         videoSource!.setLuminosity(sender.value)
     }
     
-    private func postLoop(session: String) {
-        uploadedBytesRepresented = 0
-        progressBar.alpha = 1.0
-        showLoadingLabel()
-        let headers = [
-            "Session": session,
-            "Format": "MOV"
-        ]
-//        Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", headers: headers, file: movieURL!)
-//            .progress { _, totalBytesRead, totalBytesExpectedToRead in
-//                self.updateUploadProgress(totalBytesRead, totalBytesExpectedToRead: totalBytesExpectedToRead)
-//            }
-//            .responseJSON { response in
-//                self.processUploadResponse(response)
-//        }
+    @IBAction func didPressFilter(sender: AnyObject) {
+        interfaceState = .Filter
     }
     
-    private func updateUploadProgress(totalBytesRead: Int64, totalBytesExpectedToRead: Int64) {
-        let unrepresentedBytes = totalBytesRead - self.uploadedBytesRepresented!
-        let unrepresentedPercent = Float(unrepresentedBytes) / Float(totalBytesExpectedToRead)
-        if unrepresentedPercent > 0.2 {
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                self.moveProgressBar(unrepresentedBytes,
-                                     totalBytesExpectedToRead: totalBytesExpectedToRead,
-                                     unrepresentedPercent: unrepresentedPercent)
-            }
-            self.uploadedBytesRepresented = totalBytesRead
-        }
-    }
-    
-    private func processUploadResponse(response: (Response<AnyObject, NSError>)) {
-        guard response.result.error == nil else {
-            // got an error in getting the data, need to handle it
-            print(response.result.error!)
-            AppDelegate.getAppDelegate().showError("Conneciton Error", message: "Failed to upload post")
-            resetUploadInterface()
-            return
-        }
-        if let value: AnyObject = response.result.value {
-            let json = JSON(value)
-            if json["Success"].int == 1 {
-                dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                    self.showUploadSuccess()
-                }
-                return
-            } else {
-                AppDelegate.getAppDelegate().showError("Upload Error", message: json["Error"].stringValue)
-            }
-        } else {
-            AppDelegate.getAppDelegate().showError("Upload Error", message: "Failed to successfully upload")
-        }
-        resetUploadInterface()
-    }
-    
-    private func showLoadingLabel(){
-        self.loadingLabel.text = "Posting..."
-        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.loadingLabel.alpha = 1.0
-            self.nextButton.alpha = 0.0
-            self.view.layoutIfNeeded()
-            }, completion: { finished in
-                if finished {
-                    self.nextButton.hidden = true
-                }
-        })
+    @IBAction func didPressBrightness(sender: AnyObject) {
+        interfaceState = .Brightness
     }
 
-    private func moveProgressBar(unrepresented: Int64, totalBytesExpectedToRead: Int64, unrepresentedPercent: Float) {
-        let moveByPercent = Float(unrepresented) / Float(totalBytesExpectedToRead)
-        UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.progressBarCenterX.constant += CGFloat(moveByPercent) * self.view.bounds.width
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-    }
-    
-    // make the label transluscent to make the text transition less harsh, and then show the updated "It's up!" text
-    private func showUploadSuccess() {
-        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.loadingLabel.alpha = 0.2
-            self.progressBarCenterX.constant = 0.0
-            self.view.layoutIfNeeded()
-            }, completion: { finished in
-                if finished {
-                    self.showUploadSuccessLabel()
-                }
-        })
-    }
-    
-    private func showUploadSuccessLabel() {
-        self.loadingLabel.text = "It's up!"
-        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.loadingLabel.alpha = 1.0
-            self.progressBar.alpha = 0.0
-            self.view.layoutIfNeeded()
-            }, completion: { finished in
-                if finished {
-                    self.startUploadSuccessLabelFadeout()
-                }
-        })
-    }
-    
-    // resets the loading interface
-    private func startUploadSuccessLabelFadeout() {
-        UIView.animateWithDuration(0.2, delay: 1.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.loadingLabel.alpha = 0.0
-            self.progressBarCenterX.constant = -self.view.bounds.width
-            self.view.layoutIfNeeded()
-            }, completion: { finished in
-                if finished {
-                    self.captureModeDelegate!.didFinishUpload()
-                }
-        })
+    private func updateBottomInterface() {
+        if interfaceState == .Filter {
+            label.text = "Filter"
+            slider.hidden = true
+            filterView.hidden = false
+        } else {
+            label.text = "Brightness"
+            filterView.hidden = true
+            slider.hidden = false
+        }
     }
 }
 
+extension MoviePreviewViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                        cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("filterCell", forIndexPath: indexPath) as! FilterViewCell
+        let index = indexPath.row
+        let filterPreview = filterPreviews[index]
+        let image = videoSource!.getProcessedImage(firstFrame!, filter: filterPreview.filter)
+        cell.loadCell(image, name: filterPreview.name, selected: filterPreview.selected)
+        return cell
+    }
 
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        for i in 0...(filterPreviews.count-1) {
+            if i == indexPath.row {
+                filterPreviews[i].selected = true
+                videoSource!.filter = filterPreviews[i].filter
+            } else {
+                filterPreviews[i].selected = false
+            }
+        }
+        filterView.reloadData()
+    }
+//    -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
+//    
+//    UICollectionViewCell *datasetCell =[collectionView cellForItemAtIndexPath:indexPath];
+//    datasetCell.backgroundColor = [UIColor blueColor]; // highlight selection
+//    }
+//    
+//    -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    UICollectionViewCell *datasetCell =[collectionView cellForItemAtIndexPath:indexPath];
+//    datasetCell.backgroundColor = [UIColor redColor]; // Default color
+//    }
+
+    
+}
 typealias Filter = CIImage -> CIImage
 
 func blur(radius: Double) -> Filter {

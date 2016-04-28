@@ -54,7 +54,9 @@ class AddContactsViewController: UIViewController {
 //            self.navigationItem.setHidesBackButton(true, animated:true)
         }
     }
-    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     func configureUserList(configurationMode: String, backMethod: () -> Void) {
         self.backMethod = backMethod
         self.configurationMode = configurationMode

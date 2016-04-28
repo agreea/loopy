@@ -38,8 +38,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TCq-VT-X5i">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Agp-zQ-8d2">
+                                                <rect key="frame" x="0.0" y="0.0" width="102" height="60"/>
+                                            </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="teg-j8-qdC">
-                                                <rect key="frame" x="0.0" y="0.0" width="64" height="60"/>
+                                                <rect key="frame" x="102" y="0.0" width="64" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="Xc4-sQ-0K0"/>
                                                 </constraints>
@@ -48,50 +51,24 @@
                                                     <action selector="didPressHomeButton:" destination="CpM-Kh-BuR" eventType="touchUpInside" id="huH-cn-CAR"/>
                                                 </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Agp-zQ-8d2">
-                                                <rect key="frame" x="64" y="0.0" width="70" height="60"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2k-ii-rWh">
-                                                <rect key="frame" x="134" y="0.0" width="64" height="60"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="64" id="BjQ-6A-n3Z"/>
-                                                </constraints>
-                                                <state key="normal" image="DiscoverIcon"/>
-                                                <connections>
-                                                    <action selector="didPressDiscoverButton:" destination="CpM-Kh-BuR" eventType="touchUpInside" id="Udn-Lg-lLD"/>
-                                                </connections>
-                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0DF-Rc-HEI">
-                                                <rect key="frame" x="198" y="0.0" width="70" height="60"/>
+                                                <rect key="frame" x="166" y="0.0" width="102" height="60"/>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egD-7F-lGL">
                                                 <rect key="frame" x="268" y="0.0" width="64" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="u2g-O9-X4f"/>
                                                 </constraints>
-                                                <state key="normal" image="CameraIcon"/>
+                                                <state key="normal" image="NewPostIcon"/>
                                                 <connections>
                                                     <action selector="didPressCameraButton:" destination="CpM-Kh-BuR" eventType="touchUpInside" id="MEv-b0-xCm"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBe-uQ-q4w">
-                                                <rect key="frame" x="332" y="0.0" width="70" height="60"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ksb-am-gZq">
-                                                <rect key="frame" x="402" y="0.0" width="64" height="60"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="64" id="faU-e1-ZrI"/>
-                                                </constraints>
-                                                <state key="normal" image="AlertsIcon"/>
-                                                <connections>
-                                                    <action selector="didPressAlertsButton:" destination="CpM-Kh-BuR" eventType="touchUpInside" id="lEY-Od-c9G"/>
-                                                </connections>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQ3-if-x4I">
-                                                <rect key="frame" x="466" y="0.0" width="70" height="60"/>
+                                                <rect key="frame" x="332" y="0.0" width="102" height="60"/>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAD-EI-eLf">
-                                                <rect key="frame" x="536" y="0.0" width="64" height="60"/>
+                                                <rect key="frame" x="434" y="0.0" width="64" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="tuz-xg-f4G"/>
                                                 </constraints>
@@ -100,27 +77,27 @@
                                                     <action selector="didPressUserButton:" destination="CpM-Kh-BuR" eventType="touchUpInside" id="WRP-YU-PeB"/>
                                                 </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQ3-if-x4I">
+                                                <rect key="frame" x="498" y="0.0" width="102" height="60"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="uQ3-if-x4I" firstAttribute="width" secondItem="JBe-uQ-q4w" secondAttribute="width" id="0KZ-3J-pHg"/>
-                                            <constraint firstItem="r2k-ii-rWh" firstAttribute="height" secondItem="TCq-VT-X5i" secondAttribute="height" id="0Sc-4h-07x"/>
                                             <constraint firstItem="Agp-zQ-8d2" firstAttribute="top" secondItem="0DF-Rc-HEI" secondAttribute="top" id="0rL-Cj-ui6"/>
-                                            <constraint firstItem="JBe-uQ-q4w" firstAttribute="top" secondItem="uQ3-if-x4I" secondAttribute="top" id="5Nr-kf-SgM"/>
                                             <constraint firstItem="JBe-uQ-q4w" firstAttribute="width" secondItem="0DF-Rc-HEI" secondAttribute="width" id="6CZ-nP-xZY"/>
                                             <constraint firstItem="0DF-Rc-HEI" firstAttribute="width" secondItem="Agp-zQ-8d2" secondAttribute="width" id="BC4-3K-doI"/>
                                             <constraint firstItem="egD-7F-lGL" firstAttribute="centerX" secondItem="TCq-VT-X5i" secondAttribute="centerX" id="G9y-YV-KK0"/>
                                             <constraint firstItem="egD-7F-lGL" firstAttribute="height" secondItem="TCq-VT-X5i" secondAttribute="height" id="GkE-RT-jx3"/>
                                             <constraint firstItem="Agp-zQ-8d2" firstAttribute="top" secondItem="TCq-VT-X5i" secondAttribute="top" id="Puo-2Y-Q7k"/>
-                                            <constraint firstItem="Ksb-am-gZq" firstAttribute="height" secondItem="TCq-VT-X5i" secondAttribute="height" id="ZQl-2M-b98"/>
                                             <constraint firstItem="teg-j8-qdC" firstAttribute="height" secondItem="TCq-VT-X5i" secondAttribute="height" id="Zcq-8H-Irz"/>
+                                            <constraint firstItem="uQ3-if-x4I" firstAttribute="top" secondItem="oAD-EI-eLf" secondAttribute="top" id="aPe-H0-TrR"/>
                                             <constraint firstItem="0DF-Rc-HEI" firstAttribute="top" secondItem="JBe-uQ-q4w" secondAttribute="top" id="iYo-nx-pVD"/>
                                             <constraint firstItem="oAD-EI-eLf" firstAttribute="height" secondItem="TCq-VT-X5i" secondAttribute="height" id="yFD-ES-1Jv"/>
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ban-ep-MD1" userLabel="top line">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                                        <color key="backgroundColor" red="0.95132526178010468" green="0.95132526178010468" blue="0.95132526178010468" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.80395124350000002" green="0.80395124350000002" blue="0.80395124350000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -173,9 +150,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="alertsButton" destination="Ksb-am-gZq" id="Mgj-mX-MBu"/>
                         <outlet property="cameraButton" destination="egD-7F-lGL" id="A3o-db-S7a"/>
-                        <outlet property="discoverButton" destination="r2k-ii-rWh" id="8KK-1e-lEq"/>
                         <outlet property="homeButton" destination="teg-j8-qdC" id="eh5-9r-s2M"/>
                         <outlet property="tabBar" destination="5iZ-ad-bix" id="ARc-Y5-Tgd"/>
                         <outlet property="userButton" destination="oAD-EI-eLf" id="Ffh-dI-In4"/>
@@ -187,10 +162,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AlertsIcon" width="40" height="40"/>
-        <image name="CameraIcon" width="60" height="40"/>
-        <image name="DiscoverIcon" width="40" height="40"/>
         <image name="HomeIcon" width="40" height="40"/>
+        <image name="NewPostIcon" width="40" height="40"/>
         <image name="UserIcon" width="40" height="40"/>
     </resources>
 </document>

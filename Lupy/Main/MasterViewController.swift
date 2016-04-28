@@ -12,12 +12,6 @@ import Kingfisher
 import Alamofire
 import CoreData
 
-protocol CoreDataDelegate {
-    func getSession() -> String?
-    func getUserId() -> Int?
-    func getUsername() -> String?
-}
-
 protocol TabBarDelegate {
     func goToCamera()
     func goToHome()
@@ -31,13 +25,14 @@ protocol CameraNavDelegate {
     func cameraDidEnter()
 }
 
+
 class MasterViewController: UIPageViewController, UINavigationControllerDelegate {
     
     var moviePreviewController: MoviePreviewViewController?
     var captureViewController: CaptureViewController?
     var previewMode: Bool = false
     var cameraDelegate: CameraNavDelegate?
-    
+    var uploader: VideoUploader?
     private(set) lazy var orderedViewControllers: [UIViewController] = {
         return [self.initCaptureViewController(), self.initFeedViewController(), self.initMyLoopsViewController()]
     }()
@@ -51,6 +46,7 @@ class MasterViewController: UIPageViewController, UINavigationControllerDelegate
                                animated: true,
                                completion: nil)
         }
+        uploader = VideoUploader(delegate: self)
         print("Transition style: \(transitionStyle)")
     }
     
@@ -164,51 +160,52 @@ extension MasterViewController: TabBarDelegate {
     }
 }
 
-extension MasterViewController: CoreDataDelegate {
-    func getUserId() -> Int? {
-        if let userData = getUserData() {
-            return userData.valueForKey("id") as? Int
-        }
-        return nil
+extension MasterViewController: VideoUploaderDelegate {
+    func uploadDidStart(firstFrame: CIImage){
+        // show uploadCell in feed
+        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        feedViewController.uploadDidStart()
     }
     
-    func getSession() -> String? {
-        if let userData = getUserData() {
-            return userData.valueForKey("session") as? String
-        }
-        return nil
+    func uploadDidSucceed() {
+        // show upload was successful, once that's done exit uploading mode
+        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        feedViewController.uploadDidSucceed()
+        uploader!.sourceURL = nil
     }
     
-    func getUsername() -> String? {
-        if let userData = getUserData() {
-            return userData.valueForKey("username") as? String
-        }
-        return nil
+    func uploadDidError() {
+        // show there was an error and allow the user to tap to retry uploading
+        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        feedViewController.uploadError()
+        print("Upload did error")
     }
     
-    private func getUserData() -> NSManagedObject? {
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: "User_data")
-        do {
-            let results =
-                try managedContext.executeFetchRequest(fetchRequest)
-            if let userCredentials = results as? [NSManagedObject],
-                let userData = userCredentials[0] as? NSManagedObject {
-                return userData
-            }
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
+    func retry() {
+        if uploader!.sourceURL != nil {
+            uploader!.retry()
+        } else {
+            // some error display
         }
-        return nil
     }
 }
 
 extension MasterViewController: CaptureModeDelegate {
+    
+    func didPressUpload(sourceURL: NSURL, filterSettings: FilterSettings) {
+        uploader!.postVideo(sourceURL, filterSettings: filterSettings)
+        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        feedViewController.scrollToTop()
+        goToHome()
+        cameraDelegate!.cameraDidExit()
+        moviePreviewController!.view.hidden = true
+        // go back to feed
+    }
+
     // CaptureModeDelegateMethods
     func previewModeDidStart(movieURL: NSURL) {
         moviePreviewController!.movieURL = movieURL
+        moviePreviewController!.captureModeDelegate = self
         moviePreviewController!.previewModeDidStart()
         moviePreviewController!.view.hidden = false
         previewMode = true
@@ -228,7 +225,7 @@ extension MasterViewController: CaptureModeDelegate {
             feedViewController.attemptLoadFeed()
         }
         moviePreviewController!.view.hidden = true
-        cameraDelegate?.cameraDidExit()
+        cameraDelegate!.cameraDidExit()
     }
     
     func didExitCamera() {

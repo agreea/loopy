@@ -89,6 +89,13 @@ extension CGRect {
     var center: CGPoint {
         return CGPoint(x: midX, y: midY)
     }
+    static func rectAroundCenter(center: CGPoint, width: CGFloat, height: CGFloat) -> CGRect {
+        // take the height
+        // take the width
+        let originX = center.x - (width/2)
+        let originY = center.y - (height/2)
+        return CGRect(x: originX, y: originY, width: width, height: height)
+    }
 }
 
 extension AVCaptureDevicePosition {

@@ -8,9 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		85C700A90DDA269D36450C4B /* Pods_Lupy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9CA5447C2C686D816945BA /* Pods_Lupy.framework */; };
+		C61D37BE1CD0B39D007E8ACA /* VideoUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D37BD1CD0B39D007E8ACA /* VideoUploader.swift */; };
+		C61D37C21CD1439B007E8ACA /* FrameFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D37C11CD1439B007E8ACA /* FrameFilter.swift */; };
+		C61D37C51CD15D02007E8ACA /* UploadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D37C31CD15D02007E8ACA /* UploadingCell.swift */; };
+		C61D37C61CD15D02007E8ACA /* UploadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C61D37C41CD15D02007E8ACA /* UploadingCell.xib */; };
 		C635A0211CCD3A030096940C /* VideoBufferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0201CCD3A030096940C /* VideoBufferManager.swift */; };
 		C635A0231CCDED2A0096940C /* VideoSampleBufferSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */; };
 		C635A0251CCDEF380096940C /* CoreImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C635A0241CCDEF380096940C /* CoreImageView.swift */; };
+		C63E28401CD1A12400B5D656 /* pier-italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C63E283C1CD1A11300B5D656 /* pier-italic.otf */; };
+		C63E28411CD1A12600B5D656 /* pier-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C63E283D1CD1A11300B5D656 /* pier-regular.otf */; };
+		C63E28421CD1A12900B5D656 /* pier-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C63E283F1CD1A11300B5D656 /* pier-bold.otf */; };
+		C63E28431CD1A12C00B5D656 /* pier-bold-italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C63E283E1CD1A11300B5D656 /* pier-bold-italic.otf */; };
+		C63E28461CD1E90E00B5D656 /* FilterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63E28441CD1E90E00B5D656 /* FilterViewCell.swift */; };
+		C63E28471CD1E90E00B5D656 /* FilterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63E28451CD1E90E00B5D656 /* FilterViewCell.xib */; };
 		C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */; };
 		C63EC0C71CBE326900ACE7E4 /* MyLoopsUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */; };
 		C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */; };
@@ -112,10 +122,20 @@
 		14F63581D348DC3BFE1E2897 /* Pods_Loopy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Loopy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B9CA5447C2C686D816945BA /* Pods_Lupy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lupy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		512549D5C1058CBEE3D6B822 /* Pods-Lupy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lupy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lupy/Pods-Lupy.debug.xcconfig"; sourceTree = "<group>"; };
+		C61D37BD1CD0B39D007E8ACA /* VideoUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoUploader.swift; sourceTree = "<group>"; };
+		C61D37C11CD1439B007E8ACA /* FrameFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameFilter.swift; path = Main/FrameFilter.swift; sourceTree = "<group>"; };
+		C61D37C31CD15D02007E8ACA /* UploadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadingCell.swift; path = Main/UploadingCell.swift; sourceTree = "<group>"; };
+		C61D37C41CD15D02007E8ACA /* UploadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UploadingCell.xib; path = Main/UploadingCell.xib; sourceTree = "<group>"; };
 		C62490381CBA6E2B00C3A36F /* Loopy2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Loopy2.xcdatamodel; sourceTree = "<group>"; };
 		C635A0201CCD3A030096940C /* VideoBufferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBufferManager.swift; sourceTree = "<group>"; };
 		C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoSampleBufferSource.swift; path = Main/VideoSampleBufferSource.swift; sourceTree = "<group>"; };
 		C635A0241CCDEF380096940C /* CoreImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreImageView.swift; path = Main/CoreImageView.swift; sourceTree = "<group>"; };
+		C63E283C1CD1A11300B5D656 /* pier-italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pier-italic.otf"; sourceTree = "<group>"; };
+		C63E283D1CD1A11300B5D656 /* pier-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pier-regular.otf"; sourceTree = "<group>"; };
+		C63E283E1CD1A11300B5D656 /* pier-bold-italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pier-bold-italic.otf"; sourceTree = "<group>"; };
+		C63E283F1CD1A11300B5D656 /* pier-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pier-bold.otf"; sourceTree = "<group>"; };
+		C63E28441CD1E90E00B5D656 /* FilterViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterViewCell.swift; path = Main/FilterViewCell.swift; sourceTree = "<group>"; };
+		C63E28451CD1E90E00B5D656 /* FilterViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewCell.xib; path = Main/FilterViewCell.xib; sourceTree = "<group>"; };
 		C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyLoopsUserCell.swift; path = Main/MyLoopsUserCell.swift; sourceTree = "<group>"; };
 		C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyLoopsUserCell.xib; path = Main/MyLoopsUserCell.xib; sourceTree = "<group>"; };
 		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginSignup.storyboard; path = Landing/LoginSignup.storyboard; sourceTree = "<group>"; };
@@ -348,6 +368,10 @@
 		C6F082141CCBDF0F00014A44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C63E283C1CD1A11300B5D656 /* pier-italic.otf */,
+				C63E283D1CD1A11300B5D656 /* pier-regular.otf */,
+				C63E283E1CD1A11300B5D656 /* pier-bold-italic.otf */,
+				C63E283F1CD1A11300B5D656 /* pier-bold.otf */,
 				C6F082151CCBDF2800014A44 /* Nunito-Black.ttf */,
 				C6F082161CCBDF2800014A44 /* Nunito-Bold.ttf */,
 				C6F082171CCBDF2800014A44 /* Nunito-ExtraBold.ttf */,
@@ -382,7 +406,11 @@
 				C6BE95A61CB1ED0800E4F067 /* MoviePreviewViewController.swift */,
 				C635A0241CCDEF380096940C /* CoreImageView.swift */,
 				C635A0221CCDED2A0096940C /* VideoSampleBufferSource.swift */,
+				C61D37C11CD1439B007E8ACA /* FrameFilter.swift */,
+				C61D37BD1CD0B39D007E8ACA /* VideoUploader.swift */,
 				C6BE95A71CB1ED0800E4F067 /* MoviePreviewView.xib */,
+				C63E28441CD1E90E00B5D656 /* FilterViewCell.swift */,
+				C63E28451CD1E90E00B5D656 /* FilterViewCell.xib */,
 				C67DBB791C9FAAA70082CB56 /* CaptureViewController.swift */,
 				C67DBB7A1C9FAAA70082CB56 /* CaptureViewController.xib */,
 				C635A0201CCD3A030096940C /* VideoBufferManager.swift */,
@@ -405,6 +433,8 @@
 				C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */,
 				C65875A81CC8A01C00F3EE79 /* BottomNavBar.swift */,
 				C6F081DB1CCA924A00014A44 /* TabBarViewController.swift */,
+				C61D37C31CD15D02007E8ACA /* UploadingCell.swift */,
+				C61D37C41CD15D02007E8ACA /* UploadingCell.xib */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -525,12 +555,17 @@
 				C6F082081CCBDEC300014A44 /* home_icon.pdf in Resources */,
 				C6F082211CCBE00A00014A44 /* Nunito-Light.ttf in Resources */,
 				C6F0821E1CCBE00A00014A44 /* Nunito-Bold.ttf in Resources */,
+				C63E28421CD1A12900B5D656 /* pier-bold.otf in Resources */,
+				C63E28431CD1A12C00B5D656 /* pier-bold-italic.otf in Resources */,
+				C63E28411CD1A12600B5D656 /* pier-regular.otf in Resources */,
+				C63E28401CD1A12400B5D656 /* pier-italic.otf in Resources */,
 				C6F081FE1CCBDEC300014A44 /* Camera.pdf in Resources */,
 				C6F0820B1CCBDEC300014A44 /* navbar_back.pdf in Resources */,
 				C6BB90091CB590A200C6DB94 /* FeedCell.xib in Resources */,
 				C6FC53A61CB89F02009080A2 /* AddContactsViewController.xib in Resources */,
 				C6F082221CCBE00A00014A44 /* Nunito-Medium.ttf in Resources */,
 				C6F082021CCBDEC300014A44 /* follow_user.pdf in Resources */,
+				C63E28471CD1E90E00B5D656 /* FilterViewCell.xib in Resources */,
 				C6F082011CCBDEC300014A44 /* flip_camera.pdf in Resources */,
 				C6F082231CCBE00A00014A44 /* Nunito-Regular.ttf in Resources */,
 				C6F082071CCBDEC300014A44 /* home_icon_hl.pdf in Resources */,
@@ -542,6 +577,7 @@
 				C6F081FC1CCBDEC300014A44 /* alert_icon.pdf in Resources */,
 				C6690D291CBF9C5E00A857C0 /* Assets.xcassets in Resources */,
 				C6F082051CCBDEC300014A44 /* heart_w.pdf in Resources */,
+				C61D37C61CD15D02007E8ACA /* UploadingCell.xib in Resources */,
 				C6BE95A91CB1ED0800E4F067 /* MoviePreviewView.xib in Resources */,
 				C6F082091CCBDEC300014A44 /* magnifying_glass_icon_hl.pdf in Resources */,
 				C6F081FA1CCBDEC300014A44 /* add_user.pdf in Resources */,
@@ -641,6 +677,7 @@
 				C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */,
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
 				C635A0211CCD3A030096940C /* VideoBufferManager.swift in Sources */,
+				C61D37C51CD15D02007E8ACA /* UploadingCell.swift in Sources */,
 				C6BB900D1CB627D700C6DB94 /* TimerBarView.swift in Sources */,
 				C6BB900B1CB6099800C6DB94 /* CaptureButtonView.swift in Sources */,
 				C63F6FF81CB7A4A200D5DE3E /* FindFriendsViewController.swift in Sources */,
@@ -648,6 +685,7 @@
 				C6FC53A91CB89FA5009080A2 /* ContactCell.xib in Sources */,
 				C6FBCE1B1CBCBAB400DD65D4 /* Contact+CoreDataProperties.swift in Sources */,
 				C63F6FF61CB7708700D5DE3E /* VerifyPhoneViewController.swift in Sources */,
+				C61D37BE1CD0B39D007E8ACA /* VideoUploader.swift in Sources */,
 				C671F4511CBA53E800400963 /* ClassExtensions.swift in Sources */,
 				C6CCEF5A1C9DBD7500D8DF0F /* API.swift in Sources */,
 				C6BB90111CB63ABE00C6DB94 /* PreviewNextButton.swift in Sources */,
@@ -656,12 +694,14 @@
 				C63F6FEC1CB7395000D5DE3E /* LoopyLandingViewController.swift in Sources */,
 				C6FBCE1D1CBCBB2B00DD65D4 /* ContactCell.swift in Sources */,
 				C63F6FF41CB76E6800D5DE3E /* AddPhoneViewController.swift in Sources */,
+				C61D37C21CD1439B007E8ACA /* FrameFilter.swift in Sources */,
 				C635A0251CCDEF380096940C /* CoreImageView.swift in Sources */,
 				C67370E81C9D2D1800B2B8C1 /* AppDelegate.swift in Sources */,
 				C6BB90081CB590A200C6DB94 /* FeedCell.swift in Sources */,
 				C67DBB7F1C9FAD470082CB56 /* FeedViewController.swift in Sources */,
 				C6FBE73C1CBA3ACD00986B2A /* RoundedButton.swift in Sources */,
 				C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */,
+				C63E28461CD1E90E00B5D656 /* FilterViewCell.swift in Sources */,
 				C63F6FEE1CB75BD400D5DE3E /* SignupViewController.swift in Sources */,
 				C6FC53AC1CB89FFF009080A2 /* AddContactsViewController.swift in Sources */,
 				C635A0231CCDED2A0096940C /* VideoSampleBufferSource.swift in Sources */,

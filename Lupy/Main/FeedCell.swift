@@ -13,7 +13,6 @@ import AVFoundation
 import AVKit
 import Alamofire
 import Haneke
-import FLAnimatedImage
 
 protocol FeedCellDelegate {
     func likePost(id: Int, cell: FeedCell)
@@ -30,6 +29,25 @@ class FeedCell: UITableViewCell {
     var _liked: Bool?
     var delegate: FeedCellDelegate?
     var fullHeartWidth: CGFloat?
+    enum PlayState {
+        case Play, Pause
+    }
+    private var _shouldPlayState = PlayState.Play
+    private var shouldPlayState: PlayState {
+        get {
+            return _shouldPlayState
+        }
+        set(newValue) {
+            _shouldPlayState = newValue
+            if _shouldPlayState == .Play {
+                player!.play()
+                // hide share interface
+            } else {
+                player!.pause()
+                // show share interface
+            }
+        }
+    }
 //    var _username: String?
 //    var username: String? {
 //        get {
@@ -73,11 +91,28 @@ class FeedCell: UITableViewCell {
         super.awakeFromNib()
         initPlayer()
         addDoubleTapToPreview()
+        addSingleTapToPreview()
         addProfileLinkToUsername()
         gifPreview.userInteractionEnabled = true
         heartView.userInteractionEnabled = true
-        profilePic.layer.cornerRadius = profilePic.frame.width / 2
-        profilePic.clipsToBounds = true
+//        profilePic.layer.cornerRadius = profilePic.frame.width / 2
+//        profilePic.clipsToBounds = true
+    }
+    private func addSingleTapToPreview() {
+        let singleTapListner = UITapGestureRecognizer()
+        singleTapListner.numberOfTapsRequired = 1
+        singleTapListner.addTarget(self, action:  #selector(FeedCell.didSingleTapPreview))
+        gifPreview.addGestureRecognizer(singleTapListner)
+    }
+    
+    func didSingleTapPreview() {
+        // pause the video
+        if shouldPlayState == .Play {
+            shouldPlayState = .Pause
+        } else {
+            shouldPlayState = .Play
+        }
+        // fade in the SSD interactions
     }
     
     private func addDoubleTapToPreview() {
@@ -110,6 +145,8 @@ class FeedCell: UITableViewCell {
         usernameLabel.text = feedItem.Username
         id = feedItem.Id
         self.liked = feedItem.Liked!
+        print("Cell height: \(frame.height)")
+        print("Gif image height: \(gifPreview.frame.height)")
 //                    self.heartView.transform = CGAffineTransformMakeScale(0,0)
 //        self.heartViewWidth.constant = 0.0
 //        self.layoutIfNeeded()
@@ -131,7 +168,7 @@ class FeedCell: UITableViewCell {
                                       placeholderImage: nil,
                                       optionsInfo: optionInfo,
                                       completionHandler: { (image, error, cacheType, imageURL) -> () in
-                                        self.reframeImage()
+//                                        self.reframeImage()
                                         if self.feedViewController!.canCellDownloadGif(self) {
                                             self.loadVideoPreview(uuid)
                                         }
@@ -228,6 +265,7 @@ class FeedCell: UITableViewCell {
                                                 currentFrame.origin.y,
                                                 currentFrame.width,
                                                 currentFrame.width * 1.25)
+            print("Update frame")
         }
 //        gifPreview.layer.cornerRadius = 6.0
         gifPreview.clipsToBounds = true
@@ -319,13 +357,13 @@ extension FeedCell {
     }
     
     func playVideo() {
-        if !isPlayerPlaying() {
+        if !isPlayerPlaying() && shouldPlayState == .Play {
             player!.play()
-        } else {
-            print("didn't play")
         }
     }
     
+    // used to describe the physical state of the player,
+    // as opposed to shouldPlayState, which describes the user's "will to play"
     private func isPlayerPlaying() -> Bool {
         return player!.rate != 0 && player!.error == nil
     }
@@ -333,8 +371,6 @@ extension FeedCell {
     func pauseVideo() {
         if isPlayerPlaying() {
             player!.pause()
-        } else {
-            print("didn't pause")
         }
     }
 }
@@ -353,10 +389,41 @@ extension UIImageViewAligned {
     }
     
     private func resizePlayerLayer(layer: AVPlayerLayer) {
+        let viewHeight = self.bounds.height
+        let viewWidth = self.bounds.width
         if let playerSize = layer.player?.currentItem?.presentationSize {
-            if playerSize.height > frame.height {
+            layer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            if playerSize.width == 0.0 && playerSize.height == 0.0 {
                 layer.frame = self.bounds
+                self.clipsToBounds = true
+                return
+            }
+            if playerSize.width < viewWidth { // too narrow
+                print("=====")
+                print("Too narrow")
+                print("View width: \(viewWidth)")
+                print("player height: \(playerSize.height)")
+                print("player width: \(playerSize.width)")
+                let frameScalar = viewWidth / playerSize.width
+                let newWidth = viewWidth
+                let newHeight = playerSize.height * frameScalar
+                layer.frame = CGRect.rectAroundCenter(self.bounds.center, width: newWidth, height: newHeight)
+                print("New frame: \(layer.frame)")
+            } else if playerSize.height < viewHeight { // too short
+                print("Too short")
+                print("View width: \(viewWidth)")
+                print("player height: \(playerSize.height)")
+                print("player width: \(playerSize.width)")
+                let frameScalar = viewHeight / playerSize.height
+                let newWidth = playerSize.width * frameScalar
+                let newHeight = viewHeight
+                layer.frame = CGRect.rectAroundCenter(self.bounds.center, width: newWidth, height: newHeight)
+                print("New frame: \(layer.frame)")
             }
         }
+        self.clipsToBounds = true
+        layer.setNeedsDisplay()
+        layer.setNeedsLayout()
+
     }
 }

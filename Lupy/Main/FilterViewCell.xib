@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="pier-regular.otf">
+            <string>PierSans</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FilterViewCell" customModule="Lupy" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="64" height="105"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="64" height="105"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1oW-du-SgY">
+                        <rect key="frame" x="0.0" y="0.0" width="64" height="86"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="1oW-du-SgY" secondAttribute="height" multiplier="3:4" id="Yhf-uC-e5L"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7V5-bI-MTG">
+                        <rect key="frame" x="15" y="92" width="34" height="13"/>
+                        <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="13"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Kl-BJ-J9i">
+                        <rect key="frame" x="0.0" y="84" width="64" height="2"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="2" id="4Fz-YX-tRZ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="7V5-bI-MTG" firstAttribute="top" secondItem="1oW-du-SgY" secondAttribute="bottom" constant="6" id="0dD-Ji-4Ia"/>
+                <constraint firstAttribute="bottom" secondItem="7V5-bI-MTG" secondAttribute="bottom" id="1TL-Y3-2hD"/>
+                <constraint firstItem="7Kl-BJ-J9i" firstAttribute="bottom" secondItem="1oW-du-SgY" secondAttribute="bottom" id="6Uc-gv-kke"/>
+                <constraint firstItem="1oW-du-SgY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8WW-VN-ndK"/>
+                <constraint firstItem="1oW-du-SgY" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="FNK-11-pLd"/>
+                <constraint firstItem="7Kl-BJ-J9i" firstAttribute="centerX" secondItem="7V5-bI-MTG" secondAttribute="centerX" id="Jln-Rg-s7u"/>
+                <constraint firstItem="7V5-bI-MTG" firstAttribute="centerX" secondItem="1oW-du-SgY" secondAttribute="centerX" id="TpM-7y-fTE"/>
+                <constraint firstItem="1oW-du-SgY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="VLt-Fw-FJj"/>
+                <constraint firstItem="7Kl-BJ-J9i" firstAttribute="width" secondItem="1oW-du-SgY" secondAttribute="width" id="ZLn-7i-7ud"/>
+                <constraint firstItem="1oW-du-SgY" firstAttribute="centerX" secondItem="7V5-bI-MTG" secondAttribute="centerX" id="dMw-Ju-JqG"/>
+                <constraint firstItem="7V5-bI-MTG" firstAttribute="top" secondItem="1oW-du-SgY" secondAttribute="bottom" constant="6" id="r0s-yl-H8p"/>
+                <constraint firstAttribute="trailing" secondItem="1oW-du-SgY" secondAttribute="trailing" id="r3T-XN-qEs"/>
+            </constraints>
+            <size key="customSize" width="64" height="105"/>
+            <connections>
+                <outlet property="nameLabel" destination="7V5-bI-MTG" id="n4F-U1-cix"/>
+                <outlet property="preview" destination="1oW-du-SgY" id="rI7-tj-oIL"/>
+                <outlet property="selectedBar" destination="7Kl-BJ-J9i" id="q7Q-3z-fqt"/>
+            </connections>
+            <point key="canvasLocation" x="187" y="281.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

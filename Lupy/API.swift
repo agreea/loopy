@@ -28,6 +28,23 @@ class API {
             AppDelegate.getAppDelegate().showError("Network Error", message: "There was an error handling your request.")
         }
     }
+
+    class func processResponse(response: Response<AnyObject, NSError>, onSuccess: (AnyObject) -> Void, onFailure: () -> Void) {
+        guard response.result.error == nil else {
+            // got an error in getting the data, need to handle it
+            print(response.result.error!)
+            onFailure()
+            AppDelegate.getAppDelegate().showError("Connection Error", message: "Check your internet connection and please try again.")
+            return
+        }
+        if let value: AnyObject = response.result.value {
+            onSuccess(value)
+        } else {
+            onFailure()
+        }
+    }
+
+    
 }
 
 //class API: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {

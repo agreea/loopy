@@ -59,6 +59,12 @@ class ProfileViewController: FeedViewController {
         } else if username != nil {
             loadProfileByUsername(username!)
         }
+        if username == AppDelegate.getAppDelegate().getUsername() {
+            titleNav.text = "Me"
+            rightButtonNav.setImage(UIImage(named: "MoreIcon"), forState: .Normal)
+        } else {
+            titleNav.text = username
+        }
         leftButtonNav.hidden = backButtonMethod == nil
 //        attemptLoadFeed()
         print("Scrolling: \(self.scrolling)")
@@ -67,6 +73,8 @@ class ProfileViewController: FeedViewController {
     
     // loads username, followers (Array), and following (array)
     func loadProfileByUserId(userId: Int) {
+        titleNav.hidden = true
+        rightButtonNav.hidden = true
         if let session = AppDelegate.getAppDelegate().getSession() {
             let parameters = [
                 "method": "GetProfileByUserId",
@@ -112,9 +120,12 @@ class ProfileViewController: FeedViewController {
             constructFeedArrayFromJSON(feedJsons!)
             if userId == AppDelegate.getAppDelegate().getUserId() {
                 titleNav.text = "Me"
+                rightButtonNav.setImage(UIImage(named: "MoreIcon"), forState: .Normal)
             } else {
                 titleNav.text = username
             }
+            titleNav.hidden = false
+            rightButtonNav.hidden = false
             feedView.reloadData()
         } else {
             AppDelegate.getAppDelegate().showError("Error", message: json["Error"].stringValue)
@@ -123,8 +134,40 @@ class ProfileViewController: FeedViewController {
     }
     
     override func navBarRightButtonAction() {
-        let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
-        presentViewController(contactViewController, animated: true, completion: nil)
+        if (self.id == AppDelegate.getAppDelegate().getUserId() || self.username == AppDelegate.getAppDelegate().getUsername()) {
+            showAccountAlertController()
+        }
+        // else toggle some follow behavior
+//        let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
+//        contactViewController.configureUserList(AddContactsViewController.CONFIG_CONTACTS) {
+//            self.dismissViewControllerAnimated(true){}
+//        }
+//        self.presentViewController(contactViewController, animated: true, completion: nil)
+    }
+    
+    private func showAccountAlertController() {
+        let alertController = UIAlertController(title: "Keyframe", message: "My Account", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let followersAction = UIAlertAction(title: "Followers", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
+            print("Followers tapped")
+        })
+        alertController.addAction(followersAction)
+        
+        let followingAction = UIAlertAction(title: "Following", style: UIAlertActionStyle.Default, handler: {(alert :UIAlertAction!) in
+            print("Following tapped")
+        })
+        alertController.addAction(followingAction)
+        
+        let logoutAction = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+            print("Logout button tapped")
+        })
+        alertController.addAction(logoutAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert :UIAlertAction!) in
+            print("cancel button tapped")
+        })
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     override func navBarLeftButtonAction() {
@@ -152,36 +195,36 @@ extension ProfileViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let userCell = feedView.dequeueReusableCellWithIdentifier("myLoopsUserCell") as! MyLoopsUserCell
-            if username == nil || isFollowing == nil {
-                return userCell
-            }
-            print("\(userId)")
-            if userId == AppDelegate.getAppDelegate().getUserId() {
-                print("loading self")
-                userCell.loadSelf(username!)
-            } else {
-                print("loading other")
-                userCell.loadOther(username!, isFollowing: isFollowing!, profPicUuid: "")
-            }
-            return userCell
-        }
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-    }
-        
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        if indexPath.section == 0 {
+//            let userCell = feedView.dequeueReusableCellWithIdentifier("myLoopsUserCell") as! MyLoopsUserCell
+//            if username == nil || isFollowing == nil {
+//                return userCell
+//            }
+//            print("\(userId)")
+//            if userId == AppDelegate.getAppDelegate().getUserId() {
+//                print("loading self")
+//                userCell.loadSelf(username!)
+//            } else {
+//                print("loading other")
+//                userCell.loadOther(username!, isFollowing: isFollowing!, profPicUuid: "")
+//            }
+//            return userCell
+//        }
+//        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+//    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //        if indexPath.section == 0 {
 //            return view.frame.width * 1.25
 //        }
 //        return UITableViewAutomaticDimension
 //    }
-//    
+//
 //    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //        print("1.25w = \(view.frame.width * 1.25)")
 //        if indexPath.section == 0 {
@@ -191,9 +234,9 @@ extension ProfileViewController {
 //    }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }
+//        if section == 0 {
+//            return 1
+//        }
         return super.tableView(tableView, numberOfRowsInSection: section)
     }
 }
