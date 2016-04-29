@@ -6,6 +6,29 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="pier-regular.otf">
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+            <string>PierSans</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Loopy Landing View Controller-->
         <scene sceneID="V9f-tW-u5d">
@@ -15,27 +38,27 @@
                         <viewControllerLayoutGuide type="top" id="idq-e7-kmG"/>
                         <viewControllerLayoutGuide type="bottom" id="WCq-Ft-zeT"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="WnB-r4-Z4l" customClass="GradientView" customModule="Lupy" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="WnB-r4-Z4l">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lupy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sks-zV-LLH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keyframe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sks-zV-LLH">
                                 <rect key="frame" x="199" y="28" width="202" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="7U1-Vy-rLi"/>
                                     <constraint firstAttribute="width" constant="202" id="mJu-KH-qh0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="37"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="37"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNT-6r-FeO">
                                 <rect key="frame" x="0.0" y="453" width="600" height="74"/>
-                                <color key="backgroundColor" red="1" green="0.36078431372549019" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="ZAC-cu-fGt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="28"/>
                                 <state key="normal" title="LOG IN">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -45,11 +68,11 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ms-wz-OPO">
                                 <rect key="frame" x="0.0" y="526" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.0" green="0.89803921568627454" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="PWL-Ab-55x"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="28"/>
                                 <state key="normal" title="SIGN UP">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -57,17 +80,17 @@
                                     <segue destination="r7U-DK-dbX" kind="show" id="5Nx-DG-w0N"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make and share gifs instantly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGf-pe-34S">
-                                <rect key="frame" x="160" y="116" width="281" height="38"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A place to share beautiful morsels of life" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGf-pe-34S">
+                                <rect key="frame" x="110" y="116" width="381" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="q7b-bL-bAf"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.950853280141844" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Sks-zV-LLH" firstAttribute="top" secondItem="WnB-r4-Z4l" secondAttribute="topMargin" constant="28" id="10L-YS-a1w"/>
                             <constraint firstItem="Sks-zV-LLH" firstAttribute="centerX" secondItem="yGf-pe-34S" secondAttribute="centerX" id="6db-6H-ZHD"/>
@@ -115,14 +138,14 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9R-De-Fhs" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="228" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="Fob-WA-lzf"/>
                                     <constraint firstAttribute="height" constant="45" id="OIy-x5-rNo"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="24"/>
                                 <color key="tintColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Join Lupy">
+                                <state key="normal" title="Join">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -161,10 +184,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMh-0r-Igx" userLabel="Navbar">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Va6-bd-eP3">
-                                        <rect key="frame" x="260" y="31" width="80" height="25"/>
-                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join Keyframe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Va6-bd-eP3">
+                                        <rect key="frame" x="226" y="35" width="148" height="21"/>
+                                        <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                        <color key="textColor" red="0.13752693969999999" green="0.14232219830000001" blue="0.14232219830000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXM-4e-Bpa">
@@ -175,7 +198,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.49803921568627452" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="gXM-4e-Bpa" secondAttribute="bottom" constant="7" id="5Jm-uV-H2s"/>
                                     <constraint firstAttribute="bottom" secondItem="Va6-bd-eP3" secondAttribute="bottom" constant="8" id="804-Ul-Lv7"/>
@@ -248,18 +271,35 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For password resets and allowing other users to add you. We'll never share it with anyone." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiE-h0-P49">
-                                <rect key="frame" x="20" y="132" width="560" height="41"/>
-                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                <rect key="frame" x="20" y="132" width="560" height="36"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="18"/>
                                 <color key="textColor" red="0.26214823300000001" green="0.26214823300000001" blue="0.26214823300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4F-DK-fat" userLabel="NavBar">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7p-bR-fvH">
+                                        <rect key="frame" x="244" y="35" width="112" height="21"/>
+                                        <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                        <color key="textColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="WkE-0m-Uix"/>
+                                    <constraint firstAttribute="bottom" secondItem="T7p-bR-fvH" secondAttribute="bottom" constant="8" id="h1X-xD-D03"/>
+                                    <constraint firstItem="T7p-bR-fvH" firstAttribute="centerX" secondItem="R4F-DK-fat" secondAttribute="centerX" id="iNb-Ay-rzH"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ej9-yM-TvA" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
-                                <rect key="frame" x="193" y="216" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="193" y="216" width="215" height="36"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="m2b-Tf-hTq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="24"/>
                                 <color key="tintColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Send Pin">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -268,23 +308,6 @@
                                     <action selector="didPressSendCode:" destination="nTo-rD-caz" eventType="touchUpInside" id="kI9-I2-Ib0"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4F-DK-fat" userLabel="NavBar">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7p-bR-fvH">
-                                        <rect key="frame" x="244" y="31" width="112" height="25"/>
-                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="WkE-0m-Uix"/>
-                                    <constraint firstAttribute="bottom" secondItem="T7p-bR-fvH" secondAttribute="bottom" constant="8" id="h1X-xD-D03"/>
-                                    <constraint firstItem="T7p-bR-fvH" firstAttribute="centerX" secondItem="R4F-DK-fat" secondAttribute="centerX" id="iNb-Ay-rzH"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -344,11 +367,11 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the pin we just texted you." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6E-tX-SSv">
-                                <rect key="frame" x="20" y="132" width="295" height="21"/>
+                                <rect key="frame" x="20" y="132" width="295" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="295" id="WI5-WF-DQl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="18"/>
                                 <color key="textColor" red="0.26214823300000001" green="0.26214823300000001" blue="0.26214823300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -358,13 +381,13 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pH0-Fo-BfY" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
-                                <rect key="frame" x="193" y="216" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="193" y="213" width="215" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dIM-ca-EMS"/>
                                     <constraint firstAttribute="width" constant="215" id="ixS-9v-f9x"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="24"/>
                                 <color key="tintColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Verify">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -374,13 +397,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kbP-Wm-mEa" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
-                                <rect key="frame" x="193" y="269" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.85882352939999995" green="0.5568627451" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="193" y="266" width="215" height="45"/>
+                                <color key="backgroundColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="eO8-N1-8st"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="22"/>
-                                <color key="tintColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                <color key="tintColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Send New Pin">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -392,9 +415,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHP-d9-75S">
-                                        <rect key="frame" x="236" y="31" width="129" height="25"/>
-                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="236" y="35" width="128" height="21"/>
+                                        <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                        <color key="textColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTQ-fM-nkZ">
@@ -408,7 +431,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="rHP-d9-75S" firstAttribute="centerX" secondItem="bga-Ho-66q" secondAttribute="centerX" id="4nP-2f-UHn"/>
                                     <constraint firstAttribute="bottom" secondItem="LTQ-fM-nkZ" secondAttribute="bottom" constant="8" id="AOp-yc-io9"/>
@@ -461,19 +484,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Lupy yours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-Pq-E3I">
-                                <rect key="frame" x="0.0" y="72" width="600" height="38"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="32"/>
-                                <color key="textColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Keyframe yours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-Pq-E3I">
+                                <rect key="frame" x="0.0" y="72" width="600" height="32"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="32"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Pw-Sf-rvZ">
                                 <rect key="frame" x="0.0" y="526" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.85882352939999995" green="0.5568627451" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.14307650862068966" green="0.66193426724137927" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="KUI-v3-ANx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="28"/>
                                 <state key="normal" title="LATER">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -483,11 +506,11 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jL-wmC">
                                 <rect key="frame" x="0.0" y="453" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="seV-BN-Cab"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="28"/>
                                 <state key="normal" title="SEARCH CONTACTS">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -496,12 +519,12 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover which of your friends are already here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffK-tK-qKt">
-                                <rect key="frame" x="0.0" y="118" width="600" height="54"/>
+                                <rect key="frame" x="0.0" y="112" width="600" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="K9e-bK-w9u"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
-                                <color key="textColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                <color key="textColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -575,9 +598,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTn-qk-DCd">
-                                        <rect key="frame" x="269" y="31" width="63" height="25"/>
-                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="268" y="35" width="64" height="21"/>
+                                        <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
+                                        <color key="textColor" red="0.13752693969999999" green="0.14232219830000001" blue="0.14232219830000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWM-Ir-m2q">
@@ -588,7 +611,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.5" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="IWM-Ir-m2q" secondAttribute="bottom" constant="7" id="2Fy-VA-jsQ"/>
                                     <constraint firstItem="IWM-Ir-m2q" firstAttribute="leading" secondItem="zVv-dF-xEB" secondAttribute="leading" constant="8" id="XQr-m4-Clb"/>
@@ -598,14 +621,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1f-RS-k7k" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
-                                <rect key="frame" x="193" y="227" width="215" height="40"/>
-                                <color key="backgroundColor" red="0.49803921569999998" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="193" y="227" width="215" height="36"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="Npj-s4-Sur"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="24"/>
                                 <color key="tintColor" red="0.61926185339999995" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Login">
+                                <state key="normal" title="Log in">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>

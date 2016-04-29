@@ -159,7 +159,7 @@ class FeedCell: UITableViewCell {
     }
     
     func setImagePreview(uuid: String) {
-        let URL = NSURL(string: "https://yaychakula.com/img/" + uuid + "/0c.jpg")!
+        let URL = NSURL(string: "https://yaychakula.com/img/" + uuid + "/0.jpg")!
         let optionInfo: KingfisherOptionsInfo = [
             .DownloadPriority(0.5),
             .Transition(ImageTransition.Fade(0.5))
@@ -170,7 +170,7 @@ class FeedCell: UITableViewCell {
                                       completionHandler: { (image, error, cacheType, imageURL) -> () in
 //                                        self.reframeImage()
                                         if self.feedViewController!.canCellDownloadGif(self) {
-                                            self.loadVideoPreview(uuid)
+                                            self.loadVideoPreview(uuid, lofi: false)
                                         }
         })
     }
@@ -275,38 +275,54 @@ class FeedCell: UITableViewCell {
 
 extension FeedCell {
     // fine
-    func loadVideoPreview(gifUuid: String) {
+    func loadVideoPreview(gifUuid: String, lofi: Bool) {
         // check if the video file is in the temporary directory
-        let moviePath = getTempURLForUuid(gifUuid)
+        let moviePath = getTempURLForUuid(gifUuid, lofi: lofi)
         let manager = NSFileManager.defaultManager()
         if manager.fileExistsAtPath(moviePath.path!){
             let playerItem = AVPlayerItem(URL: moviePath)
             let duration = playerItem.asset.duration
             if duration == CMTimeMake(0, 1) {
                 print("fetching null video from server")
-                fetchVideoFromServer(gifUuid)
+                fetchVideoFromServer(gifUuid, lofi: lofi)
             } else {
                 self.player!.replaceCurrentItemWithPlayerItem(playerItem)
                 self.startPlayer()
             }
         } else {
-            fetchVideoFromServer(gifUuid)
+            fetchVideoFromServer(gifUuid, lofi: lofi)
         }
     }
+    
     // fine
-    func fetchVideoFromServer(gifUuid: String) {
-        let videoUrl = "https://yaychakula.com/img/" + gifUuid + "/ds_c.MOV"
+    func fetchVideoFromServer(gifUuid: String, lofi: Bool) {
+        let fileEnding = lofi ? "/ds_c.MOV" : "/c_r.MOV"
+        let videoUrl = "https://yaychakula.com/img/" + gifUuid + "/c_r.MOV"
         Alamofire.request(.GET, videoUrl).response { request, response, data, error in
-            print("For \(gifUuid) Fetched bytes: \(data!.length)")
-            if self.writeVideoFile(gifUuid, data: data!) {
-                let movieURL = self.getTempURLForUuid(gifUuid)
+            print("For \(gifUuid), lofi: \(lofi). Fetched bytes: \(data!.length)")
+            if data!.length <= 2884 {
+                self.loadVideoPreview(gifUuid, lofi: true)
+                return
+            }else if self.writeVideoFile(gifUuid, data: data!, lofi: lofi) {
+                print("Wrote file")
+                let movieURL = self.getTempURLForUuid(gifUuid, lofi: lofi)
                 let playerItem = AVPlayerItem(URL: movieURL)
-                self.player?.replaceCurrentItemWithPlayerItem(playerItem)
-                self.startPlayer()
+                if playerItem.duration > CMTimeMake(0, 1) {
+                    print("Player length was greater than 0")
+                    self.player?.replaceCurrentItemWithPlayerItem(playerItem)
+                    self.startPlayer()
+                } else if lofi == false {
+                    print("Player length was 0. Fetching lofi")
+                    self.loadVideoPreview(gifUuid, lofi: true)
+                }
             } else {
-                // todo: show error
+                print("failed to fetch")
             }
         }
+    }
+    
+    @IBAction func didPressDownload(sender: AnyObject) {
+        // ask the server to load it to the camera roll
     }
     
     func startPlayer() {
@@ -320,14 +336,15 @@ extension FeedCell {
         self.playerLayer?.hidden = false
     }
     
-    func getTempURLForUuid(uuid: String) -> NSURL {
+    func getTempURLForUuid(uuid: String, lofi: Bool) -> NSURL {
         let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let movieName = uuid + "_ds_c.MOV"
+        let fileEnding = lofi ? "_ds_c.MOV" : "_c_r.MOV"
+        let movieName = uuid + fileEnding
         return tempDir.URLByAppendingPathComponent(movieName)
     }
     
-    private func writeVideoFile(gifUuid: String, data: NSData) -> Bool {
-        let moviePath = getTempURLForUuid(gifUuid)
+    private func writeVideoFile(gifUuid: String, data: NSData, lofi: Bool) -> Bool {
+        let moviePath = getTempURLForUuid(gifUuid, lofi: lofi)
         do {
             try data.writeToFile(moviePath.path!, options: .AtomicWrite)
         } catch {

@@ -217,6 +217,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
+    // returns true if successful
+    func logout() -> Bool {
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "User_data")
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            if let userCredentials = results as? [NSManagedObject] {
+                for credential in userCredentials {
+                    managedContext.deleteObject(credential)
+                }
+                print("Successfully deleted all user credentials")
+                return true
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            return false
+        }
+        return false
+    }
+    
     func showMessage(message: String) {
         let alertController = UIAlertController(title: "Loopy", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
@@ -279,7 +302,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         viewController.presentViewController(alert, animated: true, completion: nil)
     }
-
     
     func showSettingsAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

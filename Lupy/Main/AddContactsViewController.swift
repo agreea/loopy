@@ -45,6 +45,13 @@ class AddContactsViewController: UIViewController {
         contactTableView.hidden = true
         contactTableView.tableFooterView = UIView()
         noContactsView.hidden = true
+        for family: String in UIFont.familyNames() {
+            print("\(family)")
+            for names: String in UIFont.fontNamesForFamilyName(family)
+            {
+                print("== \(names)")
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

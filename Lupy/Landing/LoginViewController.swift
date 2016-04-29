@@ -144,7 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         print("Launching main story board")
         // otherwise launch the splash scene
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let masterViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MasterViewController") as! MasterViewController
+        let masterViewController = mainStoryboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! TabBarViewController
         let appDelegate =
             UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.window!.rootViewController = masterViewController

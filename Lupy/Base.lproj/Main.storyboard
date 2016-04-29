@@ -17,7 +17,7 @@
         <!--Tab Bar View Controller-->
         <scene sceneID="VXb-rm-TpH">
             <objects>
-                <viewController id="CpM-Kh-BuR" customClass="TabBarViewController" customModule="Lupy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TabBarViewController" id="CpM-Kh-BuR" customClass="TabBarViewController" customModule="Lupy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hbN-Rt-5b7"/>
                         <viewControllerLayoutGuide type="bottom" id="loc-Z9-rBh"/>
