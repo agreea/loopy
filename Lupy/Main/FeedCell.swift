@@ -15,11 +15,14 @@ import Alamofire
 import Haneke
 
 protocol FeedCellDelegate {
-    func likePost(id: Int, cell: FeedCell)
-    func unlikePost(id: Int, cell: FeedCell)
-    func usernameTapped(username: String)
+    func likePost( cell: FeedCell)
+    func unlikePost(cell: FeedCell)
+    func usernameTapped(cell: FeedCell)
+    func savePostToCameraRoll(cell: FeedCell)
+    func didPressMore(cell: FeedCell)
+    func isSelfPost(cell: FeedCell) -> Bool
+    func getTempURLForUuid(uuid: String, lofi: Bool) -> NSURL
 }
-
 
 class FeedCell: UITableViewCell {
     var moviePlayer: AVPlayerViewController!
@@ -42,22 +45,15 @@ class FeedCell: UITableViewCell {
             if _shouldPlayState == .Play {
                 player!.play()
                 // hide share interface
+                hidePauseStackContainer()
             } else {
                 player!.pause()
+                // TODO: fade IN to showing pause stack
+                showPauseStackContainer()
                 // show share interface
             }
         }
     }
-//    var _username: String?
-//    var username: String? {
-//        get {
-//            return _username
-//        }
-//        set(newValue){
-//            usernameLabel.text = newValue
-//            _username = newValue
-//        }
-//    }
     var liked: Bool {
         get {
             return _liked!
@@ -74,6 +70,8 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var heartView: UIImageView!
     @IBOutlet weak var heartViewWidth: NSLayoutConstraint!
     @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var pauseStackView: UIStackView!
+    @IBOutlet weak var pauseStackContainerView: UIView!
     
 //    @IBOutlet weak var avPlayerView: UIView!
     
@@ -95,9 +93,21 @@ class FeedCell: UITableViewCell {
         addProfileLinkToUsername()
         gifPreview.userInteractionEnabled = true
         heartView.userInteractionEnabled = true
-//        profilePic.layer.cornerRadius = profilePic.frame.width / 2
-//        profilePic.clipsToBounds = true
+        pauseStackContainerView.hidden = true
+        addGradientToStackViewLayer()
     }
+    
+    private func addGradientToStackViewLayer() {
+        let gl = CAGradientLayer()
+        gl.frame = pauseStackContainerView.bounds
+        gl.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gl.endPoint = CGPoint(x: 0.0, y: 1.0)
+        print("frame: \(gl.frame)")
+        gl.colors = [UIColor(red: 60, green: 60, blue: 60, a: 0.0).CGColor, UIColor(netHex: 0x131313).CGColor]
+        gl.locations = [0.0, 1.0]
+        pauseStackContainerView.layer.insertSublayer(gl, atIndex: 0)
+    }
+    
     private func addSingleTapToPreview() {
         let singleTapListner = UITapGestureRecognizer()
         singleTapListner.numberOfTapsRequired = 1
@@ -131,7 +141,7 @@ class FeedCell: UITableViewCell {
     
     func didTapUsername() {
         print("Username tapped")
-        delegate!.usernameTapped(usernameLabel.text!)
+        delegate!.usernameTapped(self)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -139,23 +149,38 @@ class FeedCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func loadItem(feedItem: FeedItem, userId: Int) {
+    func loadItem(feedItem: FeedItem) {
         hasGif = false
         setImagePreview(feedItem.Uuid!)
         usernameLabel.text = feedItem.Username
         id = feedItem.Id
         self.liked = feedItem.Liked!
-        print("Cell height: \(frame.height)")
-        print("Gif image height: \(gifPreview.frame.height)")
-//                    self.heartView.transform = CGAffineTransformMakeScale(0,0)
-//        self.heartViewWidth.constant = 0.0
-//        self.layoutIfNeeded()
-//        avPlayerView.hidden = true
-//        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-//            self.loadVideoPreview(feedItem.Uuid!)
-//        }
-//        setTimeLabel(feedItem.Timestamp!)
+        shouldPlayState = .Play
+    }
+    
+    
+    @IBAction func didPressDownload(sender: AnyObject) {
+        // tell the delegate the user pressed download for the cell
+        // TODO: track saving state for each thing (?)
+        delegate!.savePostToCameraRoll(self)
+    }
+    
+    @IBAction func didPressMore(sender: AnyObject) {
+        // tell the delegate the user pressed more for my cell
+        delegate!.didPressMore(self)
+    }
+    
+    private func showReportInterface() {
+        
+    }
+    
+    private func showDeleteInterface() {
+        // show the popover action view
+        
+    }
+    
+    private func showDeleteConfirmation() {
+        // show the final alert. destructive action -->
     }
     
     func setImagePreview(uuid: String) {
@@ -190,10 +215,10 @@ class FeedCell: UITableViewCell {
         print("Noticed double tap")
         if liked {
             print("Calling unlike")
-            delegate!.unlikePost(id!, cell: self)
+            delegate!.unlikePost(self)
         } else {
             print("Calling like")
-            delegate!.likePost(id!, cell: self)
+            delegate!.likePost(self)
         }
     }
     
@@ -232,25 +257,26 @@ class FeedCell: UITableViewCell {
         heartButton.setImage(UIImage(named: imageName), forState: .Normal)
     }
     
-    func setGif(uuid: String, placeholder: Image?) {
-//        let URL = NSURL(string: "https://yaychakula.com/img/" + uuid + "/loopy.gif")!
-        
-//        let cache = Shared.dataCache
-//        cache.fetch(URL: URL).onSuccess { data in
-//            let gif = FLAnimatedImage(animatedGIFData: data)
-//            self.gifPreview.animatedImage = gif
-//        }
-        
-//        let optionInfo: KingfisherOptionsInfo = [
-//            .DownloadPriority(0.5),
-//            .Transition(ImageTransition.Fade(0.5))
-//        ]
-//        gifPreview.kf_setImageWithURL(URL,
-//                                      placeholderImage: placeholder,
-//                                      optionsInfo: optionInfo,
-//                                      completionHandler: { (image, error, cacheType, imageURL) -> () in
-//                                        self.hasGif = true
-//        })
+    private func showPauseStackContainer() {
+        // set alpha 0, unhide, fade in
+        self.pauseStackContainerView.alpha = 0.0
+        self.pauseStackContainerView.hidden = false
+        UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.pauseStackContainerView.alpha = 1.0
+            self.contentView.layoutIfNeeded()
+            }, completion: nil)
+    }
+    
+    private func hidePauseStackContainer() {
+        // fade out, set alpha 0, hide
+        UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.pauseStackContainerView.alpha = 0.0
+            self.contentView.layoutIfNeeded()
+            }, completion: { finished in
+                if finished {
+                    self.pauseStackContainerView.hidden = true
+                }
+        })
     }
     
     private func reframeImage() {
@@ -277,7 +303,7 @@ extension FeedCell {
     // fine
     func loadVideoPreview(gifUuid: String, lofi: Bool) {
         // check if the video file is in the temporary directory
-        let moviePath = getTempURLForUuid(gifUuid, lofi: lofi)
+        let moviePath = delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
         let manager = NSFileManager.defaultManager()
         if manager.fileExistsAtPath(moviePath.path!){
             let playerItem = AVPlayerItem(URL: moviePath)
@@ -304,25 +330,19 @@ extension FeedCell {
                 self.loadVideoPreview(gifUuid, lofi: true)
                 return
             }else if self.writeVideoFile(gifUuid, data: data!, lofi: lofi) {
-                print("Wrote file")
-                let movieURL = self.getTempURLForUuid(gifUuid, lofi: lofi)
+                let movieURL = self.delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
                 let playerItem = AVPlayerItem(URL: movieURL)
+                
                 if playerItem.duration > CMTimeMake(0, 1) {
-                    print("Player length was greater than 0")
                     self.player?.replaceCurrentItemWithPlayerItem(playerItem)
                     self.startPlayer()
                 } else if lofi == false {
-                    print("Player length was 0. Fetching lofi")
                     self.loadVideoPreview(gifUuid, lofi: true)
                 }
             } else {
                 print("failed to fetch")
             }
         }
-    }
-    
-    @IBAction func didPressDownload(sender: AnyObject) {
-        // ask the server to load it to the camera roll
     }
     
     func startPlayer() {
@@ -335,16 +355,9 @@ extension FeedCell {
         self.player!.play()
         self.playerLayer?.hidden = false
     }
-    
-    func getTempURLForUuid(uuid: String, lofi: Bool) -> NSURL {
-        let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let fileEnding = lofi ? "_ds_c.MOV" : "_c_r.MOV"
-        let movieName = uuid + fileEnding
-        return tempDir.URLByAppendingPathComponent(movieName)
-    }
-    
+        
     private func writeVideoFile(gifUuid: String, data: NSData, lofi: Bool) -> Bool {
-        let moviePath = getTempURLForUuid(gifUuid, lofi: lofi)
+        let moviePath = delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
         do {
             try data.writeToFile(moviePath.path!, options: .AtomicWrite)
         } catch {

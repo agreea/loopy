@@ -4,7 +4,12 @@
 //
 //  Created by Agree Ahmed on 3/19/16.
 //  Copyright © 2016 Agree Ahmed. All rights reserved.
-//
+// 
+
+/*
+Here's the code to update the logo INSTANTLY:
+sh iconsmith.sh /Users/agree/ios/Lupy/Lupy/images/keyframe_logo.pdf Lupy
+ */
 
 import UIKit
 import CoreData

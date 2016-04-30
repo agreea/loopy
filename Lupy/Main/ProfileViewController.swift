@@ -165,7 +165,7 @@ class ProfileViewController: FeedViewController {
     }
     
     private func isSelf() -> Bool {
-        print("User's id: \(self.id)")
+        print("User's id: \(self.myUserId!)")
         print("My id: \(AppDelegate.getAppDelegate().getUserId())")
         print("User's name: \(self.username)")
         print("My username: \(AppDelegate.getAppDelegate().getUsername())")
@@ -300,7 +300,7 @@ extension ProfileViewController {
 //        }
 //    }
     // avoid an infinitely recursive view stack
-    override func usernameTapped(username: String) { }
+    override func usernameTapped(cell: FeedCell) { }
     
     override func refresh(sender: AnyObject) {
         // Code to refresh table view

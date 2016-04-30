@@ -21,6 +21,7 @@
 		C63E28431CD1A12C00B5D656 /* pier-bold-italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C63E283E1CD1A11300B5D656 /* pier-bold-italic.otf */; };
 		C63E28461CD1E90E00B5D656 /* FilterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63E28441CD1E90E00B5D656 /* FilterViewCell.swift */; };
 		C63E28471CD1E90E00B5D656 /* FilterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63E28451CD1E90E00B5D656 /* FilterViewCell.xib */; };
+		C63E28491CD4656B00B5D656 /* FeedCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63E28481CD4656B00B5D656 /* FeedCellDelegate.swift */; };
 		C63EC0C61CBE326900ACE7E4 /* MyLoopsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */; };
 		C63EC0C71CBE326900ACE7E4 /* MyLoopsUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */; };
 		C63F6FE81CB6EC2200D5DE3E /* LoginSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */; };
@@ -136,6 +137,7 @@
 		C63E283F1CD1A11300B5D656 /* pier-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pier-bold.otf"; sourceTree = "<group>"; };
 		C63E28441CD1E90E00B5D656 /* FilterViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterViewCell.swift; path = Main/FilterViewCell.swift; sourceTree = "<group>"; };
 		C63E28451CD1E90E00B5D656 /* FilterViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewCell.xib; path = Main/FilterViewCell.xib; sourceTree = "<group>"; };
+		C63E28481CD4656B00B5D656 /* FeedCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedCellDelegate.swift; path = Main/FeedCellDelegate.swift; sourceTree = "<group>"; };
 		C63EC0C41CBE326900ACE7E4 /* MyLoopsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyLoopsUserCell.swift; path = Main/MyLoopsUserCell.swift; sourceTree = "<group>"; };
 		C63EC0C51CBE326900ACE7E4 /* MyLoopsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyLoopsUserCell.xib; path = Main/MyLoopsUserCell.xib; sourceTree = "<group>"; };
 		C63F6FE71CB6EC2200D5DE3E /* LoginSignup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginSignup.storyboard; path = Landing/LoginSignup.storyboard; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				C635A0201CCD3A030096940C /* VideoBufferManager.swift */,
 				C67DBB7D1C9FAD470082CB56 /* FeedViewController.swift */,
 				C6FBCE1E1CBD6AB200DD65D4 /* FeedViewController.xib */,
+				C63E28481CD4656B00B5D656 /* FeedCellDelegate.swift */,
 				C6BB90061CB590A200C6DB94 /* FeedCell.swift */,
 				C6BB90071CB590A200C6DB94 /* FeedCell.xib */,
 				C6BB900A1CB6099800C6DB94 /* CaptureButtonView.swift */,
@@ -675,6 +678,7 @@
 				C6BB900F1CB6345300C6DB94 /* CancelPreviewButton.swift in Sources */,
 				C65875A91CC8A01C00F3EE79 /* BottomNavBar.swift in Sources */,
 				C67370F01C9D2D1800B2B8C1 /* Loopy.xcdatamodeld in Sources */,
+				C63E28491CD4656B00B5D656 /* FeedCellDelegate.swift in Sources */,
 				C6BE95A81CB1ED0800E4F067 /* MoviePreviewViewController.swift in Sources */,
 				C635A0211CCD3A030096940C /* VideoBufferManager.swift in Sources */,
 				C61D37C51CD15D02007E8ACA /* UploadingCell.swift in Sources */,

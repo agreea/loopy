@@ -40,7 +40,7 @@ class FeedViewController: UIViewController {
     var scrolling = false
     var decelerating = false
     var refreshControl: UIRefreshControl!
-    var id: Int?
+    var myUserId: Int?
     var navbarFullHeight: CGFloat?
     var scrollSession: ScrollSession?
     var uploadState = UploadState.None
@@ -62,12 +62,11 @@ class FeedViewController: UIViewController {
         navbarFullHeight = abs(navBarHeight.constant)
         let postNib = UINib(nibName: "FeedCell", bundle: nil)
         let uploadingNib = UINib(nibName: "UploadingCell", bundle: nil)
-        id = AppDelegate.getAppDelegate().getUserId()
+        myUserId = AppDelegate.getAppDelegate().getUserId()
         feedView.registerNib(postNib, forCellReuseIdentifier: "feedCell")
         feedView.registerNib(uploadingNib, forCellReuseIdentifier: "uploadingCell")
         feedView.tableFooterView = UIView()
         feedView.allowsSelection = false
-        
         attemptLoadFeed()
         imageCopiedAlert.layer.cornerRadius = 6.0
         imageCopiedAlert.clipsToBounds = true
@@ -113,6 +112,8 @@ class FeedViewController: UIViewController {
     }
     
     func loadFeed(session: String) {
+        feedView.estimatedRowHeight = self.view.frame.width * 1.25 + 50.0
+        feedView.rowHeight = UITableViewAutomaticDimension
         // Do any additional setup after loading the view.
         let parameters = [
             "method": "GetFeed",
@@ -276,12 +277,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         return feedData.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if shouldShowUploadingCell() && indexPath.section == 0 {
-            return CGFloat(60.0)
-        }        
-        return view.frame.width * 1.25 + 50.0
-    }
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        if shouldShowUploadingCell() && indexPath.section == 0 {
+//            return CGFloat(60.0)
+//        }
+//        return view.frame.width * 1.25 + 50.0
+//    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if shouldShowUploadingCell() {
@@ -320,7 +321,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.feedViewController = self
         cell.hasGif = false
         cell.delegate = self
-        cell.loadItem(feedItem, userId: id!)
+        cell.loadItem(feedItem)
         cell.alpha = 1.0
         return cell
     }
@@ -473,98 +474,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             feedCell.hideVideo()
         }
     }
-}
-
-extension FeedViewController: FeedCellDelegate {
-    
-    func usernameTapped(username: String) {
-        let profileViewController = ProfileViewController(nibName: "FeedViewController", bundle: nil)
-        profileViewController.configProfileByUsername(username) {
-            let outTransition = FeedViewController.getModalViewTransition()
-            outTransition.subtype = kCATransitionFromLeft
-            profileViewController.view.window!.layer.addAnimation(outTransition, forKey: nil)
-            self.dismissViewControllerAnimated(false, completion: nil)
-        }
-        let transition = FeedViewController.getModalViewTransition()
-        transition.subtype = kCATransitionFromRight
-        self.view.window!.layer.addAnimation(transition, forKey:nil)
-        self.presentViewController(profileViewController, animated: false, completion: nil)
-    }
-    
-    class func getModalViewTransition() -> CATransition {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        return transition
-    }
-    
-    func likePost(id: Int, cell: FeedCell) {
-        if let session = AppDelegate.getAppDelegate().getSession() {
-            let params = [
-                "session": session,
-                "Id": "\(id)",
-                "method": "Like"
-            ]
-            executeChangeLikeStatus(params, cell: cell)
-        }
-    }
-    
-    func unlikePost(id: Int, cell: FeedCell) {
-        if let session = AppDelegate.getAppDelegate().getSession() {
-            let params = [
-                "session": session,
-                "Id": "\(id)",
-                "method": "Unlike"
-            ]
-            executeChangeLikeStatus(params, cell: cell)
-        }
-    }
-    
-    private func executeChangeLikeStatus(params: [String : String], cell: FeedCell) {
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif",
-            parameters: params)
-            .responseJSON { response in
-                self.processChangeLikeStatusRepsonse(response, cell: cell, params: params)
-        }
-    }
-    
-    private func processChangeLikeStatusRepsonse(response: Response<AnyObject, NSError>, cell: FeedCell, params: [String: String]) {
-        guard response.result.error == nil else {
-            // got an error in getting the data, need to handle it
-            print(response.result.error!)
-            AppDelegate.getAppDelegate().showError("Connection Error", message: "Failed to record like/unlike")
-            return
-        }
-        if let value: AnyObject = response.result.value {
-            let json = JSON(value)
-            if json["Success"].int == 1 {
-                // update the table view data and cell
-                let nowLiked = params["method"]!.hasPrefix("Like")
-                let feedItemId = Int(params["Id"]!)
-                updateFeedData(feedItemId!, nowLiked: nowLiked)
-                cell.liked = nowLiked
-            } else {
-                AppDelegate.getAppDelegate().showError("Error", message: "Failed to record like/unlike")
-            }
-        }
-    }
-    
-    private func updateFeedData(feedItemId: Int, nowLiked: Bool) {
-        for i in 0...feedData.count-1 {
-            let feedItem = feedData[i]
-            if feedItem.Id == feedItemId {
-                feedData[i] = FeedItem(Id: feedItem.Id,
-                                        User_id: feedItem.User_id,
-                                        Username: feedItem.Username,
-                                        Uuid: feedItem.Uuid,
-                                        Timestamp: feedItem.Timestamp,
-                                        Liked: nowLiked)
-            }
-        }
-        feedView.reloadData()
-    }
-
 }
 
 extension FeedViewController: UploadingCellDelegate {

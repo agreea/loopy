@@ -239,15 +239,10 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             if session.canAddOutput(movieFileOutput){
                 movieFileOutput.maxRecordedDuration = CMTimeMake(6, 1)
                 session.addOutput(movieFileOutput)
-                //                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
-                //                let stab = connection?.supportsVideoStabilization
-                //                if (stab != nil) {
-                //                    connection!.enablesVideoStabilizationWhenAvailable = true
-                //                }
+                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
+                connection!.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.Auto
                 self.movieFileOutput = movieFileOutput
-            }
-            
-            
+            }            
         })
         
     }
