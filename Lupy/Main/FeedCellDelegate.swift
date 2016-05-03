@@ -26,7 +26,7 @@ extension FeedViewController: FeedCellDelegate {
         return tempDir.URLByAppendingPathComponent(movieName)
     }
     
-    private func getFeedItemForCell(cell: FeedCell) -> FeedItem {
+    func getFeedItemForCell(cell: FeedCell) -> FeedItem {
         let indexPath = feedView.indexPathForCell(cell)
         return feedData[indexPath!.row]
     }
@@ -124,17 +124,51 @@ extension FeedViewController: FeedCellDelegate {
         // get URL for video
         let feedItem = getFeedItemForCell(cell)
         let videoURL  = getTempURLForUuid(feedItem.Uuid!, lofi: false)
-        let asset = AVAsset(URL: videoURL)
+        downsampleVideoForCameraRoll(videoURL)
+    }
+    
+    private func downsampleVideoForCameraRoll(url: NSURL) {
+        let asset = AVAsset(URL: url)
+        let videoComposition = AVMutableVideoComposition()
+        videoComposition.frameDuration = CMTimeMake(1, 60)
+        let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last!
+        
+        videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.width/1.5, videoTrack.naturalSize.width * 1.25/1.5)
+        let instruction = AVMutableVideoCompositionInstruction()
+        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
+        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+        let scale = CGAffineTransformMakeScale(0.75, 0.75)
+        transformer.setTransform(scale, atTime: kCMTimeZero)
+        
+        instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
+        videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
+        let timeInterval = Int(NSDate().timeIntervalSince1970)
+        let exportURL = NSURL(fileURLWithPath: NSTemporaryDirectory() + "\(timeInterval).MOV")
+        
+        let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
+        exporter!.videoComposition = videoComposition
+        exporter!.outputFileType = AVFileTypeQuickTimeMovie
+        exporter!.outputURL = exportURL
+        exporter!.exportAsynchronouslyWithCompletionHandler({
+            self.writeVideoToGifForCameraRoll(exporter!.outputURL!)
+        })        // TODO: error check
+
+    }
+    
+    func writeVideoToGifForCameraRoll(url: NSURL) {
+        let asset = AVAsset(URL: url)
         let startTime = Float(0.0)
         let duration  = Float(asset.duration.seconds)
         if let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last {
             let frameRate = min(Int(videoTrack.nominalFrameRate * 0.75), 22)
             print("Frame rate: \(videoTrack.nominalFrameRate)")
             dispatch_async(dispatch_queue_create("gif_writer", DISPATCH_QUEUE_SERIAL)) {
-                Regift.createGIFFromSource(videoURL, startTime: startTime, duration: duration, frameRate: frameRate) { (destURL) in
+                Regift.createGIFFromSource(url, startTime: startTime, duration: duration, frameRate: frameRate) { (destURL) in
                     if destURL == nil {
                         // show some error
-                        AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop to your library! :(")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop to your library! :(")
+                        }
                         return
                     }
                     PHPhotoLibrary.sharedPhotoLibrary().performChanges({
@@ -149,7 +183,7 @@ extension FeedViewController: FeedCellDelegate {
                 }
             }
         } else {
-            AppDelegate.getAppDelegate().showError("Download Failture", message: "Couldn't save the loop to your library! :(")
+            AppDelegate.getAppDelegate().showError("Download Failure", message: "Couldn't save the loop to your library! :(")
         }
     }
     
@@ -262,6 +296,7 @@ extension FeedViewController: FeedCellDelegate {
             } else {
                 AppDelegate.getAppDelegate().showError("Error", message: "Failed to record like/unlike")
             }
+//            cell.playerLayer?.hidden = true
         }
     }
     
@@ -277,7 +312,7 @@ extension FeedViewController: FeedCellDelegate {
                                        Liked: nowLiked)
             }
         }
-        feedView.reloadData()
+//        feedView.reloadData()
     }
     
 }

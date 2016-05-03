@@ -44,13 +44,8 @@ class FeedCell: UITableViewCell {
             _shouldPlayState = newValue
             if _shouldPlayState == .Play {
                 player!.play()
-                // hide share interface
-                hidePauseStackContainer()
             } else {
                 player!.pause()
-                // TODO: fade IN to showing pause stack
-                showPauseStackContainer()
-                // show share interface
             }
         }
     }
@@ -60,7 +55,8 @@ class FeedCell: UITableViewCell {
         }
         set(newValue) {
             _liked = newValue
-            updateHeartButton()
+            heartButton.alpha = _liked! ? 1.0 : 0.0
+            heartButton.enabled = _liked!
         }
     }
     
@@ -69,9 +65,7 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var heartView: UIImageView!
     @IBOutlet weak var heartViewWidth: NSLayoutConstraint!
-    @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var pauseStackView: UIStackView!
-    @IBOutlet weak var pauseStackContainerView: UIView!
     
 //    @IBOutlet weak var avPlayerView: UIView!
     
@@ -93,21 +87,8 @@ class FeedCell: UITableViewCell {
         addProfileLinkToUsername()
         gifPreview.userInteractionEnabled = true
         heartView.userInteractionEnabled = true
-        pauseStackContainerView.hidden = true
-        addGradientToStackViewLayer()
     }
-    
-    private func addGradientToStackViewLayer() {
-        let gl = CAGradientLayer()
-        gl.frame = pauseStackContainerView.bounds
-        gl.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gl.endPoint = CGPoint(x: 0.0, y: 1.0)
-        print("frame: \(gl.frame)")
-        gl.colors = [UIColor(red: 60, green: 60, blue: 60, a: 0.0).CGColor, UIColor(netHex: 0x131313).CGColor]
-        gl.locations = [0.0, 1.0]
-        pauseStackContainerView.layer.insertSublayer(gl, atIndex: 0)
-    }
-    
+
     private func addSingleTapToPreview() {
         let singleTapListner = UITapGestureRecognizer()
         singleTapListner.numberOfTapsRequired = 1
@@ -156,6 +137,7 @@ class FeedCell: UITableViewCell {
         id = feedItem.Id
         self.liked = feedItem.Liked!
         shouldPlayState = .Play
+        print("Cell's height in loadItem: \(self.contentView.frame.height)")
     }
     
     
@@ -169,20 +151,7 @@ class FeedCell: UITableViewCell {
         // tell the delegate the user pressed more for my cell
         delegate!.didPressMore(self)
     }
-    
-    private func showReportInterface() {
         
-    }
-    
-    private func showDeleteInterface() {
-        // show the popover action view
-        
-    }
-    
-    private func showDeleteConfirmation() {
-        // show the final alert. destructive action -->
-    }
-    
     func setImagePreview(uuid: String) {
         let URL = NSURL(string: "https://yaychakula.com/img/" + uuid + "/0.jpg")!
         let optionInfo: KingfisherOptionsInfo = [
@@ -256,44 +225,16 @@ class FeedCell: UITableViewCell {
         let imageName = liked ? "Heart" : "HeartOutline"
         heartButton.setImage(UIImage(named: imageName), forState: .Normal)
     }
-    
-    private func showPauseStackContainer() {
-        // set alpha 0, unhide, fade in
-        self.pauseStackContainerView.alpha = 0.0
-        self.pauseStackContainerView.hidden = false
-        UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.pauseStackContainerView.alpha = 1.0
-            self.contentView.layoutIfNeeded()
-            }, completion: nil)
-    }
-    
-    private func hidePauseStackContainer() {
-        // fade out, set alpha 0, hide
-        UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.pauseStackContainerView.alpha = 0.0
-            self.contentView.layoutIfNeeded()
-            }, completion: { finished in
-                if finished {
-                    self.pauseStackContainerView.hidden = true
-                }
-        })
-    }
-    
+
     private func reframeImage() {
-        if let gifSize = self.gifPreview.image?.size {
+        if self.gifPreview.image?.size != nil {
             let currentFrame = self.gifPreview.frame
-            // get the current height of the gif
-            // divide that by the current height of the preview, you've got the ratio
-//            let downscaleRatio =  currentFrame.height / gifSize.height
-//            let downScaleWidth = gifSize.width * downscaleRatio
-//            gifPreview.alignment = .Left
             self.gifPreview!.frame = CGRectMake(currentFrame.origin.x,
                                                 currentFrame.origin.y,
                                                 currentFrame.width,
                                                 currentFrame.width * 1.25)
             print("Update frame")
         }
-//        gifPreview.layer.cornerRadius = 6.0
         gifPreview.clipsToBounds = true
         gifPreview.setNeedsLayout()
     }
@@ -373,6 +314,7 @@ extension FeedCell {
         //set a listener for when the video ends
         playerLayer = AVPlayerLayer(player: player)
         playerLayer!.frame = gifPreview.bounds
+        playerLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
         gifPreview.layer.addSublayer(playerLayer!)
     }
     

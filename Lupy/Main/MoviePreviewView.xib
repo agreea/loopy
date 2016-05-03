@@ -8,6 +8,7 @@
     <customFonts key="customFonts">
         <mutableArray key="pier-regular.otf">
             <string>PierSans</string>
+            <string>PierSans</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -16,6 +17,7 @@
                 <outlet property="bottomView" destination="7aJ-Rs-6K6" id="7hR-pM-fCb"/>
                 <outlet property="filterView" destination="vjO-j2-H01" id="5rh-O0-9q5"/>
                 <outlet property="label" destination="6UK-S0-DYD" id="u0e-pm-GNt"/>
+                <outlet property="loadingVideoLabel" destination="CfW-HA-qWr" id="ug9-wN-gI4"/>
                 <outlet property="moviePreview" destination="3t6-1V-WMG" id="GUa-AR-mek"/>
                 <outlet property="nextButton" destination="Ry5-hc-OmM" id="N9u-Rp-KVf"/>
                 <outlet property="slider" destination="vJQ-9w-IvF" id="aUH-yv-kXM"/>
@@ -28,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3t6-1V-WMG" userLabel="moviePreview">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="448"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mi2-ZG-Ix4" userLabel="xButton" customClass="CancelPreviewButton" customModule="Lupy" customModuleProvider="target">
                             <rect key="frame" x="8" y="8" width="42" height="42"/>
@@ -51,10 +53,18 @@
                                 <action selector="didPressSend:" destination="-1" eventType="touchUpInside" id="eSy-UF-ajV"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfW-HA-qWr">
+                            <rect key="frame" x="242" y="215" width="116" height="17"/>
+                            <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="mi2-ZG-Ix4" firstAttribute="top" secondItem="3t6-1V-WMG" secondAttribute="topMargin" id="Iou-UF-CC0"/>
                         <constraint firstItem="Ry5-hc-OmM" firstAttribute="trailing" secondItem="3t6-1V-WMG" secondAttribute="trailingMargin" id="R2v-s4-5cK"/>
+                        <constraint firstItem="CfW-HA-qWr" firstAttribute="centerX" secondItem="3t6-1V-WMG" secondAttribute="centerX" id="jD6-dz-3C6"/>
+                        <constraint firstItem="CfW-HA-qWr" firstAttribute="centerY" secondItem="3t6-1V-WMG" secondAttribute="centerY" id="sig-1K-yPI"/>
                         <constraint firstItem="mi2-ZG-Ix4" firstAttribute="leading" secondItem="3t6-1V-WMG" secondAttribute="leadingMargin" id="uo6-uY-tfI"/>
                     </constraints>
                 </view>
@@ -143,9 +153,9 @@
             <constraints>
                 <constraint firstItem="7aJ-Rs-6K6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1wR-0H-HoW"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8K4-WG-Ym1"/>
-                <constraint firstItem="7aJ-Rs-6K6" firstAttribute="bottom" secondItem="3t6-1V-WMG" secondAttribute="bottom" id="Wko-63-kSY"/>
                 <constraint firstItem="7aJ-Rs-6K6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="cyy-h6-L4K"/>
                 <constraint firstItem="3t6-1V-WMG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jLZ-0l-b6h"/>
+                <constraint firstItem="7aJ-Rs-6K6" firstAttribute="top" secondItem="3t6-1V-WMG" secondAttribute="bottom" constant="-1" id="mw0-kk-hXd"/>
                 <constraint firstItem="7aJ-Rs-6K6" firstAttribute="top" secondItem="Ry5-hc-OmM" secondAttribute="bottom" constant="9" id="n4Y-5O-pWc"/>
                 <constraint firstAttribute="bottom" secondItem="7aJ-Rs-6K6" secondAttribute="bottom" id="ngv-Gn-yeY"/>
                 <constraint firstAttribute="trailing" secondItem="3t6-1V-WMG" secondAttribute="trailing" id="yHj-QM-jIJ"/>

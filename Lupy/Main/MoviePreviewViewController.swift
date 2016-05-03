@@ -37,6 +37,7 @@ class MoviePreviewViewController: UIViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var filterView: UICollectionView!
+    @IBOutlet weak var loadingVideoLabel: UILabel!
     
     
     private var interfaceToggle = InterfaceToggle.Filter
@@ -91,6 +92,7 @@ class MoviePreviewViewController: UIViewController {
     
     func previewModeDidStart() {
         videoSource?.stop()
+        loadingVideoLabel.hidden = true
         if coreImageView == nil {
             print("Adding core image view")
             coreImageView = CoreImageView(frame: moviePreview.bounds)
@@ -104,8 +106,9 @@ class MoviePreviewViewController: UIViewController {
     
     func handleVideoFrame(image: CIImage) {
         // get transformation for this rotation
-        let rotateTransform = image.imageTransformForOrientation(Int32(6))
-        coreImageView!.image = image.imageByApplyingTransform(rotateTransform)
+//        let rotateTransform = image.imageTransformForOrientation(Int32(6))
+//        coreImageView!.image = image.imageByApplyingTransform(rotateTransform)
+        coreImageView!.image = image
         if firstFrame == nil {
             firstFrame = coreImageView!.image
             populateFilterCells()
@@ -168,7 +171,13 @@ class MoviePreviewViewController: UIViewController {
         videoSource = nil
         slider.value = 0.5
         firstFrame = nil
+        loadingVideoLabel.hidden = false
+        interfaceState = .Filter
         filterView.hidden = true
+        for i in 0...filterPreviews.count-1 {
+            filterPreviews[i].selected = false
+        }
+        filterPreviews[0].selected = true
         if coreImageView != nil {
             coreImageView!.image = nil
             coreImageView!.hidden = true

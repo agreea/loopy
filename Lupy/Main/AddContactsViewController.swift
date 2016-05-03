@@ -245,7 +245,7 @@ class AddContactsViewController: UIViewController {
                         API.processResponse(response, onSuccess: self.processRegisteredContactsResponse)
                 }
             } catch {
-                appDelegate.showError("Address Book Error", message: "Failed to get your friends on Lupy.")
+                appDelegate.showError("Address Book Error", message: "Failed to get your friends on Keyframe.")
             }
         } else {
             appDelegate.showError("Login Error", message: "Make sure you're logged in and try again")
@@ -377,7 +377,7 @@ extension AddContactsViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView( tableView : UITableView,  titleForHeaderInSection section: Int)->String? {
         if configurationMode == AddContactsViewController.CONFIG_CONTACTS {
-            return usernameSearchResultsMode ? "Results" : "Friends on Lupy"
+            return usernameSearchResultsMode ? "Results" : "Friends on Keyframe"
         }
         return nil
     }

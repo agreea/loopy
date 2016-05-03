@@ -861,7 +861,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.agreeahmed.loopi;
 				PRODUCT_NAME = Lupy;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9162d175-f20b-405e-865c-c3d0e3b2db53";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;

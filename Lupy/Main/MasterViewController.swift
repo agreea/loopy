@@ -34,7 +34,7 @@ class MasterViewController: UIPageViewController, UINavigationControllerDelegate
     var cameraDelegate: CameraNavDelegate?
     var uploader: VideoUploader?
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [self.initCaptureViewController(), self.initFeedViewController(), self.initMyLoopsViewController()]
+        return [self.initFeedViewController(), self.initCaptureViewController(),  self.initMyLoopsViewController()]
     }()
     
     override func viewDidLoad() {
@@ -83,11 +83,11 @@ class MasterViewController: UIPageViewController, UINavigationControllerDelegate
     }
     
     func goToCapture(direction: UIPageViewControllerNavigationDirection) {
-        setViewControllers([orderedViewControllers[0]], direction: direction, animated: true, completion: nil)
+        setViewControllers([orderedViewControllers[1]], direction: direction, animated: true, completion: nil)
     }
     
     func goToFeed(direction: UIPageViewControllerNavigationDirection) {
-        setViewControllers([orderedViewControllers[1]], direction: direction, animated: true, completion: nil)
+        setViewControllers([orderedViewControllers[0]], direction: direction, animated: true, completion: nil)
     }
 
     func goToMyLoops(direction: UIPageViewControllerNavigationDirection) {
@@ -138,14 +138,14 @@ class MasterViewController: UIPageViewController, UINavigationControllerDelegate
 
 extension MasterViewController: TabBarDelegate {
     func goToCamera() {
-        setViewControllers([orderedViewControllers[0]], direction: .Reverse, animated: false, completion: nil)
+        setViewControllers([orderedViewControllers[1]], direction: .Reverse, animated: false, completion: nil)
         cameraDelegate?.cameraDidEnter()
     }
     
     func goToHome() {
-        if let feedVC = orderedViewControllers[1] as? FeedViewController {
+        if let feedVC = orderedViewControllers[0] as? FeedViewController {
             feedVC.showNavBarImmediately()
-            setViewControllers([orderedViewControllers[1]], direction: .Reverse, animated: false, completion: nil)
+            setViewControllers([orderedViewControllers[0]], direction: .Reverse, animated: false, completion: nil)
         }
     }
     
@@ -163,20 +163,20 @@ extension MasterViewController: TabBarDelegate {
 extension MasterViewController: VideoUploaderDelegate {
     func uploadDidStart(firstFrame: CIImage){
         // show uploadCell in feed
-        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        let feedViewController = orderedViewControllers[0] as! FeedViewController
         feedViewController.uploadDidStart()
     }
     
     func uploadDidSucceed() {
         // show upload was successful, once that's done exit uploading mode
-        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        let feedViewController = orderedViewControllers[0] as! FeedViewController
         feedViewController.uploadDidSucceed()
         uploader!.sourceURL = nil
     }
     
     func uploadDidError() {
         // show there was an error and allow the user to tap to retry uploading
-        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        let feedViewController = orderedViewControllers[0] as! FeedViewController
         feedViewController.uploadError()
         print("Upload did error")
     }
@@ -194,7 +194,7 @@ extension MasterViewController: CaptureModeDelegate {
     
     func didPressUpload(sourceURL: NSURL, filterSettings: FilterSettings) {
         uploader!.postVideo(sourceURL, filterSettings: filterSettings)
-        let feedViewController = orderedViewControllers[1] as! FeedViewController
+        let feedViewController = orderedViewControllers[0] as! FeedViewController
         feedViewController.scrollToTop()
         goToHome()
         cameraDelegate!.cameraDidExit()
@@ -202,10 +202,13 @@ extension MasterViewController: CaptureModeDelegate {
         // go back to feed
     }
 
-    // CaptureModeDelegateMethods
+    func captureModeDidEnd() {
+        moviePreviewController!.view.hidden = false
+        previewMode = true
+    }
+    
     func previewModeDidStart(movieURL: NSURL) {
         moviePreviewController!.movieURL = movieURL
-        moviePreviewController!.captureModeDelegate = self
         moviePreviewController!.previewModeDidStart()
         moviePreviewController!.view.hidden = false
         previewMode = true
@@ -221,7 +224,7 @@ extension MasterViewController: CaptureModeDelegate {
     func didFinishUpload() {
         // go to feed?
         goToHome()
-        if let feedViewController = orderedViewControllers[1] as? FeedViewController {
+        if let feedViewController = orderedViewControllers[0] as? FeedViewController {
             feedViewController.attemptLoadFeed()
         }
         moviePreviewController!.view.hidden = true

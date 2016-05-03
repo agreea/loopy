@@ -50,11 +50,10 @@ class FrameFilter {
         let bwParams = [
             kCIInputImageKey as String: image,
             "inputBrightness": CGFloat(0.0),
-            "inputContrast": CGFloat(1.1),
+            "inputContrast": CGFloat(1.0),
             "inputSaturation": CGFloat(0.0)
         ]
         let blackAndWhite = CIFilter(name: "CIColorControls", withInputParameters: bwParams)!.outputImage!
-//        CIImage *blackAndWhite = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputImageKey, beginImage, @"inputBrightness", [NSNumber numberWithFloat:0.0], @"inputContrast", [NSNumber numberWithFloat:1.1], @"inputSaturation", [NSNumber numberWithFloat:0.0], nil].outputImage;
         let exposureAdjustParams = [
             kCIInputImageKey as String: blackAndWhite,
             "inputEV": 0.7

@@ -322,7 +322,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.hasGif = false
         cell.delegate = self
         cell.loadItem(feedItem)
-        cell.alpha = 1.0
+        updateCellLoopStatus(cell)
+//        cell.alpha = 1.0
         return cell
     }
     
@@ -357,31 +358,38 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         // for each one if less than half of the gifVideo is visible, pause that video
         if let cells = feedView.visibleCells as? [FeedCell] {
             for cell in cells {
-                let indexPath = feedView.indexPathForCell(cell)
-                let rect = feedView.rectForRowAtIndexPath(indexPath!)
-                
-                // get the view's frame in terms of the screen
-                let cellTop = rect.origin.y
-                let loopTop = cellTop + cell.gifPreview.frame.origin.y
-                let loopH = cell.gifPreview.frame.height
-                let loopBottom = loopTop + loopH
-                let feedTop = scrollSession!.currentY!
-                let feedBottom = scrollSession!.currentY! + feedView.frame.height
-                if loopTop < feedTop {
-                    if loopBottom - feedTop < loopH/2 { // if more than half of the video is hidden, pause it
-                        cell.pauseVideo()
-                        cell.alpha = (loopBottom - feedTop)/(loopH/2)
-                    } else {
-                        cell.alpha = 1.0
-                        cell.playVideo()
-                    }
-                } else if feedBottom < loopBottom  { // for videos with top half showing
-                    if feedBottom - loopTop < loopH/2 {
-                        cell.pauseVideo()
-                    } else {
-                        cell.playVideo()
-                    }
-                }
+                updateCellLoopStatus(cell)
+            }
+        }
+    }
+    
+    private func updateCellLoopStatus(cell: FeedCell) {
+        let indexPath = feedView.indexPathForCell(cell)
+        if indexPath == nil {
+            return
+        }
+        
+        let rect = feedView.rectForRowAtIndexPath(indexPath!)
+        // get the view's frame in terms of the screen
+        let cellTop = rect.origin.y
+        let loopTop = cellTop + cell.gifPreview.frame.origin.y
+        let loopH = cell.gifPreview.frame.height
+        let loopBottom = loopTop + loopH
+        let feedTop = feedView.contentOffset.y
+        let feedBottom = feedView.contentOffset.y + feedView.frame.height
+        if loopTop < feedTop {
+            if loopBottom - feedTop < loopH/2 { // if more than half of the video is hidden, pause it
+                cell.pauseVideo()
+                cell.alpha = (loopBottom - feedTop)/(loopH/2)
+            } else {
+                cell.alpha = 1.0
+                cell.playVideo()
+            }
+        } else if feedBottom < loopBottom  { // for videos with top half showing
+            if feedBottom - loopTop < loopH/2 {
+                cell.pauseVideo()
+            } else {
+                cell.playVideo()
             }
         }
     }

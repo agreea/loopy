@@ -85,7 +85,7 @@ class VideoSampleBufferSource: NSObject {
             return
         }
         synced(self) {
-            self.luminosity = CGFloat(1.3 * (value - 0.5))
+            self.luminosity = CGFloat((value - 0.5))
         }
     }
     
