@@ -1,0 +1,31 @@
+PODS:
+  - Alamofire (3.3.1)
+  - HanekeSwift (0.10.1)
+  - Kingfisher (2.3.1)
+  - Proposer (0.8.0)
+  - Regift (1.2.0)
+  - SCRecorder (2.7.0)
+  - SwiftyJSON (2.3.2)
+  - UIImageViewAlignedSwift (0.1.11)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.0)
+  - HanekeSwift
+  - Kingfisher (~> 2.1)
+  - Proposer (~> 0.8.0)
+  - Regift
+  - SCRecorder
+  - SwiftyJSON (~> 2.3.2)
+  - UIImageViewAlignedSwift (~> 0.1.11)
+
+SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
+  Kingfisher: 6d3fbada4829cbc7b89e883e8218c28afeb64e42
+  Proposer: 17cd7fd2509b0d8d7c9e33815d648087c7dcaa81
+  Regift: c9ac13d922047c39e385d2c19be338461a259fd6
+  SCRecorder: bbb521dbc222908876ec9cd9156bbc8a893bed44
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  UIImageViewAlignedSwift: 3f2739bb8d5cda0ce0b45630efd3e94dae3bbc28
+
+COCOAPODS: 0.39.0
