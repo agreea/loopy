@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 import Proposer
 
-class AddContactsViewController: UIViewController {
+class AddContactsViewController: UIViewController, UITextFieldDelegate {
     var allContacts = [String: String]()
     var usernameResultsArray = [(username: String, followed: Bool)]()
     var registeredContacts = [(phone: String, name: String, followed: Bool)]()
@@ -45,6 +45,7 @@ class AddContactsViewController: UIViewController {
         contactTableView.hidden = true
         contactTableView.tableFooterView = UIView()
         noContactsView.hidden = true
+        usernameField.delegate = self
         for family: String in UIFont.familyNames() {
             print("\(family)")
             for names: String in UIFont.fontNamesForFamilyName(family)
@@ -105,6 +106,14 @@ class AddContactsViewController: UIViewController {
 //        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        // attempt to log in
+        fetchUsernameSearchResults()
+        return true
+    }
+    
     @IBAction func didPressSearchUser(sender: AnyObject) {
         // exit the keyboard
         usernameField.endEditing(true)
@@ -133,7 +142,7 @@ class AddContactsViewController: UIViewController {
             "session": session,
             "method": "GetFollowers"
         ]
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
             parameters: params)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: self.processFollowerFollowingResponse)
@@ -145,7 +154,7 @@ class AddContactsViewController: UIViewController {
             "session": session,
             "method": "GetFollowing"
         ]
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
             parameters: params)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: self.processFollowerFollowingResponse)
@@ -225,7 +234,6 @@ class AddContactsViewController: UIViewController {
         }
         return digitsOnly
     }
-
     
     // get contacts with accounts from the server
     private func fetchRegisteredContacts(phoneNumbers: [String]) {
@@ -239,7 +247,7 @@ class AddContactsViewController: UIViewController {
                     "contacts": phoneJSON as! AnyObject,
                     "method": "GetRegisteredContacts"
                 ]
-                Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+                Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                     parameters: params)
                     .responseJSON { response in
                         API.processResponse(response, onSuccess: self.processRegisteredContactsResponse)
@@ -288,7 +296,7 @@ class AddContactsViewController: UIViewController {
                 "username": usernameField.text!,
                 "method": "FindUserToFollowByUsername"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: params)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processUsernameSearchResponse)
@@ -440,7 +448,7 @@ extension AddContactsViewController: ContactCellDelegate {
     }
     
     private func executeChangeFollowStatus(params: [String : String], cell: ContactCell) {
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
             parameters: params)
             .responseJSON { response in
                 self.processChangeFollowStatusRepsonse(response, cell: cell, params: params)

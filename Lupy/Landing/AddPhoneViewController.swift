@@ -44,7 +44,7 @@ class AddPhoneViewController: UIViewController {
                 "session": session,
                 "phone": phoneTextField.text!
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     self.processAddPhoneResponse(response)

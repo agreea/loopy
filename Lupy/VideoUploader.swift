@@ -26,7 +26,9 @@ class VideoUploader: NSObject {
     private var delegate: VideoUploaderDelegate
     var sourceURL: NSURL?
     private var filterSettings: FilterSettings?
-    
+    private var firstFrame: CIImage?
+    let context = CIContext(options:nil)
+
     init?(delegate: VideoUploaderDelegate){
         self.delegate = delegate
         super.init()
@@ -56,20 +58,19 @@ class VideoUploader: NSObject {
                 let reader = self.getReader(asset) {
                 if videoTrack != nil {
                     var isWriting = false
-                    let context = CIContext(options: nil)
                     reader.startReading()
                     let readerOutput = reader.outputs.last!
                     while let buffer: CMSampleBuffer? = readerOutput.copyNextSampleBuffer() {
                         if buffer == nil {
                             break
                         }
-                        var firstFrame = false
+                        var writingFirstFrame = false
                         autoreleasepool() {
                             if !isWriting {
                                 if writer.startWriting() {
                                     writer.startSessionAtSourceTime(CMSampleBufferGetPresentationTimeStamp(buffer!))
                                     isWriting = true
-                                    firstFrame = true
+                                    writingFirstFrame = true
                                 } else {
                                     self.dispatchError()
                                     return
@@ -77,10 +78,11 @@ class VideoUploader: NSObject {
                             }
                             let pixelBuffer = CMSampleBufferGetImageBuffer(buffer!)
                             let image = FrameFilter.getProcessedImage(pixelBuffer!, filterSettings: self.filterSettings!)
-                            if firstFrame {
+                            if writingFirstFrame {
                                 self.dispatchDidStart(image)
+                                self.firstFrame = image
                             }
-                            context.render(image, toCVPixelBuffer: pixelBuffer!)
+                            self.context.render(image, toCVPixelBuffer: pixelBuffer!)
                             while writer.inputs.last!.readyForMoreMediaData == false {
                                 NSThread.sleepForTimeInterval(0.05)
                             }
@@ -119,27 +121,102 @@ class VideoUploader: NSObject {
     
     private func attemptUploadVideoAtURL(sourceURL: NSURL) {
         if let session = AppDelegate.getAppDelegate().getSession() {
-            uploadVideoAtURL(sourceURL, session: session)
+            getS3URLs(sourceURL, session: session)
         } else {
             AppDelegate.getAppDelegate().showError("Video Upload Error", message: "Please log out and log back in to upload a video")
             dispatchError()
         }
     }
     
-    private func uploadVideoAtURL(sourceURL: NSURL, session: String){
-        let headers = [
-            "Session": session,
-            "Format": "MOV"
+    func getS3URLs(sourceURL: NSURL, session: String) {
+        let parameters = [
+            "session": session,
+            "method": "GetVideoS3URL",
         ]
-        Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", headers: headers, file: sourceURL).progress { _, totalBytesRead, totalBytesExpectedToRead in
-//                self.updateUploadProgress(totalBytesRead, totalBytesExpectedToRead: totalBytesExpectedToRead)
-            }
+        print("getting s3 video url")
+        Alamofire.request(.POST, "https://getkeyframe.com/api/gif",
+            parameters: parameters)
             .responseJSON { response in
-                API.processResponse(response, onSuccess: self.processUploadResponse, onFailure: {
-                    self.dispatchError()
+                API.processResponse(response, onSuccess: { value in
+                    let json = JSON(value)
+                    print(json)
+                    if json["Success"].int == 1 {
+                        let videoURL = json["Return", "VideoURL"].stringValue
+                        let frameURL = json["Return", "FrameURL"].stringValue
+                        let uuid = json["Return", "Uuid"].stringValue
+                        self.uploadVideoToS3(sourceURL, s3URL: videoURL, frameURL: frameURL, uuid: uuid)
+                    } else {
+                        self.dispatchError()
+                    }
                 })
         }
     }
+    
+    private func uploadVideoToS3(sourceURL: NSURL, s3URL: String, frameURL: String, uuid: String) {
+        print("Uploading video to s3")
+        Alamofire.upload(.PUT, s3URL, file: sourceURL).progress { _, totalBytesRead, totalBytesExpectedToRead in
+            print("bytes read: \(totalBytesRead)")
+            }
+            .response { request, response, data, error in
+                // todo: error check
+                self.uploadFirstFrameToS3(frameURL, uuid: uuid)
+        }
+    }
+    
+    private func uploadFirstFrameToS3(s3URL: String, uuid: String) {
+        if firstFrame == nil {
+            print("First frame == nil")
+            return
+        }
+        print("uploading first frame to s3")
+        let firstFrameCG = context.createCGImage(firstFrame!, fromRect: firstFrame!.extent)
+        let firstFrameUI = UIImage(CGImage: firstFrameCG)
+        let firstFrameData = UIImageJPEGRepresentation(firstFrameUI, 1.0)
+        Alamofire.upload(.PUT, s3URL, data: firstFrameData!).progress { _, totalBytesRead, totalBytesExpectedToRead in
+            print("bytes read: \(totalBytesRead)")
+            }
+            .response { request, response, data, error in
+                // todo: error check
+                self.reportUploadComplete(uuid)
+        }
+
+    }
+    private func reportUploadComplete(uuid: String) {
+        let session = AppDelegate.getAppDelegate().getSession()!
+        let parameters = [
+            "session": session,
+            "method": "ReportUploadComplete",
+            "uuid": uuid
+        ]
+        print("Reporting upload complete")
+        Alamofire.request(.POST, "https://getkeyframe.com/api/gif",
+            parameters: parameters)
+            .responseJSON { response in
+                API.processResponse(response, onSuccess: { value in
+                    let json = JSON(value)
+                    print(json)
+                    if json["Success"].int == 1 {
+                        self.dispatchSuccess()
+                    } else {
+                        self.dispatchError()
+                    }
+                })
+        }
+    }
+//    private func uploadVideoAtURL(sourceURL: NSURL, session: String){
+//        let headers = [
+//            "Session": session,
+//            "Format": "MOV"
+//        ]
+//        Alamofire.upload(.POST, "https://qa.yaychakula.com/api/gif/upload/", headers: headers, file: sourceURL).progress { _, totalBytesRead, totalBytesExpectedToRead in
+////                self.updateUploadProgress(totalBytesRead, totalBytesExpectedToRead: totalBytesExpectedToRead)
+//            }
+//            .responseJSON { response in
+//                API.processResponse(response, onSuccess: self.processUploadResponse, onFailure: {
+//                    self.dispatchError()
+//                })
+//        }
+//    }
     
     func processUploadResponse(value: AnyObject) {
         let json = JSON(value)

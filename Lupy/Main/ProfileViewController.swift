@@ -94,7 +94,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "userId": "\(userId)"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processGetUserDataResponse)
@@ -111,7 +111,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username)"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processGetUserDataResponse)
@@ -183,7 +183,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username!)"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processFollowResponse)
@@ -202,7 +202,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username!)"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processUnfollowResponse)

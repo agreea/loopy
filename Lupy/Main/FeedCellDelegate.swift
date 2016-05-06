@@ -18,11 +18,9 @@ enum ReportReason {
 }
 
 extension FeedViewController: FeedCellDelegate {
-    
-    func getTempURLForUuid(uuid: String, lofi: Bool) -> NSURL {
+    func getTempURLForKey(contentKey: String) -> NSURL {
         let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let fileEnding = lofi ? "_ds_c.MOV" : "_c_r.MOV"
-        let movieName = uuid + fileEnding
+        let movieName = contentKey + ".MOV"
         return tempDir.URLByAppendingPathComponent(movieName)
     }
     
@@ -123,8 +121,13 @@ extension FeedViewController: FeedCellDelegate {
     func savePostToCameraRoll(cell: FeedCell) {
         // get URL for video
         let feedItem = getFeedItemForCell(cell)
-        let videoURL  = getTempURLForUuid(feedItem.Uuid!, lofi: false)
+        let contentKey = getContentKeyForFeedItem(feedItem)
+        let videoURL  = getTempURLForKey(contentKey)
         downsampleVideoForCameraRoll(videoURL)
+    }
+    
+    func getContentKeyForFeedItem(feedItem: FeedItem) -> String {
+        return feedItem.Username! + "_" + feedItem.Uuid!
     }
     
     private func downsampleVideoForCameraRoll(url: NSURL) {
@@ -316,3 +319,76 @@ extension FeedViewController: FeedCellDelegate {
     }
     
 }
+
+extension FeedViewController {
+    // get playerItem(cell)
+    /*
+        // fetch video
+        // once that's ready, set the cell's playerLayerPlayer
+     */
+    func loadVideo(contentKey: String, cell: FeedCell) {
+        // check if the video file is in the temporary directory
+        let moviePath = getTempURLForKey(contentKey)
+        let manager = NSFileManager.defaultManager()
+        if manager.fileExistsAtPath(moviePath.path!) {
+            let playerItem = AVPlayerItem(URL: moviePath)
+            let duration = playerItem.asset.duration
+            if duration != CMTimeMake(0, 1) {
+                print("serving cache")
+                cell.videoLoaded(moviePath)
+                return
+            }
+        } else {
+            fetchVideoFromServer(contentKey, cell: cell)
+        }
+    }
+
+    // fine
+    private func fetchVideoFromServer(contentKey: String, cell: FeedCell) {
+        let videoUrl = "https://s3.amazonaws.com/keyframecontent/" + contentKey + "/v.MOV"
+        Alamofire.request(.GET, videoUrl).response { request, response, data, error in
+            print("For \(contentKey), Fetched bytes: \(data!.length)")
+            if let movieURL = self.writeVideoFile(contentKey, data: data!) {
+                cell.videoLoaded(movieURL)
+            } else {
+                print("failed to fetch")
+            }
+        }
+    }
+
+    private func writeVideoFile(contentKey: String, data: NSData) -> NSURL? {
+        let moviePath = getTempURLForKey(contentKey)
+        do {
+            try data.writeToFile(moviePath.path!, options: .AtomicWrite)
+        } catch {
+            print("\(error)")
+        }
+        let manager = NSFileManager.defaultManager()
+        return manager.fileExistsAtPath(moviePath.path!) ? moviePath : nil
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

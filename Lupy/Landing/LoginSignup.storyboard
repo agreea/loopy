@@ -7,8 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="pier-bold.otf">
+            <string>PierSans-Bold</string>
+        </mutableArray>
         <mutableArray key="pier-regular.otf">
-            <string>PierSans</string>
             <string>PierSans</string>
             <string>PierSans</string>
             <string>PierSans</string>
@@ -48,13 +50,13 @@
                                     <constraint firstAttribute="height" constant="80" id="7U1-Vy-rLi"/>
                                     <constraint firstAttribute="width" constant="202" id="mJu-KH-qh0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="37"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="PierSans-Bold" family="Pier Sans" pointSize="37"/>
+                                <color key="textColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNT-6r-FeO">
                                 <rect key="frame" x="0.0" y="453" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="ZAC-cu-fGt"/>
                                 </constraints>
@@ -68,7 +70,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ms-wz-OPO">
                                 <rect key="frame" x="0.0" y="526" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.66632543099999997" blue="0.31064116380000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="PWL-Ab-55x"/>
                                 </constraints>
@@ -86,21 +88,27 @@
                                     <constraint firstAttribute="height" constant="38" id="q7b-bL-bAf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.66632543099999997" blue="0.31064116380000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KeyframeLogo" translatesAutoresizingMaskIntoConstraints="NO" id="OxE-KS-a6m">
+                                <rect key="frame" x="65" y="162" width="471" height="215"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Sks-zV-LLH" firstAttribute="top" secondItem="WnB-r4-Z4l" secondAttribute="topMargin" constant="28" id="10L-YS-a1w"/>
                             <constraint firstItem="Sks-zV-LLH" firstAttribute="centerX" secondItem="yGf-pe-34S" secondAttribute="centerX" id="6db-6H-ZHD"/>
+                            <constraint firstItem="OxE-KS-a6m" firstAttribute="top" secondItem="yGf-pe-34S" secondAttribute="bottom" constant="8" id="Gh2-Pb-E9d"/>
                             <constraint firstItem="yGf-pe-34S" firstAttribute="centerX" secondItem="BNT-6r-FeO" secondAttribute="centerX" id="Gjs-MV-tWE"/>
                             <constraint firstItem="BNT-6r-FeO" firstAttribute="leading" secondItem="6Ms-wz-OPO" secondAttribute="leading" id="Qru-MU-OcB"/>
                             <constraint firstAttribute="trailing" secondItem="BNT-6r-FeO" secondAttribute="trailing" id="Vy2-2I-IOh"/>
                             <constraint firstItem="BNT-6r-FeO" firstAttribute="trailing" secondItem="6Ms-wz-OPO" secondAttribute="trailing" id="XBW-M1-xGs"/>
                             <constraint firstItem="6Ms-wz-OPO" firstAttribute="bottom" secondItem="WCq-Ft-zeT" secondAttribute="top" id="b18-sS-xSJ"/>
+                            <constraint firstItem="BNT-6r-FeO" firstAttribute="top" secondItem="OxE-KS-a6m" secondAttribute="bottom" constant="76" id="eF4-vA-KAC"/>
                             <constraint firstItem="BNT-6r-FeO" firstAttribute="leading" secondItem="WnB-r4-Z4l" secondAttribute="leading" id="l0V-Tc-3Wb"/>
                             <constraint firstItem="WCq-Ft-zeT" firstAttribute="top" secondItem="BNT-6r-FeO" secondAttribute="bottom" constant="73" id="lwf-4b-B7l"/>
+                            <constraint firstItem="OxE-KS-a6m" firstAttribute="centerX" secondItem="WnB-r4-Z4l" secondAttribute="centerX" id="qoC-eN-cYz"/>
                             <constraint firstItem="yGf-pe-34S" firstAttribute="top" secondItem="Sks-zV-LLH" secondAttribute="bottom" constant="8" symbolic="YES" id="tVW-75-1y6"/>
                         </constraints>
                     </view>
@@ -138,7 +146,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9R-De-Fhs" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="228" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="Fob-WA-lzf"/>
                                     <constraint firstAttribute="height" constant="45" id="OIy-x5-rNo"/>
@@ -295,7 +303,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ej9-yM-TvA" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="216" width="215" height="36"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="m2b-Tf-hTq"/>
                                 </constraints>
@@ -382,7 +390,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pH0-Fo-BfY" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="213" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dIM-ca-EMS"/>
                                     <constraint firstAttribute="width" constant="215" id="ixS-9v-f9x"/>
@@ -398,7 +406,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kbP-Wm-mEa" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="266" width="215" height="45"/>
-                                <color key="backgroundColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.66632543103448272" blue="0.31064116379310347" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="eO8-N1-8st"/>
                                 </constraints>
@@ -487,18 +495,18 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Keyframe yours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-Pq-E3I">
                                 <rect key="frame" x="0.0" y="72" width="600" height="32"/>
                                 <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="32"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Pw-Sf-rvZ">
                                 <rect key="frame" x="0.0" y="526" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.14307650862068966" green="0.66193426724137927" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="KUI-v3-ANx"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="28"/>
                                 <state key="normal" title="LATER">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="didPressLater:" destination="Sfb-Sd-PcH" eventType="touchUpInside" id="B7I-3x-jUG"/>
@@ -506,7 +514,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jL-wmC">
                                 <rect key="frame" x="0.0" y="453" width="600" height="74"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="seV-BN-Cab"/>
                                 </constraints>
@@ -524,7 +532,7 @@
                                     <constraint firstAttribute="height" constant="54" id="K9e-bK-w9u"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="21"/>
-                                <color key="textColor" red="0.14307650860000001" green="0.66193426720000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.66632543099999997" blue="0.31064116380000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -622,7 +630,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1f-RS-k7k" customClass="RoundedButton" customModule="Lupy" customModuleProvider="target">
                                 <rect key="frame" x="193" y="227" width="215" height="36"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="215" id="Npj-s4-Sur"/>
                                 </constraints>
@@ -683,6 +691,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="KeyframeLogo" width="471" height="471"/>
         <image name="NavbarBack" width="28" height="22"/>
         <image name="PasswordSecure" width="150" height="150"/>
     </resources>

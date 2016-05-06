@@ -58,6 +58,7 @@ class UploadingCell: UITableViewCell {
         // Initialization code
         gl = CAGradientLayer()
         gl!.frame = contentView.bounds
+        print("GL frame: \(gl!.frame)")
         gl!.colors = colorPairs[currentColorPair]
         gl!.locations = [0.0, 1.0]
         gl!.startPoint = CGPoint(x: 0.0, y: 0.0)
@@ -80,6 +81,7 @@ class UploadingCell: UITableViewCell {
         let fromColors = gl!.colors
         let toColors = colorPairs[nextColorPair]
         let animation = CABasicAnimation(keyPath: "colors")
+        gl!.frame = contentView.bounds
         gl!.colors = toColors
         animation.fromValue = fromColors
         animation.toValue = toColors

@@ -61,9 +61,6 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLY-Oq-zBx">
                                 <rect key="frame" x="0.0" y="0.0" width="53" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="nLY-Oq-zBx" secondAttribute="height" multiplier="59:56" id="HSY-PD-vHV"/>
-                                </constraints>
                                 <state key="normal" image="Heart"/>
                                 <connections>
                                     <action selector="didPressHeartButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7N8-7f-3Xb"/>
@@ -128,9 +125,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Download" width="59" height="40"/>
-        <image name="Heart" width="59" height="40"/>
+        <image name="Download" width="25" height="25"/>
+        <image name="Heart" width="25" height="25"/>
         <image name="HeartWhite" width="80" height="80"/>
-        <image name="MoreIconWhite" width="59" height="40"/>
+        <image name="MoreIconWhite" width="25" height="25"/>
     </resources>
 </document>

@@ -21,7 +21,9 @@ protocol FeedCellDelegate {
     func savePostToCameraRoll(cell: FeedCell)
     func didPressMore(cell: FeedCell)
     func isSelfPost(cell: FeedCell) -> Bool
-    func getTempURLForUuid(uuid: String, lofi: Bool) -> NSURL
+    func getTempURLForKey(key: String) -> NSURL
+    func getContentKeyForFeedItem(feedItem: FeedItem) -> String
+    func loadVideo(contentKey: String, cell: FeedCell)
 }
 
 class FeedCell: UITableViewCell {
@@ -132,9 +134,13 @@ class FeedCell: UITableViewCell {
     
     func loadItem(feedItem: FeedItem) {
         hasGif = false
-        setImagePreview(feedItem.Uuid!)
+        playerLayer?.hidden = true
+        print("Cell load view called, my id is: \(id)")
+        let contentKey = feedItem.Username! + "_" + feedItem.Uuid!
+        setImagePreview(contentKey)
         usernameLabel.text = feedItem.Username
         id = feedItem.Id
+        print("Load Video called for \(id)")
         self.liked = feedItem.Liked!
         shouldPlayState = .Play
         print("Cell's height in loadItem: \(self.contentView.frame.height)")
@@ -152,8 +158,9 @@ class FeedCell: UITableViewCell {
         delegate!.didPressMore(self)
     }
         
-    func setImagePreview(uuid: String) {
-        let URL = NSURL(string: "https://yaychakula.com/img/" + uuid + "/0.jpg")!
+    func setImagePreview(key: String) {
+        print("Image preview key:  \(key)")
+        let URL = NSURL(string: "https://s3.amazonaws.com/keyframecontent/" + key + "/f.jpg")!
         let optionInfo: KingfisherOptionsInfo = [
             .DownloadPriority(0.5),
             .Transition(ImageTransition.Fade(0.5))
@@ -162,9 +169,12 @@ class FeedCell: UITableViewCell {
                                       placeholderImage: nil,
                                       optionsInfo: optionInfo,
                                       completionHandler: { (image, error, cacheType, imageURL) -> () in
-//                                        self.reframeImage()
                                         if self.feedViewController!.canCellDownloadGif(self) {
-                                            self.loadVideoPreview(uuid, lofi: false)
+                                            print("load video called for id: \(self.id)")
+                                            self.playerLayer!.hidden = true
+                                            self.delegate!.loadVideo(key, cell: self)
+                                        } else {
+                                            print("can't load video??")
                                         }
         })
     }
@@ -238,55 +248,41 @@ class FeedCell: UITableViewCell {
         gifPreview.clipsToBounds = true
         gifPreview.setNeedsLayout()
     }
+    
+    func fadeToNonScrollState() {
+        if self.alpha > 0.5 {
+            UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.alpha = 1.0
+                self.contentView.layoutIfNeeded()
+                }, completion: nil)
+        } else {
+            UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.alpha = 0.0
+                self.contentView.layoutIfNeeded()
+                }, completion: nil)
+
+        }
+    }
 }
 
-extension FeedCell {
-    // fine
-    func loadVideoPreview(gifUuid: String, lofi: Bool) {
-        // check if the video file is in the temporary directory
-        let moviePath = delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
-        let manager = NSFileManager.defaultManager()
-        if manager.fileExistsAtPath(moviePath.path!){
-            let playerItem = AVPlayerItem(URL: moviePath)
-            let duration = playerItem.asset.duration
-            if duration == CMTimeMake(0, 1) {
-                print("fetching null video from server")
-                fetchVideoFromServer(gifUuid, lofi: lofi)
-            } else {
-                self.player!.replaceCurrentItemWithPlayerItem(playerItem)
-                self.startPlayer()
-            }
-        } else {
-            fetchVideoFromServer(gifUuid, lofi: lofi)
-        }
-    }
-    
-    // fine
-    func fetchVideoFromServer(gifUuid: String, lofi: Bool) {
-        let fileEnding = lofi ? "/ds_c.MOV" : "/c_r.MOV"
-        let videoUrl = "https://yaychakula.com/img/" + gifUuid + "/c_r.MOV"
-        Alamofire.request(.GET, videoUrl).response { request, response, data, error in
-            print("For \(gifUuid), lofi: \(lofi). Fetched bytes: \(data!.length)")
-            if data!.length <= 2884 {
-                self.loadVideoPreview(gifUuid, lofi: true)
+extension FeedCell {    
+    func videoLoaded(url: NSURL) {
+        if let playerURLAsset = player?.currentItem?.asset as? AVURLAsset {
+            if playerURLAsset.URL == url {
+                print("avoid an unnecessary reload")
+                player!.play()
+                playerLayer?.frame = gifPreview.bounds
+                self.playerLayer?.hidden = false
                 return
-            }else if self.writeVideoFile(gifUuid, data: data!, lofi: lofi) {
-                let movieURL = self.delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
-                let playerItem = AVPlayerItem(URL: movieURL)
-                
-                if playerItem.duration > CMTimeMake(0, 1) {
-                    self.player?.replaceCurrentItemWithPlayerItem(playerItem)
-                    self.startPlayer()
-                } else if lofi == false {
-                    self.loadVideoPreview(gifUuid, lofi: true)
-                }
-            } else {
-                print("failed to fetch")
             }
         }
-    }
-    
-    func startPlayer() {
+        print("Player layer hidden : \(playerLayer!.hidden)")
+        let playerItem = AVPlayerItem(URL: url)
+        print("video loaded for \(id)")
+        if playerItem.duration == CMTimeMake(0, 1) {
+            return
+        }
+        player!.replaceCurrentItemWithPlayerItem(playerItem)
         NSNotificationCenter
             .defaultCenter()
             .addObserver(self,
@@ -294,20 +290,11 @@ extension FeedCell {
                          name: AVPlayerItemDidPlayToEndTimeNotification,
                          object: player?.currentItem)
         self.player!.play()
-        self.playerLayer?.hidden = false
+        print("player playing")
+        playerLayer?.frame = gifPreview.bounds
+        playerLayer!.hidden = false
     }
-        
-    private func writeVideoFile(gifUuid: String, data: NSData, lofi: Bool) -> Bool {
-        let moviePath = delegate!.getTempURLForUuid(gifUuid, lofi: lofi)
-        do {
-            try data.writeToFile(moviePath.path!, options: .AtomicWrite)
-        } catch {
-            //            print("\(error)")
-        }
-        let manager = NSFileManager.defaultManager()
-        return manager.fileExistsAtPath(moviePath.path!)
-    }
-    
+            
     private func initPlayer() {
         player = AVPlayer()
         player!.actionAtItemEnd = .None
@@ -329,7 +316,10 @@ extension FeedCell {
     }
     
     func playVideo() {
+        print("Play video called on \(id)")
+        
         if !isPlayerPlaying() && shouldPlayState == .Play {
+            print("Play video EXECUTED")
             player!.play()
         }
     }
@@ -345,6 +335,7 @@ extension FeedCell {
             player!.pause()
         }
     }
+    
 }
 
 extension UIImageViewAligned {

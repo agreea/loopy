@@ -46,7 +46,7 @@ class VerifyPhoneViewController: UIViewController {
                 "method": "SendNewPin",
                 "session": session
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
         }
     }
@@ -61,7 +61,7 @@ class VerifyPhoneViewController: UIViewController {
                 "session": session,
                 "pin": codeField.text!
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
                 parameters: parameters)
                 .responseJSON { response in
                     self.processVerifyResponse(response)

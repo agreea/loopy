@@ -323,23 +323,22 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.loadItem(feedItem)
         updateCellLoopStatus(cell)
-//        cell.alpha = 1.0
         return cell
     }
     
     // methods to manage video loading
-    
     func scrollViewWillBeginDragging(scrollView: UIScrollView){
         let currentY = scrollView.contentOffset.y
         scrollSession = ScrollSession(originY: currentY, currentY: currentY)
     }
 
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        // if the navbar is half its height --> hide it
-        print("ScrollEnd. NavHeight: \(navBar.frame.height)")
-        print("ScrollEnd. CurrentY: \(scrollSession!.currentY)")
+        for cell in feedView.visibleCells {
+            if let feedCell = cell as? FeedCell {
+                feedCell.fadeToNonScrollState()
+            }
+        }
         if abs(navBarHeight.constant) * 2 < navbarFullHeight! {
-            print("Hiding navbar")
             hideNavBar()
         } else {
             showNavBarHeight(navbarFullHeight!)
@@ -415,7 +414,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let midScrollHeight = navbarFullHeight! - abs(scrollSession!.delta!)
         // prevent passing showNavBarHeight a negative value
         let barHeight = max(midScrollHeight, 0.0)
-        print("shrinkNav, midScrollH: \(midScrollHeight)")
         showNavBarHeight(barHeight)
     }
     
@@ -433,7 +431,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func hideNavBar() {
-        print("Hiding navbar")
         UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.navBarHeight.constant = 0.0
             self.view.layoutIfNeeded()
@@ -468,7 +465,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let feedItem = feedData[index!.row]
             if let otherCell = cell as? FeedCell {
                 if !otherCell.hasGif {
-                    otherCell.setImagePreview(feedItem.Uuid!)
+                    let contentKey = getContentKeyForFeedItem(feedItem)
+                    otherCell.setImagePreview(contentKey)
                 }
             }
         }

@@ -199,7 +199,6 @@ extension MasterViewController: CaptureModeDelegate {
         goToHome()
         cameraDelegate!.cameraDidExit()
         moviePreviewController!.view.hidden = true
-        // go back to feed
     }
 
     func captureModeDidEnd() {

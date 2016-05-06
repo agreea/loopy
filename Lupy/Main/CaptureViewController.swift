@@ -155,6 +155,10 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func didPressExitCam(sender: AnyObject) {
         captureModeDelegate?.didExitCamera()
+        if recording {
+            stopRecording()
+        }
+        recording = false
     }
     
     @IBAction func didPressFlipCam(sender: AnyObject) {
@@ -292,7 +296,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             dispatch_async(dispatch_get_main_queue()) {
                 self.captureModeDelegate!.previewModeDidStart(exporter!.outputURL!)
             }
-        })        // TODO: error check
+        })     // TODO: error check
         captureModeDelegate!.captureModeDidEnd()
     }
     
