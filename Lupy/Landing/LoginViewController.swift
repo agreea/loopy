@@ -101,7 +101,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             "username": username!,
             "password": password!
         ]
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: parameters)
             .responseJSON { response in
                 self.processLoginResponse(response)

@@ -32,6 +32,7 @@ extension FeedViewController: FeedCellDelegate {
     func usernameTapped(cell: FeedCell) {
         let feedItem = getFeedItemForCell(cell)
         let profileViewController = ProfileViewController(nibName: "FeedViewController", bundle: nil)
+        profileViewController.myUserId = myUserId
         profileViewController.configProfileByUsername(feedItem.Username!) {
             let outTransition = FeedViewController.getModalViewTransition()
             outTransition.subtype = kCATransitionFromLeft
@@ -123,14 +124,14 @@ extension FeedViewController: FeedCellDelegate {
         let feedItem = getFeedItemForCell(cell)
         let contentKey = getContentKeyForFeedItem(feedItem)
         let videoURL  = getTempURLForKey(contentKey)
-        downsampleVideoForCameraRoll(videoURL)
+        downsampleVideoForCameraRoll(videoURL, cell: cell)
     }
     
     func getContentKeyForFeedItem(feedItem: FeedItem) -> String {
         return feedItem.Username! + "_" + feedItem.Uuid!
     }
     
-    private func downsampleVideoForCameraRoll(url: NSURL) {
+    private func downsampleVideoForCameraRoll(url: NSURL, cell: FeedCell) {
         let asset = AVAsset(URL: url)
         let videoComposition = AVMutableVideoComposition()
         videoComposition.frameDuration = CMTimeMake(1, 60)
@@ -153,12 +154,12 @@ extension FeedViewController: FeedCellDelegate {
         exporter!.outputFileType = AVFileTypeQuickTimeMovie
         exporter!.outputURL = exportURL
         exporter!.exportAsynchronouslyWithCompletionHandler({
-            self.writeVideoToGifForCameraRoll(exporter!.outputURL!)
+            self.writeVideoToGifForCameraRoll(exporter!.outputURL!, cell: cell)
         })        // TODO: error check
 
     }
     
-    func writeVideoToGifForCameraRoll(url: NSURL) {
+    func writeVideoToGifForCameraRoll(url: NSURL, cell: FeedCell) {
         let asset = AVAsset(URL: url)
         let startTime = Float(0.0)
         let duration  = Float(asset.duration.seconds)
@@ -170,23 +171,27 @@ extension FeedViewController: FeedCellDelegate {
                     if destURL == nil {
                         // show some error
                         dispatch_async(dispatch_get_main_queue()) {
-                            AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop to your library! :(")
+                            AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
+                            cell.saveGifComplete()
                         }
                         return
                     }
                     PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                         PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(destURL!)
                         }, completionHandler: { (success, error) in
-                            if success {
-                                print("Was successful!!")
-                            } else {
-                                print("Failed to save: \(error)")
+                            dispatch_async(dispatch_get_main_queue()) {
+                                if success {
+                                    cell.saveGifComplete()
+                                } else {
+                                    print("Failed to save: \(error)")
+                                }
                             }
-                    })
+                        })
                 }
             }
         } else {
-            AppDelegate.getAppDelegate().showError("Download Failure", message: "Couldn't save the loop to your library! :(")
+            AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
+            print("last track nil??")
         }
     }
     
@@ -197,7 +202,7 @@ extension FeedViewController: FeedCellDelegate {
                 "Id": "\(id)",
                 "method": "Delete"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif",
+            Alamofire.request(.POST, API.ENDPOINT_GIF,
                 parameters: params)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processDeletePostResult)
@@ -231,7 +236,7 @@ extension FeedViewController: FeedCellDelegate {
                 "Id": "\(feedItem.Id!)",
                 "method": "Report"
             ]
-            Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif",
+            Alamofire.request(.POST, API.ENDPOINT_GIF,
                 parameters: params)
                 .responseJSON { response in
                     self.processChangeLikeStatusRepsonse(response, cell: cell, params: params)
@@ -274,7 +279,7 @@ extension FeedViewController: FeedCellDelegate {
     }
     
     private func executeChangeLikeStatus(params: [String : String], cell: FeedCell) {
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif",
+        Alamofire.request(.POST, API.ENDPOINT_GIF,
             parameters: params)
             .responseJSON { response in
                 self.processChangeLikeStatusRepsonse(response, cell: cell, params: params)
@@ -328,6 +333,7 @@ extension FeedViewController {
      */
     func loadVideo(contentKey: String, cell: FeedCell) {
         // check if the video file is in the temporary directory
+        print("in load video")
         let moviePath = getTempURLForKey(contentKey)
         let manager = NSFileManager.defaultManager()
         if manager.fileExistsAtPath(moviePath.path!) {
@@ -337,12 +343,21 @@ extension FeedViewController {
                 print("serving cache")
                 cell.videoLoaded(moviePath)
                 return
+            } else {
+                // TODO: show error, offer to reload? 
+                print("time was none, fetching")
+                fetchVideoFromServer(contentKey, cell: cell)
             }
         } else {
+            print("Fetching video from server")
             fetchVideoFromServer(contentKey, cell: cell)
         }
     }
-
+    
+    func forceFetchFromServer(contentKey: String, cell: FeedCell) {
+        fetchVideoFromServer(contentKey, cell: cell)
+    }
+    
     // fine
     private func fetchVideoFromServer(contentKey: String, cell: FeedCell) {
         let videoUrl = "https://s3.amazonaws.com/keyframecontent/" + contentKey + "/v.MOV"
@@ -351,7 +366,7 @@ extension FeedViewController {
             if let movieURL = self.writeVideoFile(contentKey, data: data!) {
                 cell.videoLoaded(movieURL)
             } else {
-                print("failed to fetch")
+                // show video error
             }
         }
     }

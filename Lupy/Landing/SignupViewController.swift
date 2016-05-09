@@ -129,7 +129,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             "username": usernameField!.text!,
             "password": passwordField!.text!
         ]
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: parameters)
             .responseJSON { response in
                 self.processRegisterResponse(response)

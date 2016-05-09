@@ -33,7 +33,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="451" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gqe-gj-lCJ">
-                            <rect key="frame" x="0.0" y="63" width="600" height="608"/>
+                            <rect key="frame" x="0.0" y="63" width="600" height="537"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="ZGA-qf-o9J"/>
@@ -45,14 +45,14 @@
                     <constraints>
                         <constraint firstItem="Gqe-gj-lCJ" firstAttribute="leading" secondItem="hBe-Ix-ILI" secondAttribute="leading" id="4Ia-ky-vLP"/>
                         <constraint firstItem="Gqe-gj-lCJ" firstAttribute="width" secondItem="hBe-Ix-ILI" secondAttribute="width" id="6JW-rL-2DA"/>
-                        <constraint firstAttribute="bottom" secondItem="Gqe-gj-lCJ" secondAttribute="bottom" constant="-71" id="cpA-dK-bDx"/>
                         <constraint firstItem="Gqe-gj-lCJ" firstAttribute="top" secondItem="hBe-Ix-ILI" secondAttribute="top" constant="63" id="paz-od-eiD"/>
+                        <constraint firstAttribute="bottom" secondItem="Gqe-gj-lCJ" secondAttribute="bottom" id="zCN-dd-oU0"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImL-uv-lbg" userLabel="Navbar">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                     <subviews>
-                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Keyframe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DL0-VI-9Vc">
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keyframe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DL0-VI-9Vc">
                             <rect key="frame" x="249" y="0.0" width="101" height="64"/>
                             <fontDescription key="fontDescription" name="PierSans-Bold" family="Pier Sans" pointSize="21"/>
                             <color key="textColor" red="0.12156862745098039" green="0.12156862745098039" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>

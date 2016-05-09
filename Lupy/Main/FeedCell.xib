@@ -80,7 +80,6 @@
                                 </constraints>
                                 <state key="normal" image="MoreIconWhite"/>
                                 <connections>
-                                    <action selector="didPressDownload:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Vc9-8D-NDg"/>
                                     <action selector="didPressMore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sQT-RJ-pzf"/>
                                 </connections>
                             </button>
@@ -114,6 +113,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="downloadButton" destination="VNv-pe-Q92" id="3fk-nb-bnz"/>
                 <outlet property="gifPreview" destination="Wfl-Dg-hXa" id="4dO-uu-SdQ"/>
                 <outlet property="heartButton" destination="nLY-Oq-zBx" id="paK-eZ-O0Q"/>
                 <outlet property="heartView" destination="1af-kU-yZ4" id="sRP-1q-yCe"/>

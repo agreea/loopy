@@ -142,7 +142,7 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
             "session": session,
             "method": "GetFollowers"
         ]
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: params)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: self.processFollowerFollowingResponse)
@@ -154,7 +154,7 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
             "session": session,
             "method": "GetFollowing"
         ]
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: params)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: self.processFollowerFollowingResponse)
@@ -247,7 +247,7 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
                     "contacts": phoneJSON as! AnyObject,
                     "method": "GetRegisteredContacts"
                 ]
-                Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+                Alamofire.request(.POST, API.ENDPOINT_USER,
                     parameters: params)
                     .responseJSON { response in
                         API.processResponse(response, onSuccess: self.processRegisteredContactsResponse)
@@ -296,7 +296,7 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
                 "username": usernameField.text!,
                 "method": "FindUserToFollowByUsername"
             ]
-            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+            Alamofire.request(.POST, API.ENDPOINT_USER,
                 parameters: params)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processUsernameSearchResponse)
@@ -313,6 +313,7 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
             let usernameSearchResults = json["Return"].dictionaryValue
             // returns a dictionary of username : follows
             // create an array of (username, follows)
+            usernameResultsArray = [(username: String, followed: Bool)]()
             for (username, followsJSON) in usernameSearchResults {
                 usernameResultsArray.append((username, followsJSON.boolValue))
             }
@@ -337,8 +338,8 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func didPressStartButton(sender: AnyObject) {
         // launch the main storyboard
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let masterViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MasterViewController") as! MasterViewController
-        AppDelegate.getAppDelegate().window!.rootViewController = masterViewController
+        let tabBarViewController = mainStoryboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! TabBarViewController
+        AppDelegate.getAppDelegate().window!.rootViewController = tabBarViewController
     }
 }
 
@@ -448,7 +449,7 @@ extension AddContactsViewController: ContactCellDelegate {
     }
     
     private func executeChangeFollowStatus(params: [String : String], cell: ContactCell) {
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: params)
             .responseJSON { response in
                 self.processChangeFollowStatusRepsonse(response, cell: cell, params: params)

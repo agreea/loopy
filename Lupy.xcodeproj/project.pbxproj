@@ -854,7 +854,7 @@
 			baseConfigurationReference = 512549D5C1058CBEE3D6B822 /* Pods-Lupy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Lupy/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -878,7 +878,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.agreeahmed.loopi;
 				PRODUCT_NAME = Lupy;
-				PROVISIONING_PROFILE = "9162d175-f20b-405e-865c-c3d0e3b2db53";
+				PROVISIONING_PROFILE = "959bc840-1c99-4329-affb-265100b670f9";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

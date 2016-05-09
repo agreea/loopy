@@ -34,6 +34,7 @@ class FeedCell: UITableViewCell {
     var _liked: Bool?
     var delegate: FeedCellDelegate?
     var fullHeartWidth: CGFloat?
+    var downloading = false
     enum PlayState {
         case Play, Pause
     }
@@ -68,6 +69,7 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var heartView: UIImageView!
     @IBOutlet weak var heartViewWidth: NSLayoutConstraint!
     @IBOutlet weak var pauseStackView: UIStackView!
+    @IBOutlet weak var downloadButton: UIButton!
     
 //    @IBOutlet weak var avPlayerView: UIView!
     
@@ -104,7 +106,12 @@ class FeedCell: UITableViewCell {
             shouldPlayState = .Pause
         } else {
             shouldPlayState = .Play
+            playerLayer!.hidden = false
+            print("playerlayer hidden: \(playerLayer!.hidden)")
         }
+        print("single tapped to: \(shouldPlayState)")
+        print("player detail: \(player!.currentItem!.duration)")
+        print("playerlayer hidden: \(playerLayer!.hidden)")
         // fade in the SSD interactions
     }
     
@@ -143,6 +150,7 @@ class FeedCell: UITableViewCell {
         print("Load Video called for \(id)")
         self.liked = feedItem.Liked!
         shouldPlayState = .Play
+        downloading = false
         print("Cell's height in loadItem: \(self.contentView.frame.height)")
     }
     
@@ -151,14 +159,45 @@ class FeedCell: UITableViewCell {
         // tell the delegate the user pressed download for the cell
         // TODO: track saving state for each thing (?)
         delegate!.savePostToCameraRoll(self)
+        downloading = true
+        downloadButton.userInteractionEnabled = false
+        downloadButton.setImage(UIImage(named: "Downloading"), forState: .Normal)
+        rotateDownloadButton()
+        // set the button to spinny
+        // rotate view
     }
     
+    func saveGifComplete() {
+        downloading = false
+    }
+    private func rotateDownloadButton() {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+        rotateAnimation.duration = 1.0
+        rotateAnimation.delegate = self
+        downloadButton.layer.addAnimation(rotateAnimation, forKey: nil)
+    }
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        if downloading {
+            rotateDownloadButton()
+        } else {
+            downloadButton.setImage(UIImage(named: "Download"), forState: .Normal)
+            downloadButton.userInteractionEnabled = true
+            // change back to download icon
+        }
+    }
+
+
     @IBAction func didPressMore(sender: AnyObject) {
         // tell the delegate the user pressed more for my cell
         delegate!.didPressMore(self)
     }
         
     func setImagePreview(key: String) {
+        print("Top of set image preview")
+        print("Player layer is hidden?: \(self.playerLayer!.hidden)")
         print("Image preview key:  \(key)")
         let URL = NSURL(string: "https://s3.amazonaws.com/keyframecontent/" + key + "/f.jpg")!
         let optionInfo: KingfisherOptionsInfo = [
@@ -170,7 +209,7 @@ class FeedCell: UITableViewCell {
                                       optionsInfo: optionInfo,
                                       completionHandler: { (image, error, cacheType, imageURL) -> () in
                                         if self.feedViewController!.canCellDownloadGif(self) {
-                                            print("load video called for id: \(self.id)")
+                                            print("image completion: about to load video")
                                             self.playerLayer!.hidden = true
                                             self.delegate!.loadVideo(key, cell: self)
                                         } else {
@@ -243,7 +282,6 @@ class FeedCell: UITableViewCell {
                                                 currentFrame.origin.y,
                                                 currentFrame.width,
                                                 currentFrame.width * 1.25)
-            print("Update frame")
         }
         gifPreview.clipsToBounds = true
         gifPreview.setNeedsLayout()
@@ -269,17 +307,16 @@ extension FeedCell {
     func videoLoaded(url: NSURL) {
         if let playerURLAsset = player?.currentItem?.asset as? AVURLAsset {
             if playerURLAsset.URL == url {
-                print("avoid an unnecessary reload")
                 player!.play()
-                playerLayer?.frame = gifPreview.bounds
-                self.playerLayer?.hidden = false
+                playerLayer!.frame = gifPreview.bounds
+                self.playerLayer!.hidden = false
+                print("Avoided unnecessary reload, should be playing")
                 return
             }
         }
-        print("Player layer hidden : \(playerLayer!.hidden)")
         let playerItem = AVPlayerItem(URL: url)
-        print("video loaded for \(id)")
         if playerItem.duration == CMTimeMake(0, 1) {
+            print("Duration was 0, exit")
             return
         }
         player!.replaceCurrentItemWithPlayerItem(playerItem)
@@ -290,9 +327,8 @@ extension FeedCell {
                          name: AVPlayerItemDidPlayToEndTimeNotification,
                          object: player?.currentItem)
         self.player!.play()
-        print("player playing")
         playerLayer?.frame = gifPreview.bounds
-        playerLayer!.hidden = false
+        self.playerLayer!.hidden = false
     }
             
     private func initPlayer() {

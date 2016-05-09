@@ -67,7 +67,6 @@ class FeedViewController: UIViewController {
         feedView.registerNib(uploadingNib, forCellReuseIdentifier: "uploadingCell")
         feedView.tableFooterView = UIView()
         feedView.allowsSelection = false
-        attemptLoadFeed()
         imageCopiedAlert.layer.cornerRadius = 6.0
         imageCopiedAlert.clipsToBounds = true
         setUpPullToRefresh()
@@ -76,6 +75,10 @@ class FeedViewController: UIViewController {
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        attemptLoadFeed()
     }
     
     func setUpPullToRefresh() {
@@ -112,6 +115,7 @@ class FeedViewController: UIViewController {
     }
     
     func loadFeed(session: String) {
+        print("======== CALLING LOAD FEED ============")
         feedView.estimatedRowHeight = self.view.frame.width * 1.25 + 50.0
         feedView.rowHeight = UITableViewAutomaticDimension
         // Do any additional setup after loading the view.
@@ -119,7 +123,7 @@ class FeedViewController: UIViewController {
             "method": "GetFeed",
             "session": session
         ]
-        Alamofire.request(.POST, "https://qa.yaychakula.com/api/gif_user",
+        Alamofire.request(.POST, API.ENDPOINT_USER,
             parameters: parameters)
             .responseJSON { response in
                 self.processFeedAPIResponse(response)
@@ -466,6 +470,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             if let otherCell = cell as? FeedCell {
                 if !otherCell.hasGif {
                     let contentKey = getContentKeyForFeedItem(feedItem)
+                    otherCell.hideVideo()
                     otherCell.setImagePreview(contentKey)
                 }
             }

@@ -35,19 +35,9 @@ class LoopyLandingViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        setupBackground()
         self.navigationController?.navigationBarHidden = true
     }
-    private func setupBackground() {
-        view.backgroundColor = UIColor.clearColor()
-        let gl = CAGradientLayer()
-        gl.colors = [UIColor(netHex: 0x9500FF).CGColor, UIColor(netHex: 0x250095).CGColor]
-        gl.locations = [ 0.0, 1.0]
-        let backgroundLayer = gl
-        backgroundLayer.frame = view.frame
-        view.layer.insertSublayer(backgroundLayer, atIndex: 0)
-        
-    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

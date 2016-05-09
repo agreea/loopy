@@ -69,7 +69,6 @@ class ProfileViewController: FeedViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         titleNav.font = UIFont(name: "PierSans", size: CGFloat(20.0))
         if loadedData {
             return
@@ -94,7 +93,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "userId": "\(userId)"
             ]
-            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+            Alamofire.request(.POST, API.ENDPOINT_USER,
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processGetUserDataResponse)
@@ -111,7 +110,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username)"
             ]
-            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+            Alamofire.request(.POST, API.ENDPOINT_USER,
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processGetUserDataResponse)
@@ -143,7 +142,7 @@ class ProfileViewController: FeedViewController {
         } else {
             AppDelegate.getAppDelegate().showError("Error", message: json["Error"].stringValue)
         }
-        self.refreshControl.endRefreshing()
+        self.refreshControl?.endRefreshing()
     }
     
     override func navBarRightButtonAction() {
@@ -183,7 +182,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username!)"
             ]
-            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+            Alamofire.request(.POST, API.ENDPOINT_USER,
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processFollowResponse)
@@ -202,7 +201,7 @@ class ProfileViewController: FeedViewController {
                 "session": session,
                 "username": "\(username!)"
             ]
-            Alamofire.request(.POST, "https://getkeyframe.com/api/gif_user",
+            Alamofire.request(.POST, API.ENDPOINT_USER,
                 parameters: parameters)
                 .responseJSON { response in
                     API.processResponse(response, onSuccess: self.processUnfollowResponse)

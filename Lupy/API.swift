@@ -15,6 +15,9 @@ protocol APICallback {
 }
 
 class API {
+    static let ENDPOINT_GIF = "https://getkeyframe.com/api/gif"
+    static let ENDPOINT_USER = "https://getkeyframe.com/api/gif_user"
+    
     class func processResponse(response: Response<AnyObject, NSError>, onSuccess: (AnyObject) -> Void) {
         guard response.result.error == nil else {
             // got an error in getting the data, need to handle it

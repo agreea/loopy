@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func launchAddContacts(enterFromSignup: Bool) {
         let contactViewController = AddContactsViewController(nibName: "AddContactsViewController", bundle: nil)
         contactViewController.enterFromSetup = enterFromSignup
-        contactViewController.configureUserList(AddContactsViewController.CONFIG_FOLLOWING){}
+        contactViewController.configureUserList(AddContactsViewController.CONFIG_CONTACTS){}
         self.window!.rootViewController = contactViewController
     }
     
@@ -234,7 +234,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let userCredentials = results as? [NSManagedObject] {
                 for credential in userCredentials {
                     managedContext.deleteObject(credential)
+                    print("Deleting \(credential)")
                 }
+                try managedContext.save()
                 print("Successfully deleted all user credentials")
                 return true
             }

@@ -134,7 +134,7 @@ class VideoUploader: NSObject {
             "method": "GetVideoS3URL",
         ]
         print("getting s3 video url")
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif",
+        Alamofire.request(.POST, API.ENDPOINT_GIF,
             parameters: parameters)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: { value in
@@ -189,7 +189,7 @@ class VideoUploader: NSObject {
             "uuid": uuid
         ]
         print("Reporting upload complete")
-        Alamofire.request(.POST, "https://getkeyframe.com/api/gif",
+        Alamofire.request(.POST, API.ENDPOINT_GIF,
             parameters: parameters)
             .responseJSON { response in
                 API.processResponse(response, onSuccess: { value in
