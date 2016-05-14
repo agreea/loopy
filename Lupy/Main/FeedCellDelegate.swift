@@ -176,17 +176,16 @@ extension FeedViewController: FeedCellDelegate {
                         }
                         return
                     }
+                    print("gif written: \(destURL!)")
                     PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                         PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(destURL!)
                         }, completionHandler: { (success, error) in
-                            dispatch_async(dispatch_get_main_queue()) {
-                                if success {
-                                    cell.saveGifComplete()
-                                } else {
-                                    print("Failed to save: \(error)")
-                                }
+                            if success {
+                                print("Was successful!!")
+                            } else {
+                                print("Failed to save: \(error)")
                             }
-                        })
+                    })
                 }
             }
         } else {

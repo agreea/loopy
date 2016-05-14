@@ -136,6 +136,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func didPressEULA(sender: AnyObject) {
+        AppDelegate.launchEULAFromViewController(self)
+    }
     private func processRegisterResponse(response: Response<AnyObject, NSError>) {
         guard response.result.error == nil else {
             // got an error in getting the data, need to handle it

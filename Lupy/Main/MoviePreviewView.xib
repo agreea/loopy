@@ -53,7 +53,7 @@
                                 <action selector="didPressSend:" destination="-1" eventType="touchUpInside" id="eSy-UF-ajV"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Loading Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfW-HA-qWr">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfW-HA-qWr">
                             <rect key="frame" x="242" y="215" width="116" height="17"/>
                             <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -109,10 +109,10 @@
                             </connections>
                         </button>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vjO-j2-H01">
-                            <rect key="frame" x="230" y="37" width="140" height="116"/>
+                            <rect key="frame" x="186" y="37" width="229" height="116"/>
                             <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="140" id="QaI-1u-iWi"/>
+                                <constraint firstAttribute="width" constant="229" id="gZM-4e-aIT"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="10" id="uLN-BY-ezx">
                                 <size key="itemSize" width="64" height="105"/>
@@ -130,17 +130,16 @@
                         <constraint firstItem="iHP-sc-Nda" firstAttribute="bottom" secondItem="Woc-pU-V4T" secondAttribute="bottom" id="8In-1T-LDe"/>
                         <constraint firstItem="iHP-sc-Nda" firstAttribute="leading" secondItem="7aJ-Rs-6K6" secondAttribute="leadingMargin" id="8Qe-iM-K1v"/>
                         <constraint firstItem="iHP-sc-Nda" firstAttribute="top" secondItem="6UK-S0-DYD" secondAttribute="top" id="EEd-Fg-sEr"/>
+                        <constraint firstItem="vjO-j2-H01" firstAttribute="centerX" secondItem="vJQ-9w-IvF" secondAttribute="centerX" id="OkC-6S-yjA"/>
                         <constraint firstItem="iHP-sc-Nda" firstAttribute="leading" secondItem="vJQ-9w-IvF" secondAttribute="leading" id="QBz-Cm-7pg"/>
-                        <constraint firstItem="vjO-j2-H01" firstAttribute="top" secondItem="6UK-S0-DYD" secondAttribute="bottom" constant="8" symbolic="YES" id="R5X-kH-Mq0"/>
                         <constraint firstItem="Woc-pU-V4T" firstAttribute="trailing" secondItem="7aJ-Rs-6K6" secondAttribute="trailingMargin" id="Tys-w0-o5y"/>
                         <constraint firstItem="6UK-S0-DYD" firstAttribute="centerX" secondItem="vJQ-9w-IvF" secondAttribute="centerX" id="Vdo-eU-LTb"/>
                         <constraint firstItem="Woc-pU-V4T" firstAttribute="top" secondItem="6UK-S0-DYD" secondAttribute="top" id="ciJ-cc-hhW"/>
                         <constraint firstItem="vJQ-9w-IvF" firstAttribute="top" secondItem="Woc-pU-V4T" secondAttribute="bottom" constant="24" id="hpc-yg-yRh"/>
-                        <constraint firstItem="vjO-j2-H01" firstAttribute="centerX" secondItem="7aJ-Rs-6K6" secondAttribute="centerX" id="lPP-7x-bMq"/>
+                        <constraint firstAttribute="bottom" secondItem="vjO-j2-H01" secondAttribute="bottom" id="ij8-j3-3Xc"/>
+                        <constraint firstItem="vjO-j2-H01" firstAttribute="top" secondItem="6UK-S0-DYD" secondAttribute="bottom" constant="8" symbolic="YES" id="mqy-EL-ggc"/>
                         <constraint firstItem="vJQ-9w-IvF" firstAttribute="centerY" secondItem="7aJ-Rs-6K6" secondAttribute="centerY" id="nGh-Jx-ngd"/>
                         <constraint firstItem="vjO-j2-H01" firstAttribute="top" secondItem="6UK-S0-DYD" secondAttribute="bottom" constant="2" id="qeW-dV-ESX"/>
-                        <constraint firstAttribute="bottom" secondItem="vjO-j2-H01" secondAttribute="bottom" id="u0x-ct-gf2"/>
-                        <constraint firstItem="vjO-j2-H01" firstAttribute="centerX" secondItem="vJQ-9w-IvF" secondAttribute="centerX" id="uoH-X7-r5x"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">

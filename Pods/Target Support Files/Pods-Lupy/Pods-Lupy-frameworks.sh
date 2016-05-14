@@ -85,21 +85,21 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Lupy/Alamofire.framework"
+  install_framework "Pods-Lupy/GPUImage.framework"
   install_framework "Pods-Lupy/Haneke.framework"
   install_framework "Pods-Lupy/Kingfisher.framework"
   install_framework "Pods-Lupy/Proposer.framework"
   install_framework "Pods-Lupy/Regift.framework"
-  install_framework "Pods-Lupy/SCRecorder.framework"
   install_framework "Pods-Lupy/SwiftyJSON.framework"
   install_framework "Pods-Lupy/UIImageViewAlignedSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Lupy/Alamofire.framework"
+  install_framework "Pods-Lupy/GPUImage.framework"
   install_framework "Pods-Lupy/Haneke.framework"
   install_framework "Pods-Lupy/Kingfisher.framework"
   install_framework "Pods-Lupy/Proposer.framework"
   install_framework "Pods-Lupy/Regift.framework"
-  install_framework "Pods-Lupy/SCRecorder.framework"
   install_framework "Pods-Lupy/SwiftyJSON.framework"
   install_framework "Pods-Lupy/UIImageViewAlignedSwift.framework"
 fi

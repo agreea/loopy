@@ -13,6 +13,7 @@ import AVFoundation
 import AVKit
 import Alamofire
 import Haneke
+import GPUImage
 
 protocol FeedCellDelegate {
     func likePost( cell: FeedCell)
@@ -304,6 +305,21 @@ class FeedCell: UITableViewCell {
 }
 
 extension FeedCell {    
+//    func videoLoaded(url: NSURL) {
+////        let gpuImageMovie = GPUImageMovie()
+//        // check that the movie is different from the current one (same --> return)
+//        // create a new GPUImageMovie
+//        // create a new GPUImageView
+//        // set the GPUImageMovie at index 100 in gifPreview
+//        // show it in the subview
+//    }
+    
+    func prepareForDisappear() {
+        // stop processing GPUMovie
+        // remove GPUImageView from super view
+        // set GPUImageView to nil
+    }
+
     func videoLoaded(url: NSURL) {
         if let playerURLAsset = player?.currentItem?.asset as? AVURLAsset {
             if playerURLAsset.URL == url {
@@ -330,7 +346,7 @@ extension FeedCell {
         playerLayer?.frame = gifPreview.bounds
         self.playerLayer!.hidden = false
     }
-            
+    
     private func initPlayer() {
         player = AVPlayer()
         player!.actionAtItemEnd = .None

@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 import Proposer
+import GPUImage
 
 protocol CaptureModeDelegate {
     func previewModeDidStart(movieURL: NSURL)
@@ -27,7 +28,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     var authorized = false
     var isBackCam = true
     var runtimeErrorHandlingObserver: AnyObject?
-    
+    var movie: GPUImageMovie?
+    var movieWriter: GPUImageMovieWriter?
     @IBOutlet weak var timeBar: UIView!
     @IBOutlet weak var timeBarCenterX: NSLayoutConstraint!
     
@@ -267,37 +269,62 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     func captureOutput(captureOutput: AVCaptureFileOutput!,
                        didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!,
                                                            fromConnections connections: [AnyObject]!, error: NSError!) {
-        let asset = AVAsset(URL: outputFileURL)
-        let videoComposition = AVMutableVideoComposition()
-        videoComposition.frameDuration = CMTimeMake(1, 60) // check what frame duration means
-        let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last!
-        videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.height, videoTrack.naturalSize.height * 1.25)
-        
-        let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
-        
-        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
-        
-        let t1 = CGAffineTransformMakeTranslation(videoTrack.naturalSize.height, 0)
-        let t2 = CGAffineTransformRotate(t1, CGFloat(M_PI_2))
-        let finalTransform: CGAffineTransform = t2
-        
-        transformer.setTransform(finalTransform, atTime: kCMTimeZero)
-        
-        instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
-        videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
+        movie = GPUImageMovie(URL: outputFileURL)
+        movie!.runBenchmark = true
+//        movie!.playAtActualSpeed = false
         let timeInterval = Int(NSDate().timeIntervalSince1970)
         let exportURL = NSURL(fileURLWithPath: NSTemporaryDirectory() + "\(timeInterval).MOV")
-        let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
-        exporter!.videoComposition = videoComposition
-        exporter!.outputFileType = AVFileTypeQuickTimeMovie
-        exporter!.outputURL = exportURL
-        exporter!.exportAsynchronouslyWithCompletionHandler({
+        movieWriter = GPUImageMovieWriter(movieURL: exportURL, size: CGSize(width: 720.0, height: 900.0))
+        let cropFilter = GPUImageCropFilter(cropRegion: CGRect(x: 0.0, y: 0.0, width: 1.0, height: 900.0/1280.0))
+        let rotation = kGPUImageRotateRight
+        cropFilter.setInputRotation(rotation, atIndex: 0)
+        movieWriter!.shouldPassthroughAudio = false
+        movie!.addTarget(cropFilter)
+        cropFilter.addTarget(movieWriter)
+        movie!.enableSynchronizedEncodingUsingMovieWriter(movieWriter)
+        movieWriter!.startRecording()
+        movie!.startProcessing()
+        movieWriter!.completionBlock = {
+            print("did finish??")
+            cropFilter.removeTarget(self.movieWriter)
+            self.movieWriter!.finishRecording()
             dispatch_async(dispatch_get_main_queue()) {
-                self.captureModeDelegate!.previewModeDidStart(exporter!.outputURL!)
+                self.captureModeDelegate!.previewModeDidStart(exportURL)
+                }
             }
-        })     // TODO: error check
+        
         captureModeDelegate!.captureModeDidEnd()
+//        let asset = AVAsset(URL: outputFileURL)
+//        let videoComposition = AVMutableVideoComposition()
+//        videoComposition.frameDuration = CMTimeMake(1, 60) // check what frame duration means
+//        let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last!
+//        videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.height, videoTrack.naturalSize.height * 1.25)
+//        
+//        let instruction = AVMutableVideoCompositionInstruction()
+//        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
+//        
+//        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+//        
+//        let t1 = CGAffineTransformMakeTranslation(videoTrack.naturalSize.height, 0)
+//        let t2 = CGAffineTransformRotate(t1, CGFloat(M_PI_2))
+//        let finalTransform: CGAffineTransform = t2
+//        
+//        transformer.setTransform(finalTransform, atTime: kCMTimeZero)
+//        
+//        instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
+//        videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
+//        let timeInterval = Int(NSDate().timeIntervalSince1970)
+//        let exportURL = NSURL(fileURLWithPath: NSTemporaryDirectory() + "\(timeInterval).MOV")
+//        let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
+//        exporter!.videoComposition = videoComposition
+//        exporter!.outputFileType = AVFileTypeQuickTimeMovie
+//        exporter!.outputURL = exportURL
+//        exporter!.exportAsynchronouslyWithCompletionHandler({
+//            dispatch_async(dispatch_get_main_queue()) {
+//                self.captureModeDelegate!.previewModeDidStart(exporter!.outputURL!)
+//            }
+//        })     // TODO: error check
+//        captureModeDelegate!.captureModeDidEnd()
     }
     
     // captureMode is the live preview mode

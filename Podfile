@@ -10,8 +10,8 @@ target ‘Lupy’ do
 	pod 'UIImageViewAlignedSwift’, '~> 0.1.11'
 	pod 'Proposer', '~> 0.8.0'
 	pod 'HanekeSwift'
-	pod 'SCRecorder'
-	pod ‘Regift'
+	pod 'GPUImage'
+	pod 'Regift'
 end
 
 target ‘LupyTests’ do

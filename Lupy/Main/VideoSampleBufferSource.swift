@@ -27,6 +27,11 @@ class VideoSampleBufferSource: NSObject {
     private let consumer: CIImage -> ()
     private var player: AVPlayer?
     private var luminosity = CGFloat(0.0)
+    private var frameIndex = 0
+    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 7), y: CGFloat(arc4random() % 7)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 7), y: CGFloat(arc4random() % 7)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 7), y: -1 * CGFloat(arc4random() % 7))]
+
     var filter = VideoFilter.None
     var filterSettings: FilterSettings {
         get {
@@ -105,7 +110,8 @@ class VideoSampleBufferSource: NSObject {
         if videoOutput!.hasNewPixelBufferForItemTime(itemTime) {
             var presentationItemTime = kCMTimeZero
             if let pixelBuffer = videoOutput!.copyPixelBufferForItemTime(itemTime, itemTimeForDisplay: &presentationItemTime) {
-                let image = FrameFilter.getProcessedImage(pixelBuffer, filterSettings: filterSettings)
+                let image = FrameFilter.getProcessedImage(pixelBuffer, filterSettings: filterSettings, frameIndex: frameIndex, offsets: offsets)
+                frameIndex += 1
                 consumer(image)
             } else {
                 // show an alert
@@ -117,7 +123,7 @@ class VideoSampleBufferSource: NSObject {
     
     func getProcessedImage(image: CIImage, filter: VideoFilter) -> CIImage {
         let filterSettings = FilterSettings(luminosity: luminosity, filter: filter)
-        return FrameFilter.getProcessedImage(image, filterSettings: filterSettings)
+        return FrameFilter.getProcessedImage(image, filterSettings: filterSettings, frameIndex: frameIndex, offsets: offsets)
     }
     
     var angleForCurrentTime: Float {

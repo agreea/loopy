@@ -28,7 +28,10 @@ class VideoUploader: NSObject {
     private var filterSettings: FilterSettings?
     private var firstFrame: CIImage?
     let context = CIContext(options:nil)
-
+    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 10), y: CGFloat(arc4random() % 10)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 10), y: CGFloat(arc4random() % 10)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 10), y: -1 * CGFloat(arc4random() % 10))]
+    
     init?(delegate: VideoUploaderDelegate){
         self.delegate = delegate
         super.init()
@@ -60,6 +63,7 @@ class VideoUploader: NSObject {
                     var isWriting = false
                     reader.startReading()
                     let readerOutput = reader.outputs.last!
+                    var frameIndex = 0
                     while let buffer: CMSampleBuffer? = readerOutput.copyNextSampleBuffer() {
                         if buffer == nil {
                             break
@@ -77,7 +81,8 @@ class VideoUploader: NSObject {
                                 }
                             }
                             let pixelBuffer = CMSampleBufferGetImageBuffer(buffer!)
-                            let image = FrameFilter.getProcessedImage(pixelBuffer!, filterSettings: self.filterSettings!)
+                            let image = FrameFilter.getProcessedImage(pixelBuffer!, filterSettings: self.filterSettings!, frameIndex: frameIndex, offsets: self.offsets)
+                            frameIndex += 1
                             if writingFirstFrame {
                                 self.dispatchDidStart(image)
                                 self.firstFrame = image

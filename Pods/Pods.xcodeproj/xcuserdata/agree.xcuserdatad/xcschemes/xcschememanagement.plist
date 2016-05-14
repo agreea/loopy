@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GPUImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HanekeSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,11 +39,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SCRecorder.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +52,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5B00A03FB5299AF01ACD676E5D503A8D</key>
+		<key>18634CC3E56F44330927B2D0658E952E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4939DA01AC3B64E0AD8F365453150EF6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>63F6DD08E82298835AD39BA711E0CA3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6A681E1DC9D22CBEF03AA5BCF0B9E87B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,32 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BAD22E3DEC28B7EA76DDC4825B9F9DBB</key>
+		<key>9EF4A77F3E9C030858B63E9AE035EA7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DD3EC0BA35F876CB4B9D38E498B1A4EE</key>
+		<key>E96E13C4D3B5B5FC0651440734C2BF4D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E3E265A856B0FDA5DE3481C2E83230EF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E4B0C65AA33BCCE3CF44498D6647BDC8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6E4D04973AE739C031A93711E34FC08</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F91226101ECE8FCFD221A3EC54481F82</key>
+		<key>EA0DD8ED489933744D70DD4A9719ED01</key>
 		<dict>
 			<key>primary</key>
 			<true/>

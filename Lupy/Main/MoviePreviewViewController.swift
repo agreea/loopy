@@ -30,7 +30,9 @@ class MoviePreviewViewController: UIViewController {
     var uploadedBytesRepresented: Int64?
     var movieURL: NSURL?
     var firstFrame: CIImage?
-    var filterPreviews = [FilterPreview]()
+    var filterPreviews = [FilterPreview(name: "Natural", filter: .None, selected: true),
+                          FilterPreview(name: "Chaplin", filter: .Chaplin, selected: false),
+                          FilterPreview(name: "Clamp", filter: .Clamp, selected: false)]
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var moviePreview: UIView!
     @IBOutlet weak var bottomView: UIView!
@@ -91,6 +93,23 @@ class MoviePreviewViewController: UIViewController {
     }
     
     func previewModeDidStart() {
+        // get the movieFile from a player
+        // loop the video
+//        let playerItem = AVPlayerItem(URL: movieURL!)
+//        let movie = GPUImageMovie(URL: movieURL!)
+//        let player = AVPlayer(playerItem: playerItem)
+//        player.rate = 1.0
+//        movie.shouldRepeat = true
+//        movie.playAtActualSpeed = true
+//        let gpuImageView = GPUImageView(frame: moviePreview.bounds)
+////        let filter = GPUImageBoxBlurFilter()
+//        movie.addTarget(gpuImageView)
+////        filter.addTarget(gpuImageView)
+//        moviePreview.insertSubview(gpuImageView, atIndex: 0)
+//        movie.startProcessing()
+//        print("Gpu imageview frame: \(gpuImageView.frame)")
+        loadingVideoLabel.hidden = true
+//        player.play()
         videoSource?.stop()
         loadingVideoLabel.hidden = true
         if coreImageView == nil {
@@ -119,8 +138,6 @@ class MoviePreviewViewController: UIViewController {
     }
     
     func populateFilterCells(){
-        filterPreviews.append(FilterPreview(name: "Natural", filter: .None, selected: true))
-        filterPreviews.append(FilterPreview(name: "Chaplin", filter: .Chaplin, selected: false))
         filterView.dataSource = self
         filterView.delegate = self
         filterView.reloadData()
@@ -217,7 +234,7 @@ class MoviePreviewViewController: UIViewController {
 extension MoviePreviewViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return filterPreviews.count
     }
     
     func collectionView(collectionView: UICollectionView,
