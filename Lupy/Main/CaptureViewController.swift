@@ -288,43 +288,12 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             print("did finish??")
             cropFilter.removeTarget(self.movieWriter)
             self.movieWriter!.finishRecording()
+            // delete the original file
             dispatch_async(dispatch_get_main_queue()) {
                 self.captureModeDelegate!.previewModeDidStart(exportURL)
                 }
             }
-        
         captureModeDelegate!.captureModeDidEnd()
-//        let asset = AVAsset(URL: outputFileURL)
-//        let videoComposition = AVMutableVideoComposition()
-//        videoComposition.frameDuration = CMTimeMake(1, 60) // check what frame duration means
-//        let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last!
-//        videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.height, videoTrack.naturalSize.height * 1.25)
-//        
-//        let instruction = AVMutableVideoCompositionInstruction()
-//        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
-//        
-//        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
-//        
-//        let t1 = CGAffineTransformMakeTranslation(videoTrack.naturalSize.height, 0)
-//        let t2 = CGAffineTransformRotate(t1, CGFloat(M_PI_2))
-//        let finalTransform: CGAffineTransform = t2
-//        
-//        transformer.setTransform(finalTransform, atTime: kCMTimeZero)
-//        
-//        instruction.layerInstructions = NSArray(object: transformer) as! [AVVideoCompositionLayerInstruction]
-//        videoComposition.instructions = NSArray(object: instruction) as! [AVVideoCompositionInstructionProtocol]
-//        let timeInterval = Int(NSDate().timeIntervalSince1970)
-//        let exportURL = NSURL(fileURLWithPath: NSTemporaryDirectory() + "\(timeInterval).MOV")
-//        let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
-//        exporter!.videoComposition = videoComposition
-//        exporter!.outputFileType = AVFileTypeQuickTimeMovie
-//        exporter!.outputURL = exportURL
-//        exporter!.exportAsynchronouslyWithCompletionHandler({
-//            dispatch_async(dispatch_get_main_queue()) {
-//                self.captureModeDelegate!.previewModeDidStart(exporter!.outputURL!)
-//            }
-//        })     // TODO: error check
-//        captureModeDelegate!.captureModeDidEnd()
     }
     
     // captureMode is the live preview mode

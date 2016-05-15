@@ -13,7 +13,7 @@ import GPUImage
 import CoreGraphics
 
 enum VideoFilter {
-    case None, Chaplin, Clamp
+    case None, Chaplin, VHS
 }
 
 struct FilterSettings {
@@ -69,7 +69,7 @@ class FrameFilter {
         let alphaMaster = alphaAdjust(blurMaster, alpha: 0.70)
         
         // contrast from alpha
-        let contrastMaster = contrastAdjust(alphaMaster, contrast: 0.92)
+        let contrastMaster = contrastAdjust(alphaMaster, contrast: 0.85)
         
         // unsharp from contrast
         let unsharpMaster = unsharpMask(contrastMaster, intensity: 0.8, radius: 5.0)
@@ -81,7 +81,7 @@ class FrameFilter {
                 kCIInputImageKey as String: textureImage,
                 kCIInputBackgroundImageKey as String: unsharpMaster
             ]
-            textureMaster = CIFilter(name: "CISoftLightBlendMode", withInputParameters: hardLightParams)!.outputImage!
+            textureMaster = CIFilter(name: "CIHardLightBlendMode", withInputParameters: hardLightParams)!.outputImage!
         }
         
         let rgbClamp = getClampComposite(image, offsets: offsets)
@@ -119,8 +119,8 @@ class FrameFilter {
             print(path)
             let url = NSURL(fileURLWithPath: path)
             if let textureImage = CIImage(contentsOfURL: url) {
-                let textureContrast = contrastAdjust(textureImage, contrast: 1.8)
-                let textureAlpha = alphaAdjust(textureContrast, alpha: 0.04)
+                let textureContrast = contrastAdjust(textureImage, contrast: 2.0)
+                let textureAlpha = alphaAdjust(textureContrast, alpha: 0.025)
                 return textureAlpha
             }
         }
@@ -229,7 +229,7 @@ class FrameFilter {
         switch filter {
         case .Chaplin:
             return getChaplinImage(image)
-        case .Clamp:
+        case .VHS:
             return getVHSImage(image, offsets: offsets, frameIndex: frameIndex)
         default:
             return image

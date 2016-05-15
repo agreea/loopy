@@ -134,7 +134,8 @@ extension FeedViewController: FeedCellDelegate {
     private func downsampleVideoForCameraRoll(url: NSURL, cell: FeedCell) {
         let asset = AVAsset(URL: url)
         let videoComposition = AVMutableVideoComposition()
-        videoComposition.frameDuration = CMTimeMake(1, 60)
+        
+        videoComposition.frameDuration = CMTimeMake(1, 22)
         let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).last!
         
         videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.width/1.5, videoTrack.naturalSize.width * 1.25/1.5)
@@ -177,13 +178,17 @@ extension FeedViewController: FeedCellDelegate {
                         return
                     }
                     print("gif written: \(destURL!)")
+                    let gifData = NSData(contentsOfURL: destURL!)
+                    print("file length: \(gifData!.length)")
                     PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                         PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(destURL!)
+                        print("executing change request")
                         }, completionHandler: { (success, error) in
                             if success {
-                                print("Was successful!!")
+                                // todo: show download success
+                                cell.saveGifComplete()
                             } else {
-                                print("Failed to save: \(error)")
+                                AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
                             }
                     })
                 }

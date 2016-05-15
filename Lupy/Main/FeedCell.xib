@@ -45,7 +45,7 @@
                                     <constraint firstAttribute="height" constant="42" id="b94-dU-zSG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PierSans" family="Pier Sans" pointSize="16"/>
-                                <color key="textColor" red="0.26214823300000001" green="0.26214823300000001" blue="0.26214823300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

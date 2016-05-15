@@ -28,9 +28,9 @@ class VideoSampleBufferSource: NSObject {
     private var player: AVPlayer?
     private var luminosity = CGFloat(0.0)
     private var frameIndex = 0
-    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 7), y: CGFloat(arc4random() % 7)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 7), y: CGFloat(arc4random() % 7)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 7), y: -1 * CGFloat(arc4random() % 7))]
+    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 3 + 3), y: CGFloat(arc4random() % 3 + 3)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 3) - 3.0, y: CGFloat(arc4random() % 3) - 3.0),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 3) + 2.0, y: -1 * CGFloat(arc4random() % 3) - 4.0)]
 
     var filter = VideoFilter.None
     var filterSettings: FilterSettings {

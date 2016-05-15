@@ -32,7 +32,7 @@ class MoviePreviewViewController: UIViewController {
     var firstFrame: CIImage?
     var filterPreviews = [FilterPreview(name: "Natural", filter: .None, selected: true),
                           FilterPreview(name: "Chaplin", filter: .Chaplin, selected: false),
-                          FilterPreview(name: "Clamp", filter: .Clamp, selected: false)]
+                          FilterPreview(name: "Clamp", filter: .VHS, selected: false)]
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var moviePreview: UIView!
     @IBOutlet weak var bottomView: UIView!
@@ -203,6 +203,7 @@ class MoviePreviewViewController: UIViewController {
         } else {
             print("core image view was nil")
         }
+        // del
     }
     
     @IBAction func sliderDidSlide(sender: UISlider) {

@@ -19,6 +19,10 @@ protocol VideoUploaderDelegate {
     func retry()
 }
 
+func deleteFile(url: NSURL) {
+    
+}
+
 class VideoUploader: NSObject {
     
     private var videoOutput: AVPlayerItemVideoOutput?
@@ -28,9 +32,9 @@ class VideoUploader: NSObject {
     private var filterSettings: FilterSettings?
     private var firstFrame: CIImage?
     let context = CIContext(options:nil)
-    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 10), y: CGFloat(arc4random() % 10)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 10), y: CGFloat(arc4random() % 10)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 10), y: -1 * CGFloat(arc4random() % 10))]
+    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 3 + 3), y: CGFloat(arc4random() % 3 + 3)),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 3) - 3.0, y: CGFloat(arc4random() % 3) - 3.0),
+                           CGPoint(x: -1 * CGFloat(arc4random() % 3) + 2.0, y: -1 * CGFloat(arc4random() % 3) - 4.0)]
     
     init?(delegate: VideoUploaderDelegate){
         self.delegate = delegate
