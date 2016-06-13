@@ -109,10 +109,10 @@
                             </connections>
                         </button>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vjO-j2-H01">
-                            <rect key="frame" x="186" y="37" width="229" height="116"/>
+                            <rect key="frame" x="152" y="37" width="297" height="116"/>
                             <color key="backgroundColor" red="0.13725490200000001" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="229" id="gZM-4e-aIT"/>
+                                <constraint firstAttribute="width" constant="297" id="pAU-VZ-cF6"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="10" id="uLN-BY-ezx">
                                 <size key="itemSize" width="64" height="105"/>

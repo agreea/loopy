@@ -1,6 +1,6 @@
 if [ $# -ne 2 ]
   then
-        echo "\nUsage: sh iconizer.sh  /Users/agree/ios/Loopy/Loopy/Assets.xcassets/loopy_loop2.pdf /Users/agree/ios/Loopy/Loopy/Assets.xcassets/AppIcon.appiconset\n"
+        echo "\nUsage: sh iconsmith.sh  /Users/agree/ios/Lupy/Lupy/Assets.xcassets/keyframe_td_vapor.pdf /Lupy/\n"
 elif [ ! -e "$1" ]
     then
         echo "Did not find file $1, expected path to a vector image file.\n"

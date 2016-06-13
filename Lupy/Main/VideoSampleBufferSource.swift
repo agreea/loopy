@@ -21,21 +21,44 @@ func synced(lock: AnyObject, closure: () -> ()) {
 
 class VideoSampleBufferSource: NSObject {
     lazy var displayLink: CADisplayLink =
-        CADisplayLink(target: self, selector: "displayLinkDidRefresh:")
-    
+        CADisplayLink(target: self, selector: #selector(VideoSampleBufferSource.displayLinkDidRefresh(_:)))
     private var videoOutput: AVPlayerItemVideoOutput?
     private let consumer: CIImage -> ()
+    private var firstFrames = [CIImage]()
     private var player: AVPlayer?
-    private var luminosity = CGFloat(0.0)
-    private var frameIndex = 0
-    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 3 + 3), y: CGFloat(arc4random() % 3 + 3)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 3) - 3.0, y: CGFloat(arc4random() % 3) - 3.0),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 3) + 2.0, y: -1 * CGFloat(arc4random() % 3) - 4.0)]
-
-    var filter = VideoFilter.None
-    var filterSettings: FilterSettings {
+    private var _luminosity = CGFloat(0.0)
+    var luminosity: CGFloat {
         get {
-            return FilterSettings(luminosity: self.luminosity, filter: self.filter)
+            return _luminosity
+        }
+        set(newValue) {
+            if (newValue > 1.0 || newValue < 0.0){
+                return
+            }
+            synced(self) {
+                self._luminosity = CGFloat(newValue - 0.5) / 2.0
+                self.frameFilter.luminosity = self._luminosity
+            }
+        }
+    }
+    
+    private var frameIndex = 0
+    private var _frameFilter = FrameFilter()
+    var frameFilter: FrameFilter {
+        get {
+            return _frameFilter
+        }
+    }
+    
+    var _filter = VideoFilter.None
+    
+    var filter: VideoFilter {
+        get {
+            return _filter
+        }
+        set(newValue){
+            _filter = newValue
+            frameFilter.filter = _filter
         }
     }
 
@@ -49,11 +72,11 @@ class VideoSampleBufferSource: NSObject {
     init?(consumer callback: CIImage -> ()) {
         consumer = callback
         super.init()
-        //set a listener for when the video ends
     }
     
     func restartVideoFromBeginning()  {
         let startTime = CMTimeMake(0, 1)
+        frameIndex = 0
         player!.seekToTime(startTime)
         player!.play()
     }
@@ -84,16 +107,6 @@ class VideoSampleBufferSource: NSObject {
         player!.play()
     }
     
-    //
-    func setLuminosity(value: Float) {
-        if (value > 1.0 || value < 0.0){
-            return
-        }
-        synced(self) {
-            self.luminosity = CGFloat((value - 0.5))
-        }
-    }
-    
     func stop() {
         if !rendering {
             return
@@ -110,20 +123,16 @@ class VideoSampleBufferSource: NSObject {
         if videoOutput!.hasNewPixelBufferForItemTime(itemTime) {
             var presentationItemTime = kCMTimeZero
             if let pixelBuffer = videoOutput!.copyPixelBufferForItemTime(itemTime, itemTimeForDisplay: &presentationItemTime) {
-                let image = FrameFilter.getProcessedImage(pixelBuffer, filterSettings: filterSettings, frameIndex: frameIndex, offsets: offsets)
-                frameIndex += 1
+                let image = frameFilter.getProcessedImageFromBuffer(pixelBuffer, frameIndex: frameIndex)
                 consumer(image)
-            } else {
-                // show an alert
-                AppDelegate.getAppDelegate().showError("Video Connection Error", message: "Failed to render video")
             }
+            frameIndex += 1
+            // if none, render the image. The frame filter will cache it accordingly
         }
-        
     }
     
     func getProcessedImage(image: CIImage, filter: VideoFilter) -> CIImage {
-        let filterSettings = FilterSettings(luminosity: luminosity, filter: filter)
-        return FrameFilter.getProcessedImage(image, filterSettings: filterSettings, frameIndex: frameIndex, offsets: offsets)
+        return frameFilter.getProcessedImageWithFilter(image, filter: filter)
     }
     
     var angleForCurrentTime: Float {

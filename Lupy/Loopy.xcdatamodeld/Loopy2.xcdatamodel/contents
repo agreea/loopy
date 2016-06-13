@@ -12,7 +12,7 @@
         <attribute name="verified_phone" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User_data" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Contact" positionX="-54" positionY="18" width="128" height="90"/>
+        <element name="User_data" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

@@ -20,7 +20,15 @@ protocol VideoUploaderDelegate {
 }
 
 func deleteFile(url: NSURL) {
-    
+    let manager = NSFileManager.defaultManager()
+    if let path = url.path {
+        do {
+            try manager.removeItemAtPath(path)
+            print("successfully deleted file at path: \(path)")
+        } catch {
+            print("Failed to delete file: \(error)")
+        }
+    }
 }
 
 class VideoUploader: NSObject {
@@ -29,21 +37,18 @@ class VideoUploader: NSObject {
     private var player: AVPlayer?
     private var delegate: VideoUploaderDelegate
     var sourceURL: NSURL?
-    private var filterSettings: FilterSettings?
+    var frameFilter: FrameFilter?
     private var firstFrame: CIImage?
     let context = CIContext(options:nil)
-    private let offsets = [CGPoint(x: -1 * CGFloat(arc4random() % 3 + 3), y: CGFloat(arc4random() % 3 + 3)),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 3) - 3.0, y: CGFloat(arc4random() % 3) - 3.0),
-                           CGPoint(x: -1 * CGFloat(arc4random() % 3) + 2.0, y: -1 * CGFloat(arc4random() % 3) - 4.0)]
     
-    init?(delegate: VideoUploaderDelegate){
+    init(delegate: VideoUploaderDelegate){
         self.delegate = delegate
         super.init()
     }
     
-    func postVideo(sourceURL: NSURL, filterSettings: FilterSettings){
+    func postVideo(sourceURL: NSURL, frameFilter: FrameFilter){
         self.sourceURL = sourceURL
-        self.filterSettings = filterSettings
+        self.frameFilter = frameFilter
         writeFilteredVideoToFile()
         // writeFilteredVideoToFile
         // once that's started, send delegate the first frame
@@ -85,13 +90,15 @@ class VideoUploader: NSObject {
                                 }
                             }
                             let pixelBuffer = CMSampleBufferGetImageBuffer(buffer!)
-                            let image = FrameFilter.getProcessedImage(pixelBuffer!, filterSettings: self.filterSettings!, frameIndex: frameIndex, offsets: self.offsets)
+                            let image = self.frameFilter!.getProcessedImageFromBuffer(pixelBuffer!, frameIndex: frameIndex)
+                            print("frame extent: \(image.extent)")
                             frameIndex += 1
                             if writingFirstFrame {
                                 self.dispatchDidStart(image)
                                 self.firstFrame = image
                             }
-                            self.context.render(image, toCVPixelBuffer: pixelBuffer!)
+//                            self.context.render(image, toCVPixelBuffer: pixelBuffer!)
+                            self.context.render(image, toCVPixelBuffer: pixelBuffer!, bounds: image.extent, colorSpace: nil)
                             while writer.inputs.last!.readyForMoreMediaData == false {
                                 NSThread.sleepForTimeInterval(0.05)
                             }
@@ -153,7 +160,7 @@ class VideoUploader: NSObject {
                         let videoURL = json["Return", "VideoURL"].stringValue
                         let frameURL = json["Return", "FrameURL"].stringValue
                         let uuid = json["Return", "Uuid"].stringValue
-                        self.uploadVideoToS3(sourceURL, s3URL: videoURL, frameURL: frameURL, uuid: uuid)
+                        self.uploadVideoToS3(sourceURL, s3URL: videoURL, frameS3URL: frameURL, uuid: uuid)
                     } else {
                         self.dispatchError()
                     }
@@ -161,14 +168,16 @@ class VideoUploader: NSObject {
         }
     }
     
-    private func uploadVideoToS3(sourceURL: NSURL, s3URL: String, frameURL: String, uuid: String) {
+    private func uploadVideoToS3(sourceURL: NSURL, s3URL: String, frameS3URL: String, uuid: String) {
         print("Uploading video to s3")
         Alamofire.upload(.PUT, s3URL, file: sourceURL).progress { _, totalBytesRead, totalBytesExpectedToRead in
             print("bytes read: \(totalBytesRead)")
             }
             .response { request, response, data, error in
                 // todo: error check
-                self.uploadFirstFrameToS3(frameURL, uuid: uuid)
+                // make sure it's integritous --> delete file
+                deleteFile(sourceURL)
+                self.uploadFirstFrameToS3(frameS3URL, uuid: uuid)
         }
     }
     

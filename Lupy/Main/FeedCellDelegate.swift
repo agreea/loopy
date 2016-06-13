@@ -18,15 +18,14 @@ enum ReportReason {
 }
 
 extension FeedViewController: FeedCellDelegate {
-    func getTempURLForKey(contentKey: String) -> NSURL {
-        let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let movieName = contentKey + ".MOV"
-        return tempDir.URLByAppendingPathComponent(movieName)
-    }
     
     func getFeedItemForCell(cell: FeedCell) -> FeedItem {
         let indexPath = feedView.indexPathForCell(cell)
         return feedData[indexPath!.row]
+    }
+    
+    private func getKeyForCell(cell: FeedCell) -> String {
+        return cell.username! + "_" + cell.uuid!
     }
     
     func usernameTapped(cell: FeedCell) {
@@ -65,7 +64,8 @@ extension FeedViewController: FeedCellDelegate {
     private func presentDeleteAlertController(feedItem: FeedItem) {
         let alertController = UIAlertController(title: "Delete Post?", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
-            self.presentDeleteConfirmation(feedItem.Id!)
+            let contentKey = self.getContentKeyForFeedItem(feedItem)
+            self.presentDeleteConfirmation(feedItem.Id!, contentKey: contentKey)
         })
         alertController.addAction(deleteAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -73,10 +73,10 @@ extension FeedViewController: FeedCellDelegate {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
-    private func presentDeleteConfirmation(id: Int) {
+    private func presentDeleteConfirmation(id: Int, contentKey: String) {
         let alertController = UIAlertController(title: "Delete Post", message: "This will be forever-ever.", preferredStyle: UIAlertControllerStyle.Alert)
         let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
-            self.deletePost(id)
+            self.deletePost(id, contentKey: contentKey)
         })
         alertController.addAction(deleteAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -123,7 +123,7 @@ extension FeedViewController: FeedCellDelegate {
         // get URL for video
         let feedItem = getFeedItemForCell(cell)
         let contentKey = getContentKeyForFeedItem(feedItem)
-        let videoURL  = getTempURLForKey(contentKey)
+        let videoURL  = VideoFetcher.getTempURLForKey(contentKey)
         downsampleVideoForCameraRoll(videoURL, cell: cell)
     }
     
@@ -169,27 +169,27 @@ extension FeedViewController: FeedCellDelegate {
             print("Frame rate: \(videoTrack.nominalFrameRate)")
             dispatch_async(dispatch_queue_create("gif_writer", DISPATCH_QUEUE_SERIAL)) {
                 Regift.createGIFFromSource(url, startTime: startTime, duration: duration, frameRate: frameRate) { (destURL) in
+                    deleteFile(url) // delete the downsampled file
                     if destURL == nil {
                         // show some error
                         dispatch_async(dispatch_get_main_queue()) {
                             AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
-                            cell.saveGifComplete()
+                            cell.saveGifComplete(false)
                         }
                         return
                     }
-                    print("gif written: \(destURL!)")
                     let gifData = NSData(contentsOfURL: destURL!)
-                    print("file length: \(gifData!.length)")
                     PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                         PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(destURL!)
                         print("executing change request")
                         }, completionHandler: { (success, error) in
                             if success {
                                 // todo: show download success
-                                cell.saveGifComplete()
+                                cell.saveGifComplete(true)
                             } else {
-                                AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
+                                cell.saveGifComplete(false)
                             }
+                            deleteFile(destURL!)
                     })
                 }
             }
@@ -199,7 +199,9 @@ extension FeedViewController: FeedCellDelegate {
         }
     }
     
-    func deletePost(id: Int) {
+    func deletePost(id: Int, contentKey: String) {
+        // delete from coreData
+        VideoFetcher.deleteCachedVideo(contentKey)
         if let session =  AppDelegate.getAppDelegate().getSession() {
             let params = [
                 "session": session,
@@ -330,62 +332,36 @@ extension FeedViewController: FeedCellDelegate {
 }
 
 extension FeedViewController {
-    // get playerItem(cell)
-    /*
-        // fetch video
-        // once that's ready, set the cell's playerLayerPlayer
-     */
-    func loadVideo(contentKey: String, cell: FeedCell) {
+
+    func getFirstFrameURL(cell: FeedCell) -> NSURL {
+        return NSURL(string: "https://s3.amazonaws.com/keyframecontent/" +
+            getKeyForCell(cell) + "/f.jpg")!
+    }
+    
+    func loadVideo(cell: FeedCell) {
         // check if the video file is in the temporary directory
         print("in load video")
-        let moviePath = getTempURLForKey(contentKey)
-        let manager = NSFileManager.defaultManager()
-        if manager.fileExistsAtPath(moviePath.path!) {
-            let playerItem = AVPlayerItem(URL: moviePath)
-            let duration = playerItem.asset.duration
-            if duration != CMTimeMake(0, 1) {
-                print("serving cache")
-                cell.videoLoaded(moviePath)
-                return
+        let contentKey = getKeyForCell(cell)
+        VideoFetcher.fetchVideo(contentKey) { moviePath in
+            if let localMoviePath = moviePath {
+                cell.videoLoaded(localMoviePath)
             } else {
-                // TODO: show error, offer to reload? 
-                print("time was none, fetching")
-                fetchVideoFromServer(contentKey, cell: cell)
-            }
-        } else {
-            print("Fetching video from server")
-            fetchVideoFromServer(contentKey, cell: cell)
-        }
-    }
-    
-    func forceFetchFromServer(contentKey: String, cell: FeedCell) {
-        fetchVideoFromServer(contentKey, cell: cell)
-    }
-    
-    // fine
-    private func fetchVideoFromServer(contentKey: String, cell: FeedCell) {
-        let videoUrl = "https://s3.amazonaws.com/keyframecontent/" + contentKey + "/v.MOV"
-        Alamofire.request(.GET, videoUrl).response { request, response, data, error in
-            print("For \(contentKey), Fetched bytes: \(data!.length)")
-            if let movieURL = self.writeVideoFile(contentKey, data: data!) {
-                cell.videoLoaded(movieURL)
-            } else {
-                // show video error
+                // show error on cell
             }
         }
     }
-
-    private func writeVideoFile(contentKey: String, data: NSData) -> NSURL? {
-        let moviePath = getTempURLForKey(contentKey)
-        do {
-            try data.writeToFile(moviePath.path!, options: .AtomicWrite)
-        } catch {
-            print("\(error)")
-        }
-        let manager = NSFileManager.defaultManager()
-        return manager.fileExistsAtPath(moviePath.path!) ? moviePath : nil
-    }
     
+    func forceFetchFromServer(cell: FeedCell) {
+        let contentKey = getKeyForCell(cell)
+        VideoFetcher.fetchVideo(contentKey) { moviePath in
+            if let localMoviePath = moviePath {
+                cell.videoLoaded(localMoviePath)
+            } else {
+                // delete
+                // show error
+            }
+        }
+    }
 }
 
 

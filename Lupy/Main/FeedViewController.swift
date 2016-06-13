@@ -55,11 +55,14 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var leftButtonNav: UIButton!
     @IBOutlet weak var rightButtonNav: UIButton!
     @IBOutlet weak var titleNav: UILabel!
+    @IBOutlet weak var rightNavButtonWidth: NSLayoutConstraint!
+    var rightNavButtonFullWidth: CGFloat?
     var navBarVanishes = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navbarFullHeight = abs(navBarHeight.constant)
+        rightNavButtonFullWidth = rightNavButtonWidth.constant
         let postNib = UINib(nibName: "FeedCell", bundle: nil)
         let uploadingNib = UINib(nibName: "UploadingCell", bundle: nil)
         myUserId = AppDelegate.getAppDelegate().getUserId()
@@ -418,6 +421,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let midScrollHeight = navbarFullHeight! - abs(scrollSession!.delta!)
         // prevent passing showNavBarHeight a negative value
         let barHeight = max(midScrollHeight, 0.0)
+//        let titleAlpha = barHeight / 64.0
+//        titleNav.alpha = titleAlpha
+//        titleNav.font = titleNav.font.fontWithSize(titleAlpha * 21.0)
         showNavBarHeight(barHeight)
     }
     
@@ -437,6 +443,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     private func hideNavBar() {
         UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.navBarHeight.constant = 0.0
+            self.titleNav.alpha = 0.0
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
@@ -444,14 +451,23 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     private func showNavBarHeight(height: CGFloat) {
         UIView.animateWithDuration(0.01, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.navBarHeight.constant = height * -1
+            let alphaScaleMultiplier = abs(self.navBarHeight.constant / 64.0)
+            self.titleNav.alpha = alphaScaleMultiplier
+            self.rightButtonNav.alpha = alphaScaleMultiplier
+            self.rightNavButtonWidth.constant = alphaScaleMultiplier * self.rightNavButtonFullWidth!
+            self.titleNav.font = UIFont(name: "PierSans-Bold", size: alphaScaleMultiplier * 21.0)
             self.view.layoutIfNeeded()
-            }, completion: nil)
+        }, completion: nil)
     }
     
     func showNavBarImmediately() {
         if self.navbarFullHeight != nil {
             self.navBarHeight.constant = -1 * self.navbarFullHeight!
             self.view.layoutIfNeeded()
+            self.rightButtonNav.alpha = 1.0
+            self.titleNav.alpha = 1.0
+            self.titleNav.font = UIFont(name: "PierSans-Bold", size: 21.0)
+            self.rightNavButtonWidth.constant = rightNavButtonFullWidth!
         }
     }
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
@@ -469,9 +485,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let feedItem = feedData[index!.row]
             if let otherCell = cell as? FeedCell {
                 if !otherCell.hasGif {
-                    let contentKey = getContentKeyForFeedItem(feedItem)
                     otherCell.hideVideo()
-                    otherCell.setImagePreview(contentKey)
+                    otherCell.setImagePreview()
                 }
             }
         }

@@ -14,6 +14,8 @@ sh iconsmith.sh /Users/agree/ios/Lupy/Lupy/images/keyframe_logo.pdf Lupy
 import UIKit
 import CoreData
 import Contacts
+import AVFoundation
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,13 +24,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let contactStore = CNContactStore()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        print("launching!!!")
         self.window!.makeKeyAndVisible()
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryAmbient,
+                                          withOptions: .MixWithOthers)
+        } catch {
+            print("\(error)")
+        }
         if getSession() != nil {
             return true
         }
+        let cache = KingfisherManager.sharedManager.cache
+        cache.maxDiskCacheSize = 25 * 1024 * 1024 // max cache disk space 25mb
+        cache.maxCachePeriodInSecond = 60 * 60 * 24 // max cache duration 1 day
         launchLoginSignup()
         return true
     }
+    
     func launchLoginSignup() {
         let loginSignup = UIStoryboard(name: "LoginSignup", bundle: nil)
         let landingViewController = loginSignup.instantiateViewControllerWithIdentifier("LoopyLanding") as! LoopyLandingViewController
@@ -76,8 +90,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        dispatch_async(dispatch_queue_create("com.getkeyframe.cache_movie_cleanup", DISPATCH_QUEUE_SERIAL)) {
+            let shouldRun = true
+            while shouldRun {
+                print("calling clean video cache")
+                VideoFetcher.cleanVideoCache()
+                NSThread.sleepForTimeInterval(300)
+            }
+        }
     }
-
+    
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.

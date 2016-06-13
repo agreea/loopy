@@ -118,18 +118,21 @@ class AddContactsViewController: UIViewController, UITextFieldDelegate {
         // exit the keyboard
         usernameField.endEditing(true)
         // Todo: intercept enter to mean search (soon)
-        if usernameSearchResultsMode { // exist username search mode
+        if usernameSearchResultsMode { // exit username search mode
+            print("was search results mode")
             usernameSearchResultsMode = false
+            usernameField.text = ""
             searchButton.setImage(UIImage(named: "Search"), forState: .Normal)
             contactTableView.reloadData()
             // maybe clear input (yes)
             return
         }
-        // alert user if the
+        // alert user if the field is empty
         if (usernameField.text == nil || usernameField.text?.characters.count == 0) {
             AppDelegate.getAppDelegate().showError("Username required", message: "Please enter a username to search")
             return
         }
+        usernameSearchResultsMode = true
         fetchUsernameSearchResults()
         // fetch relevant user from server
         // load their information into another dictionary

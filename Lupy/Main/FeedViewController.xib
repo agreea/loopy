@@ -20,6 +20,7 @@
                 <outlet property="navBar" destination="ImL-uv-lbg" id="bZF-fc-LBr"/>
                 <outlet property="navBarHeight" destination="xqu-Ae-aaK" id="CPR-Q2-cEu"/>
                 <outlet property="rightButtonNav" destination="zmh-D5-jmm" id="UlM-et-J90"/>
+                <outlet property="rightNavButtonWidth" destination="Ynh-Eu-ez4" id="Vlf-IC-2FI"/>
                 <outlet property="titleNav" destination="DL0-VI-9Vc" id="hzF-Q2-FWF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -96,9 +97,9 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="42N-ue-GQV" secondAttribute="bottom" id="40t-Sb-Xpm"/>
-                        <constraint firstAttribute="bottom" secondItem="zmh-D5-jmm" secondAttribute="bottom" constant="18" id="8jJ-pJ-2xA"/>
                         <constraint firstItem="42N-ue-GQV" firstAttribute="centerX" secondItem="ImL-uv-lbg" secondAttribute="centerX" id="DuZ-ZB-sqh"/>
                         <constraint firstItem="evj-07-rCb" firstAttribute="bottom" secondItem="zmh-D5-jmm" secondAttribute="bottom" id="ECf-v3-aPA"/>
+                        <constraint firstItem="zmh-D5-jmm" firstAttribute="centerY" secondItem="DL0-VI-9Vc" secondAttribute="centerY" id="HjR-Pf-BNN"/>
                         <constraint firstItem="42N-ue-GQV" firstAttribute="width" secondItem="ImL-uv-lbg" secondAttribute="width" id="MA0-Wl-FjP"/>
                         <constraint firstItem="evj-07-rCb" firstAttribute="leading" secondItem="ImL-uv-lbg" secondAttribute="leading" constant="13" id="NHF-J0-ach"/>
                         <constraint firstAttribute="bottom" secondItem="42N-ue-GQV" secondAttribute="bottom" constant="-8" id="VTa-v7-rQq"/>

@@ -32,7 +32,8 @@ class MoviePreviewViewController: UIViewController {
     var firstFrame: CIImage?
     var filterPreviews = [FilterPreview(name: "Natural", filter: .None, selected: true),
                           FilterPreview(name: "Chaplin", filter: .Chaplin, selected: false),
-                          FilterPreview(name: "Clamp", filter: .VHS, selected: false)]
+                          FilterPreview(name: "Clamp", filter: .VHS, selected: false),
+                          FilterPreview(name: "Vapor", filter: .Vapor, selected: false)]
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var moviePreview: UIView!
     @IBOutlet weak var bottomView: UIView!
@@ -54,7 +55,6 @@ class MoviePreviewViewController: UIViewController {
     }
     var captureModeDelegate: CaptureModeDelegate?
     var videoSource: VideoSampleBufferSource?
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ class MoviePreviewViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -93,23 +93,8 @@ class MoviePreviewViewController: UIViewController {
     }
     
     func previewModeDidStart() {
-        // get the movieFile from a player
-        // loop the video
-//        let playerItem = AVPlayerItem(URL: movieURL!)
-//        let movie = GPUImageMovie(URL: movieURL!)
-//        let player = AVPlayer(playerItem: playerItem)
-//        player.rate = 1.0
-//        movie.shouldRepeat = true
-//        movie.playAtActualSpeed = true
-//        let gpuImageView = GPUImageView(frame: moviePreview.bounds)
-////        let filter = GPUImageBoxBlurFilter()
-//        movie.addTarget(gpuImageView)
-////        filter.addTarget(gpuImageView)
-//        moviePreview.insertSubview(gpuImageView, atIndex: 0)
-//        movie.startProcessing()
-//        print("Gpu imageview frame: \(gpuImageView.frame)")
+        print("preview mode did start in movie preview vc")
         loadingVideoLabel.hidden = true
-//        player.play()
         videoSource?.stop()
         loadingVideoLabel.hidden = true
         if coreImageView == nil {
@@ -144,32 +129,6 @@ class MoviePreviewViewController: UIViewController {
         filterView.hidden = false
     }
     
-//    func initPlayer() {
-//        if player == nil {
-//            player = AVPlayer(URL: movieURL!)
-//        } else {
-//            let playerItem = AVPlayerItem(URL: movieURL!)
-//            player?.replaceCurrentItemWithPlayerItem(playerItem)
-//        }
-//        player!.actionAtItemEnd = .None
-//        //set a listener for when the video ends
-//        NSNotificationCenter
-//            .defaultCenter()
-//            .addObserver(self,
-//                         selector: #selector(MoviePreviewViewController.restartVideoFromBeginning),
-//                         name: AVPlayerItemDidPlayToEndTimeNotification,
-//                         object: player!.currentItem)
-//        let playerLayer = AVPlayerLayer(player: player)
-//        playerLayer.frame = self.view.bounds
-//        let moviePreviewView = UIView(frame: self.view.bounds)
-//        moviePreviewView.layer.addSublayer(playerLayer)
-//        self.view.insertSubview(moviePreviewView, atIndex: 0)
-//        print("sublayer added")
-//        player!.play()
-//    }
-//    
-
-    
     @IBAction func didPressCancel(sender: AnyObject) {
         // go back to the captureView
         captureModeDelegate!.captureModeDidStart()
@@ -179,7 +138,7 @@ class MoviePreviewViewController: UIViewController {
     @IBAction func didPressSend(sender: AnyObject) {
         print("Writing file START: \(Int(NSDate().timeIntervalSince1970))")
         videoSource!.stop()
-        captureModeDelegate?.didPressUpload(movieURL!, filterSettings: videoSource!.filterSettings)
+        captureModeDelegate?.didPressUpload(movieURL!, frameFilter: videoSource!.frameFilter)
         prepareForDisappear()
     }
     
@@ -203,12 +162,13 @@ class MoviePreviewViewController: UIViewController {
         } else {
             print("core image view was nil")
         }
-        // del
+        deleteFile(movieURL!)
+        movieURL = nil
     }
     
     @IBAction func sliderDidSlide(sender: UISlider) {
         print(sender.value)
-        videoSource!.setLuminosity(sender.value)
+        videoSource!.luminosity = CGFloat(sender.value)
     }
     
     @IBAction func didPressFilter(sender: AnyObject) {
@@ -259,18 +219,6 @@ extension MoviePreviewViewController: UICollectionViewDelegate, UICollectionView
         }
         filterView.reloadData()
     }
-//    -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-//    
-//    UICollectionViewCell *datasetCell =[collectionView cellForItemAtIndexPath:indexPath];
-//    datasetCell.backgroundColor = [UIColor blueColor]; // highlight selection
-//    }
-//    
-//    -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    UICollectionViewCell *datasetCell =[collectionView cellForItemAtIndexPath:indexPath];
-//    datasetCell.backgroundColor = [UIColor redColor]; // Default color
-//    }
-
     
 }
 typealias Filter = CIImage -> CIImage

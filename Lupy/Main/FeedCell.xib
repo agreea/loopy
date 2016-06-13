@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="pier-regular.otf">
@@ -55,6 +54,11 @@
                             <constraint firstAttribute="height" constant="50" id="kYJ-cG-xf3"/>
                             <constraint firstItem="7YP-u1-LdV" firstAttribute="leading" secondItem="WLF-xo-Bph" secondAttribute="leading" constant="16" id="sE2-a5-6g5"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="kYJ-cG-xf3"/>
+                            </mask>
+                        </variation>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-lQ-Wt4">
                         <rect key="frame" x="161" y="400" width="159" height="50"/>
@@ -66,29 +70,51 @@
                                     <action selector="didPressHeartButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7N8-7f-3Xb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNv-pe-Q92">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vp0-DR-AB5">
                                 <rect key="frame" x="53" y="0.0" width="53" height="50"/>
-                                <state key="normal" image="Download"/>
-                                <connections>
-                                    <action selector="didPressDownload:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bkF-8J-5qd"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNv-pe-Q92">
+                                        <rect key="frame" x="0.0" y="0.0" width="53" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="VNv-pe-Q92" secondAttribute="height" multiplier="53:50" id="kfk-h7-Ify"/>
+                                        </constraints>
+                                        <state key="normal" image="Download"/>
+                                        <connections>
+                                            <action selector="didPressDownload:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bkF-8J-5qd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="VNv-pe-Q92" firstAttribute="height" secondItem="vp0-DR-AB5" secondAttribute="height" id="ZVI-P1-cT2"/>
+                                    <constraint firstItem="VNv-pe-Q92" firstAttribute="centerY" secondItem="vp0-DR-AB5" secondAttribute="centerY" id="fHJ-M2-v6r"/>
+                                    <constraint firstItem="VNv-pe-Q92" firstAttribute="centerX" secondItem="vp0-DR-AB5" secondAttribute="centerX" id="k5Y-VT-tji"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h8M-n5-ByT">
                                 <rect key="frame" x="106" y="0.0" width="53" height="50"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="53" id="9Xu-S4-mEF"/>
                                     <constraint firstAttribute="width" secondItem="h8M-n5-ByT" secondAttribute="height" multiplier="59:56" id="xUE-Sw-4ev"/>
                                 </constraints>
                                 <state key="normal" image="MoreIconWhite"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9Xu-S4-mEF"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="didPressMore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sQT-RJ-pzf"/>
                                 </connections>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="nLY-Oq-zBx" firstAttribute="width" secondItem="VNv-pe-Q92" secondAttribute="width" id="IXM-Y1-gz4"/>
+                            <constraint firstItem="nLY-Oq-zBx" firstAttribute="height" secondItem="Kjr-lQ-Wt4" secondAttribute="height" id="Cal-sG-dGf"/>
+                            <constraint firstItem="nLY-Oq-zBx" firstAttribute="width" secondItem="h8M-n5-ByT" secondAttribute="width" id="DV0-LY-SFg"/>
+                            <constraint firstItem="vp0-DR-AB5" firstAttribute="width" secondItem="h8M-n5-ByT" secondAttribute="width" id="IxZ-m7-ZQc"/>
                             <constraint firstItem="h8M-n5-ByT" firstAttribute="centerY" secondItem="Kjr-lQ-Wt4" secondAttribute="centerY" id="NDK-aC-ohW"/>
-                            <constraint firstAttribute="width" secondItem="VNv-pe-Q92" secondAttribute="width" multiplier="3" id="YR7-Tk-eDn"/>
-                            <constraint firstItem="h8M-n5-ByT" firstAttribute="width" secondItem="VNv-pe-Q92" secondAttribute="width" id="jnt-Tw-Ok1"/>
+                            <constraint firstItem="h8M-n5-ByT" firstAttribute="height" secondItem="Kjr-lQ-Wt4" secondAttribute="height" id="gZ2-To-eha"/>
+                            <constraint firstItem="vp0-DR-AB5" firstAttribute="height" secondItem="Kjr-lQ-Wt4" secondAttribute="height" id="on8-e3-bj5"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -114,6 +140,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="downloadButton" destination="VNv-pe-Q92" id="3fk-nb-bnz"/>
+                <outlet property="downloadButtonHeight" destination="ZVI-P1-cT2" id="kB5-fF-Hn5"/>
                 <outlet property="gifPreview" destination="Wfl-Dg-hXa" id="4dO-uu-SdQ"/>
                 <outlet property="heartButton" destination="nLY-Oq-zBx" id="paK-eZ-O0Q"/>
                 <outlet property="heartView" destination="1af-kU-yZ4" id="sRP-1q-yCe"/>

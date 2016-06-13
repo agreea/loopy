@@ -22,7 +22,7 @@ class CoreImageView: GLKView {
         self.init(frame: frame, context: eaglContext)
     }
     
-    override init(frame: CGRect, context eaglContext: EAGLContext!) {
+    override init(frame: CGRect, context eaglContext: EAGLContext) {
         coreImageContext = CIContext(EAGLContext: eaglContext)
         super.init(frame: frame, context: eaglContext)
         // We will be calling display() directly, hence this needs to be false

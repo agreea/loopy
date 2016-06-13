@@ -9,7 +9,7 @@ protocol CaptureModeDelegate {
     func didFinishUpload()
     func didEnterCamera()
     func didExitCamera()
-    func didPressUpload(sourceURL: NSURL, filterSettings: FilterSettings)
+    func didPressUpload(sourceURL: NSURL, frameFilter: FrameFilter)
     func captureModeDidEnd()
 }
 
@@ -53,7 +53,6 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        let frame = bottomView.frame
         let camWindowHeight = self.view.bounds.width * 1.25
         let desiredBottomViewHeight = self.view.bounds.height - camWindowHeight
         bottomViewHeight.constant = desiredBottomViewHeight
@@ -288,7 +287,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             print("did finish??")
             cropFilter.removeTarget(self.movieWriter)
             self.movieWriter!.finishRecording()
-            // delete the original file
+            deleteFile(outputFileURL)
             dispatch_async(dispatch_get_main_queue()) {
                 self.captureModeDelegate!.previewModeDidStart(exportURL)
                 }

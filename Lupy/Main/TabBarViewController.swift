@@ -16,10 +16,43 @@ class TabBarViewController: UIViewController {
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var tabBar: UIView!
     
+    enum TabSelection {
+        case Home, Me
+    }
     
+    var _selectedTab = TabSelection.Home
+    
+    var selectedTab: TabSelection {
+        get {
+            return _selectedTab
+        }
+        set(newValue) {
+            _selectedTab = newValue
+            switch(_selectedTab) {
+            case .Home:
+                homeButton.setImage(UIImage(named: "HomeIconHL"), forState: .Normal)
+                userButton.setImage(UIImage(named: "UserIcon"), forState: .Normal)
+                break
+            case .Me:
+                homeButton.setImage(UIImage(named: "HomeIcon"), forState: .Normal)
+                userButton.setImage(UIImage(named: "UserIconHL"), forState: .Normal)
+                break
+            default:
+                homeButton.setImage(UIImage(named: "HomeIconHL"), forState: .Normal)
+                userButton.setImage(UIImage(named: "UserIcon"), forState: .Normal)
+            }
+        }
+    }
     var delegate: TabBarDelegate?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        selectedTab = .Home
+    }
+
+    
     @IBAction func didPressHomeButton(sender: AnyObject) {
+        selectedTab = .Home
         delegate?.goToHome()
     }
     
@@ -36,6 +69,7 @@ class TabBarViewController: UIViewController {
     }
     
     @IBAction func didPressUserButton(sender: AnyObject) {
+        selectedTab = .Me
         delegate?.goToUser()
     }
     

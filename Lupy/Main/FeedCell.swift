@@ -22,9 +22,8 @@ protocol FeedCellDelegate {
     func savePostToCameraRoll(cell: FeedCell)
     func didPressMore(cell: FeedCell)
     func isSelfPost(cell: FeedCell) -> Bool
-    func getTempURLForKey(key: String) -> NSURL
-    func getContentKeyForFeedItem(feedItem: FeedItem) -> String
-    func loadVideo(contentKey: String, cell: FeedCell)
+    func loadVideo(cell: FeedCell)
+    func getFirstFrameURL(cell: FeedCell) -> NSURL
 }
 
 class FeedCell: UITableViewCell {
@@ -32,7 +31,6 @@ class FeedCell: UITableViewCell {
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var id: Int?
-    var _liked: Bool?
     var delegate: FeedCellDelegate?
     var fullHeartWidth: CGFloat?
     var downloading = false
@@ -53,6 +51,8 @@ class FeedCell: UITableViewCell {
             }
         }
     }
+    
+    var _liked: Bool?
     var liked: Bool {
         get {
             return _liked!
@@ -63,6 +63,17 @@ class FeedCell: UITableViewCell {
             heartButton.enabled = _liked!
         }
     }
+    var _username: String?
+    var username: String? {
+        get {
+            return _username
+        }
+        set(newValue) {
+            _username = newValue
+            usernameLabel.text = _username
+        }
+    }
+    var uuid: String?
     
     @IBOutlet weak var gifPreview: UIImageViewAligned!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -71,6 +82,7 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var heartViewWidth: NSLayoutConstraint!
     @IBOutlet weak var pauseStackView: UIStackView!
     @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var downloadButtonHeight: NSLayoutConstraint!
     
 //    @IBOutlet weak var avPlayerView: UIView!
     
@@ -143,9 +155,10 @@ class FeedCell: UITableViewCell {
     func loadItem(feedItem: FeedItem) {
         hasGif = false
         playerLayer?.hidden = true
+        username = feedItem.Username!
+        uuid = feedItem.Uuid!
         print("Cell load view called, my id is: \(id)")
-        let contentKey = feedItem.Username! + "_" + feedItem.Uuid!
-        setImagePreview(contentKey)
+        setImagePreview()
         usernameLabel.text = feedItem.Username
         id = feedItem.Id
         print("Load Video called for \(id)")
@@ -168,9 +181,99 @@ class FeedCell: UITableViewCell {
         // rotate view
     }
     
-    func saveGifComplete() {
+    func saveGifComplete(success: Bool) {
         downloading = false
+        if success {
+//            showDownloadSuccessAnimation()
+            // success scale:
+            // start scaling from 90 -> 120 in 0.15 seconds
+            // once that's done take 0.25s as long to scale down to 1
+            
+            // success opacity:
+            // fade out rotating download button in .1s (showDownloadSuccess)
+            // once that's done set the downloading button to a success check (startDownloadSuccessFadein)
+            // once that's done immediately reveal the success check, start success scale (startDownloadSuccessFadein)
+            // .75s at 100% (delay in downloadSuccessFadein)
+            // .375s from 100 to 0 (execution time of dlSuccessFadein)
+            // set download button to download icon (dlInteractiveFadein)
+            // .21s from 0 to 100 download button opacity (dlInteractiveFadein)
+        } else {
+            AppDelegate.getAppDelegate().showError("Gif Save Error", message: "Couldn't save the loop! :(")
+        }
     }
+    
+    private func showDownloadSuccessAnimation() {
+        // hide the rotating animation button
+        self.downloadButton.enabled = false
+        self.downloadButton.userInteractionEnabled = false
+        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButton.alpha = 0.0
+            self.layoutIfNeeded()
+            }, completion: { finished in
+                if finished {
+                    self.startDownloadSuccessFadein()
+                }
+        })
+    }
+
+    private func startDownloadSuccessFadein() {
+        self.downloadButton.setImage(UIImage(named:"DownloadSuccess"), forState: .Normal)
+        self.layoutIfNeeded()
+        self.startDownloadSuccessUpscale()
+        UIView.animateWithDuration(0.1, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButton.alpha = 1.0
+            self.layoutIfNeeded()
+            }, completion: { finished in
+                if finished {
+                    self.startDownloadSuccessFadeout()
+                }
+        })
+    }
+    
+    private func startDownloadSuccessFadeout() {
+        UIView.animateWithDuration(0.375, delay: 0.75, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButton.alpha = 0.0
+            self.layoutIfNeeded()
+            }, completion: { finished in
+                if finished {
+                    self.startInteractiveDownloadFadein()
+                }
+        })
+    }
+    
+    private func startDownloadSuccessUpscale() {
+        print("upscale")
+        downloadButtonHeight.constant = 45.0
+        self.layoutIfNeeded()
+        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButtonHeight.constant = 80.0
+            self.layoutIfNeeded()
+            }, completion: { finished in
+                if finished {
+                    self.startDownloadSuccessDownscale()
+                }
+        })
+    }
+    
+    private func startDownloadSuccessDownscale() {
+        print("downscale")
+        UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButtonHeight.constant = 50.0
+            self.layoutIfNeeded()
+            }, completion: nil)
+    }
+    
+    private func startInteractiveDownloadFadein() {
+        print("interactive comin back")
+        self.downloadButton.enabled = true
+        self.downloadButton.userInteractionEnabled = true
+        self.downloadButton.setImage(UIImage(named: "Download"), forState: .Normal)
+        UIView.animateWithDuration(0.21, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.downloadButton.alpha = 1.0
+            self.layoutIfNeeded()
+            }, completion: nil)
+    }
+
     private func rotateDownloadButton() {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
@@ -184,9 +287,7 @@ class FeedCell: UITableViewCell {
         if downloading {
             rotateDownloadButton()
         } else {
-            downloadButton.setImage(UIImage(named: "Download"), forState: .Normal)
-            downloadButton.userInteractionEnabled = true
-            // change back to download icon
+            showDownloadSuccessAnimation()
         }
     }
 
@@ -196,11 +297,10 @@ class FeedCell: UITableViewCell {
         delegate!.didPressMore(self)
     }
         
-    func setImagePreview(key: String) {
+    func setImagePreview() {
         print("Top of set image preview")
         print("Player layer is hidden?: \(self.playerLayer!.hidden)")
-        print("Image preview key:  \(key)")
-        let URL = NSURL(string: "https://s3.amazonaws.com/keyframecontent/" + key + "/f.jpg")!
+        let URL = NSURL(string: "https://s3.amazonaws.com/keyframecontent/" + username! + "_" + uuid! + "/f.jpg")!
         let optionInfo: KingfisherOptionsInfo = [
             .DownloadPriority(0.5),
             .Transition(ImageTransition.Fade(0.5))
@@ -212,7 +312,7 @@ class FeedCell: UITableViewCell {
                                         if self.feedViewController!.canCellDownloadGif(self) {
                                             print("image completion: about to load video")
                                             self.playerLayer!.hidden = true
-                                            self.delegate!.loadVideo(key, cell: self)
+                                            self.delegate!.loadVideo(self)
                                         } else {
                                             print("can't load video??")
                                         }

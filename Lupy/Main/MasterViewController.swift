@@ -192,8 +192,8 @@ extension MasterViewController: VideoUploaderDelegate {
 
 extension MasterViewController: CaptureModeDelegate {
     
-    func didPressUpload(sourceURL: NSURL, filterSettings: FilterSettings) {
-        uploader!.postVideo(sourceURL, filterSettings: filterSettings)
+    func didPressUpload(sourceURL: NSURL, frameFilter: FrameFilter) {
+        uploader!.postVideo(sourceURL, frameFilter: frameFilter)
         let feedViewController = orderedViewControllers[0] as! FeedViewController
         feedViewController.scrollToTop()
         goToHome()
